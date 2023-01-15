@@ -44,22 +44,19 @@ class GetNews extends Command
     public function handle()
     {
         //GoogleNewsを取得する
-        $str = GoogleNewsLib::getUrl(
-            "ゲーム実況",
+        $str = GoogleNewsLib::getNews(
             $this->argument('after')  ?? date('Y-m-d', strtotime('-3 day')),
             $this->argument('before') ?? date('Y-m-d'),
         );
         if (is_null($str)) {
             return 0;
         }
-dump($str);
-exit;
+
         //取得したxmlをオブジェクトに変換する
         $obj = simplexml_load_string($str);
 
         //取得したニュースをDBに保存
         foreach($obj->channel->item as $item) {
-            
             $result = $this->newsCreateService->createNews(
                 (string)$item->title,
                 (string)$item->pubDate,
@@ -67,7 +64,7 @@ exit;
             );
             if (!is_null($result)) {
                 dump((string)$result);
-                dump((string)$item->title);
+                dump('  ' . (string)$item->title);
             }
         }
         return 0;
