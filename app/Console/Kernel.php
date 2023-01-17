@@ -25,7 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-        // $schedule->command('inspire')->hourly();
+        //毎朝午前4時、ゲーム実況ニュースの日次取得
+        $schedule->command('get:news')->dailyAt('04:00');
     }
 
     /**

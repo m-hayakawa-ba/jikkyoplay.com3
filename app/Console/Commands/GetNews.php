@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Log;
 use App\Libs\GoogleNewsLib;
 use App\Services\News\NewsCreateService;
 
@@ -43,11 +44,15 @@ class GetNews extends Command
      */
     public function handle()
     {
+        //取得開始日時
+        $start_on = $this->argument('after')  ?? date('Y-m-d', strtotime('-1 month'));
+        $end_on   = $this->argument('before') ?? date('Y-m-d');
+
+        //ログに出力
+        Log::info("ゲーム実況ニュースの取得を開始します。$start_on から $end_on まで");
+
         //GoogleNewsを取得する
-        $str = GoogleNewsLib::getNews(
-            $this->argument('after')  ?? date('Y-m-d', strtotime('-3 day')),
-            $this->argument('before') ?? date('Y-m-d'),
-        );
+        $str = GoogleNewsLib::getNews($start_on, $end_on);
         if (is_null($str)) {
             return 0;
         }
@@ -63,10 +68,14 @@ class GetNews extends Command
                 (string)$item->link,
             );
             if (!is_null($result)) {
-                dump((string)$result);
-                dump('  ' . (string)$item->title);
+                //エラー分の出力は特に必要なし
+                // dump((string)$result);
+                // dump('  ' . (string)$item->title);
             }
         }
+
+        //終了
+        Log::info("ゲーム実況ニュースの取得を終了します。");
         return 0;
     }
 }
