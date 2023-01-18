@@ -1,0 +1,7 @@
+// フッターが画面下に張り付くように記述
+#app {
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    grid-template-columns: 100%;
+    min-height: 100vh;
+}
