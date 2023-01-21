@@ -3,9 +3,9 @@
         <div class="header-wrap">
 
             <!-- サイトロゴ -->
-            <a class="header-logo">
+            <Link href="/" class="header-logo">
                 <img src="/image/logo.png" :alt="constants.site_title">
-            </a>
+            </Link>
 
             <!-- 検索マーク -->
             <div class="header-search">
@@ -23,7 +23,13 @@
 
 
 <script>
+import { Link } from "@inertiajs/inertia-vue3";
 export default {
+
+    //読み込んだコンポーネント
+    components: {
+        Link,
+    },
 
     //返り値が固定の関数
     computed: {

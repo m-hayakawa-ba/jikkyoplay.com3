@@ -124,6 +124,7 @@ img {
 
 a {
   transition: 0.2s;
+  text-decoration: none;
 }
 a:hover {
   opacity: 0.8;
