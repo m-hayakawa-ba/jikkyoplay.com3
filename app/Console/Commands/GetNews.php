@@ -68,7 +68,7 @@ class GetNews extends Command
                 (string)$item->link,
             );
             if (!is_null($result)) {
-                //エラー分の出力は特に必要なし
+                //エラー文の出力は特に必要なし
                 // dump((string)$result);
                 // dump('  ' . (string)$item->title);
             }

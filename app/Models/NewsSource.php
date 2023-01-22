@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class News extends Model
+class NewsSource extends Model
 {
     use HasFactory;
 
@@ -13,18 +13,12 @@ class News extends Model
      * カラムの設定
      */
     protected $fillable = [
-        'title',
-        'author',
-        'news_source_id',
-        'url',
-        'image_url',
-        'flag_enabled',
-        'published_at',
+        'name',
+        'favicon_url',
         'created_at',
         'updated_at',
     ];
     protected $hidden = [
-        'flag_enabled',
         'created_at',
         'updated_at',
     ];

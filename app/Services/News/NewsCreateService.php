@@ -2,8 +2,10 @@
 
 namespace App\Services\News;
 
+use App\Libs\HttpRequestLib;
 use App\Models\News;
 use App\Services\News\NewsReadService;
+use App\Services\NewsSource\NewsSourceCreateService;
 use Illuminate\Database\Eloquent\Collection;
 
 class NewsCreateService
@@ -14,6 +16,7 @@ class NewsCreateService
     function __construct(
         private News $newsModel,
         private NewsReadService $newsReadService,
+        private NewsSourceCreateService $newsSourceCreateService,
     ) {
     }
 
@@ -36,7 +39,6 @@ class NewsCreateService
             return "GoogleNewaから取得した記事タイトルを、記事とサイト名に分割できませんでした";
         }
         $title  = $array[0];
-        $author = $array[1];
 
         //タイトル中に「ゲーム」「実況」の2語がない場合はエラーを返す
         if (mb_strpos($title, 'ゲーム') === false || mb_strpos($title, '実況') === false) {
@@ -56,14 +58,22 @@ class NewsCreateService
         if (empty($url)) {
             return "リダイレクト先のURLを取得できませんでした";
         }
+        if (is_array($url)) {
+            $url = $url[0];
+        }
+
+        //ニュースソースを作成
+        $news_source = $this->newsSourceCreateService->createNewsSourceWhenNone($array[1], $url);
 
         //DBにデータを入れていく
-        $news = $this->newsModel->create(compact(
-            'title',
-            'author',
-            'url',
-            'published_at',
-        ));
+        $news = $this->newsModel->create([
+            'title' => $title,
+            'news_source_id' => $news_source->id,
+            'author' => '',
+            'url' => $url,
+            'image_url' => $this->getOgImageUrl($url),
+            'published_at' => $published_at,
+        ]);
 
         //失敗したらエラーを返す
         if (is_null($news)) {
@@ -71,6 +81,31 @@ class NewsCreateService
         }
 
         //終了したらnullを返す
+        return null;
+    }
+
+    /**
+     * 与えられた外部urlのog:imageで指定された画像のurlを取得する
+     * 
+     * @param string $url 外部サイトのurl
+     * 
+     * @return ?string og:imageのurl
+     */
+    private function getOgImageUrl(string $url) : ?string
+    {
+        //外部urlのhtmlを取得する
+        $html = HttpRequestLib::getHtmlCurl($url);
+        $dom = new \DOMDocument;
+        @$dom->loadHTML($html);
+        
+        //XPathでmetaタグのog:imageを取得
+        $xpath = new \DOMXPath($dom);
+        $node_image = $xpath->query('//meta[@property="og:image"]/@content');
+        if ($node_image->length > 0) {
+            return $node_image->item(0)->nodeValue;
+        }
+
+        //取得できなかった場合はnullを返す
         return null;
     }
 }
