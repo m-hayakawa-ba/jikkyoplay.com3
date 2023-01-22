@@ -102,7 +102,10 @@ class NewsCreateService
         $xpath = new \DOMXPath($dom);
         $node_image = $xpath->query('//meta[@property="og:image"]/@content');
         if ($node_image->length > 0) {
-            return $node_image->item(0)->nodeValue;
+            $image_url = $node_image->item(0)->nodeValue;
+            if (strlen($image_url) < 250) {
+                return $image_url;
+            }
         }
 
         //取得できなかった場合はnullを返す

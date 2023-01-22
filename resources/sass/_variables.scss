@@ -1,7 +1,16 @@
+//レスポンシブのブレイクポイント
+$bp: 640px;
+
+//PC閲覧時の横幅
+$pc-width: 960px;
+
+//左右の隙間
+$wrap_padding_x: 8px;
 
 //サイト内の色
 $white: #fff;
 $black: #18100c;
 
 //フォントサイズ
+$font-m: 1.6rem;
 $font-s: 1.4rem; 

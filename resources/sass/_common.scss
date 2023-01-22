@@ -3,24 +3,32 @@ html {
     font-size: 10px;
 }
 
-//サイト全体のデザイン
+//サイト全体の基本設定
 body {
     font-family: "Noto Sans JP", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
     font-size: $font-s;
+    text-align: justify;
+    color: $black;
 }
-
-//画像は常に100%
+//画像は常に親要素の100%
 img {
     max-width: 100%;
 }
-
-//aタグの基本動作
+//リンク設定
 a {
-    transition: 0.2s;
+    color: $black;
+    transition: opacity 0.3s, background-color 0.3s;
     text-decoration: none;
     &:hover {
         opacity: 0.8;
     }   
+}
+//各ページのセクションタイトル
+h2 {
+    font-size: 1.6rem;
+    margin-top: 20px;
+    border-left: solid 4px #ff49d9;
+    padding-left: 4px;
 }
 
 // フッターが画面下に張り付くように記述
@@ -29,4 +37,15 @@ a {
     grid-template-rows: auto 1fr auto;
     grid-template-columns: 100%;
     min-height: 100vh;
+}
+
+//サイト全体の本体部分
+.inner {
+    width: 100%;
+    margin: 0 auto;
+    padding-right: $wrap_padding_x;
+    padding-left: $wrap_padding_x;
+    @media screen and (min-width: $bp) {
+        width: $pc-width;
+    }
 }

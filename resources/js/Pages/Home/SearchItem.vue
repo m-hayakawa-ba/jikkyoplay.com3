@@ -50,7 +50,7 @@ export default {
     .search-item-wrap {
         margin: 0 auto;
         padding: 12px 0px;
-        max-width: 1024px;
+        width: 100%;
         text-align: center;
         white-space: nowrap;
         overflow-x: scroll;

@@ -38,4 +38,21 @@ class NewsReadService
         //重複する記事があった場合はtrueを返す
         return $count > 0 ? true : false;
     }
+
+    /**
+     * トップページに表示させる最新ニュースを取得
+     * 
+     * @param int $count 取得する件数
+     * 
+     * @return Collection
+     */
+    public function getNewsAtHome(int $count) : Collection
+    {
+        return $this->newsModel
+            ->with('news_source')
+            ->orderBy('published_at', 'desc')
+            ->where('flag_enabled', 1)
+            ->limit($count)
+            ->get();
+    }
 }

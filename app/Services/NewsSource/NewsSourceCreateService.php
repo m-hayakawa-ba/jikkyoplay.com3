@@ -34,13 +34,10 @@ class NewsSourceCreateService
         //取得できなかった場合はニュースソースを作成する
         if (is_null($news_source)) {
 
-            //faviconのurlを取得する
-            $favicon_url = $this->getFaviconUrl($url);
-
             //ニュースソースを作成する
             $news_source = $this->newsSourceModel->create([
                 'name' => $name,
-                'favicon_url' => $favicon_url ?? '',
+                'favicon_url' => $this->getFaviconUrl($url),
             ]);
         }
 

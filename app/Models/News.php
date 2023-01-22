@@ -28,4 +28,12 @@ class News extends Model
         'created_at',
         'updated_at',
     ];
+
+    /**
+     * リレーションの定義
+     */
+    public function news_source(): object
+    {
+        return $this->belongsTo('App\Models\NewsSource');
+    }
 }

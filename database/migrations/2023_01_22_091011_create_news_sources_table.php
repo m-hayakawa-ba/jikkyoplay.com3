@@ -16,7 +16,7 @@ class CreateNewsSourcesTable extends Migration
         Schema::create('news_sources', function (Blueprint $table) {
             $table->id();
             $table->string('name')->comment('ニュースのソースサイト名');
-            $table->string('favicon_url')->comment('ニュースのソースサイトのファビコンURL');
+            $table->string('favicon_url')->nullable()->comment('ニュースのソースサイトのファビコンURL');
             $table->timestamps();
         });
     }

@@ -3,9 +3,11 @@
         <div class="header-wrap">
 
             <!-- サイトロゴ -->
-            <Link href="/" class="header-logo">
-                <img src="/image/logo.png" :alt="constants.site_title">
-            </Link>
+            <h1 class="header-logo">
+                <Link href="/">
+                    <img src="/image/logo.png" :alt="constants.site_title">
+                </Link>
+            </h1>
 
             <!-- 検索マーク -->
             <div class="header-search">
@@ -44,9 +46,9 @@ export default {
 
 
 <style lang="scss" scoped>
+@import "../../sass/variables";
 
     header {
-        padding: 8px 8px;
         border-bottom: solid 1px #ddd;
         box-shadow: 0px 0px 4px #00000020;
     }
@@ -54,8 +56,9 @@ export default {
         display: grid;
         align-items: center;
         grid-template-columns: auto 42px 42px;
-        max-width: 960px;
+        max-width: $pc-width;
         margin: 0 auto;
+        padding: 8px $wrap_padding_x;
     }
 
     .header-logo {

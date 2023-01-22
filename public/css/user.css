@@ -116,6 +116,8 @@ html {
 body {
   font-family: "Noto Sans JP", "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
   font-size: 1.4rem;
+  text-align: justify;
+  color: #18100c;
 }
 
 img {
@@ -123,11 +125,19 @@ img {
 }
 
 a {
-  transition: 0.2s;
+  color: #18100c;
+  transition: opacity 0.3s, background-color 0.3s;
   text-decoration: none;
 }
 a:hover {
   opacity: 0.8;
+}
+
+h2 {
+  font-size: 1.6rem;
+  margin-top: 20px;
+  border-left: solid 4px #ff49d9;
+  padding-left: 4px;
 }
 
 #app {
@@ -135,4 +145,16 @@ a:hover {
   grid-template-rows: auto 1fr auto;
   grid-template-columns: 100%;
   min-height: 100vh;
+}
+
+.inner {
+  width: 100%;
+  margin: 0 auto;
+  padding-right: 8px;
+  padding-left: 8px;
+}
+@media screen and (min-width: 640px) {
+  .inner {
+    width: 960px;
+  }
 }
