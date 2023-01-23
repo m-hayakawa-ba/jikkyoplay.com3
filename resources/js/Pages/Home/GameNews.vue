@@ -23,13 +23,20 @@
                 </div>
             </div>
         </a>
+
+        <!-- ニュース一覧へのリンク -->
+        <PageLink
+            href="/news"
+            link_name="その他のニュース"
+        />
     </section>
 </template>
 
 
 <script>
-import {usePage, Head} from "@inertiajs/inertia-vue3";
+import {usePage} from "@inertiajs/inertia-vue3";
 import moment from 'moment';
+import PageLink from '../../Components/PageLink.vue';
 export default {
 
     //コンポーネント内で使用する変数
@@ -37,6 +44,11 @@ export default {
         return {
             newses: usePage().props.value.newses,
         };
+    },
+
+    //読み込んだコンポーネント
+    components: {
+        PageLink,
     },
 
     //コンポーネント内で使用するメソッド
@@ -48,7 +60,7 @@ export default {
 
     //初回読み込み時に実行
     mounted() {
-        console.log(this.newses);
+        // console.log(this.newses);
     }
 }
 </script>
@@ -58,9 +70,12 @@ export default {
 @import "../../../sass/variables";
 
     section {
-        padding-left: 8px;
+        margin-top: 4px;
         display: flex;
         flex-wrap: wrap;
+        @media screen and (min-width: $bp) {
+            padding-left: 8px;
+        }
     }
     .news-item {
         margin: 6px 0;
@@ -78,17 +93,17 @@ export default {
         }
     }
     .news-image {
-        width: 40%;
+        width: 45%;
         padding: 4px 4px 4px 8px;
         img {
-            aspect-ratio: 3 / 2;
+            aspect-ratio: 16 / 9;
             object-fit: cover;
             border-radius: 6px;
             box-shadow: 1px 1px 4px #20060654;
         }
     }
     .news-caption {
-        width: 60%;
+        width: 55%;
         padding: 4px 6px 4px 2px;
     }
     .news-text {
@@ -110,7 +125,7 @@ export default {
         font-size: $font-s;
         img {
             display: inline;
-            width: 20px;
+            width: 16px;
             aspect-ratio: 1 / 1;
             object-fit: cover;
             vertical-align: middle;
