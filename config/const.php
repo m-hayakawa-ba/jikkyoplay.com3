@@ -10,7 +10,7 @@ return [
     //動画サイトの種類
     'site' => [
         'youtube' => 1,
-        'nikoniko' => 2,
+        'nicovideo' => 2,
         'openrec' => 3,
     ],
 ];

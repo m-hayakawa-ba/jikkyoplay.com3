@@ -13,6 +13,7 @@ class HomeController extends Controller
      */
     private $max_news_count = 4;    //表示させる最新ニュース
     private $max_ranking_count = 4; //表示させるランキング
+    private $max_program_count = 2; //サイトごとの表示させる新着動画
 
     /**
      * コンストラクタ
@@ -32,12 +33,24 @@ class HomeController extends Controller
         $newses = $this->newsReadService->getNewsAtHome($this->max_news_count);
 
         //今週のランキングを取得
-        $programs = $this->programReadService->getRanking($this->max_ranking_count);
+        $rankings = $this->programReadService->getRankings($this->max_ranking_count);
+
+        //新着動画を取得
+        $youtube_programs = $this->programReadService->getLatestProgramsEverySite(
+            $this->max_program_count,
+            config('const.site.youtube'),
+        );
+        $nicovideo_programs = $this->programReadService->getLatestProgramsEverySite(
+            $this->max_program_count,
+            config('const.site.nicovideo'),
+        );
 
         //viewへ遷移
         return Inertia::render('Home/Index', compact(
             'newses',
-            'programs',
+            'rankings',
+            'youtube_programs',
+            'nicovideo_programs',
         ));
     }
 }
