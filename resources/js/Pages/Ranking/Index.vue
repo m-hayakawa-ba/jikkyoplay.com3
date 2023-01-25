@@ -1,3 +1,3 @@
 <template>
-    news
+    ranking
 </template>
