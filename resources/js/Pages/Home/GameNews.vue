@@ -98,6 +98,7 @@ export default {
         img {
             aspect-ratio: 16 / 9;
             object-fit: cover;
+            width: 100%;
             border-radius: 6px;
             box-shadow: 1px 1px 4px #20060654;
         }
