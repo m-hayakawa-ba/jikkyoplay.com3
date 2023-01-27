@@ -30,22 +30,13 @@
         class="program-item"
         :href="'/program/' + program.id"
     >
-        <div class="program-image">
-            <img
-                :src="program.image_url"
-                class="program-thumbnail"
-            />
-            <img
-                v-if="program.site_id == constants.site.youtube"
-                src="/image/logo_youtube.webp"
-                class="program-site-icon"
-            >
-            <img
-                v-if="program.site_id == constants.site.nicovideo"
-                src="/image/logo_nicovideo.webp"
-                class="program-site-icon"
-            >
-        </div>
+        <!-- 番組のサムネイル -->
+        <ProgramThumbnail
+            :thumbnail_url="program.image_url"
+            :site_id="program.site_id"
+            style="width: 45%;"
+        />
+        
         <div class="program-caption">
             <div class="program-text">
                 {{ program.title }}
@@ -66,8 +57,9 @@
 
 
 <script>
-import {usePage, Link} from "@inertiajs/inertia-vue3";
+import {Link} from "@inertiajs/inertia-vue3";
 import moment from 'moment';
+import ProgramThumbnail from "../Components/ProgramThumbnail.vue";
 export default {
 
     //呼び出し元から渡された引数
@@ -79,15 +71,7 @@ export default {
     //読み込んだコンポーネント
     components: {
         Link,
-    },
-
-    //返り値が固定の関数
-    computed: {
-
-        //laravel側から定数を取得する
-        constants() {
-            return this.$page.props.const;
-        },
+        ProgramThumbnail,
     },
 
     //コンポーネント内で使用するメソッド
@@ -97,6 +81,10 @@ export default {
         }
     },
 
+    //初回読み込み時に実行
+    mounted() {
+        // console.log(this.program);
+    }
 }
 </script>
 
@@ -141,24 +129,6 @@ export default {
             background-color: #d4f9ff;
             border-radius: 8px;
         }
-    }
-    .program-image {
-        position: relative;
-        width: 45%;
-        padding: 0 4px 4px 8px;
-    }
-    .program-thumbnail {
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
-        width: 100%;
-        border-radius: 6px;
-        box-shadow: 1px 1px 4px #20060654;
-    }
-    .program-site-icon {
-        position: absolute;
-        width: 22%;
-        right: 3%;
-        bottom: 3%;
     }
     .program-caption {
         width: 55%;

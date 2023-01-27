@@ -15,7 +15,7 @@ class HomeController extends Controller
     private $max_news_count = 4;    //表示させる最新ニュース
     private $max_ranking_count = 4; //表示させるランキング
     private $max_program_count = 2; //サイトごとの表示させる新着動画
-    private $max_review_count = 4;  //表示させるレビュー数
+    private $max_review_count = 2;  //表示させるレビュー数
 
     /**
      * コンストラクタ

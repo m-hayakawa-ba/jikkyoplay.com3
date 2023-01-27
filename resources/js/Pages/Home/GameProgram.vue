@@ -51,6 +51,11 @@ export default {
         PageLink,
     },
 
+    //初回読み込み時に実行
+    mounted() {
+        // console.log(this.nicovideo_programs);
+    }
+
 }
 </script>
 
