@@ -53,7 +53,7 @@ export default {
 
     .caption-wrap {
         width: 100%;
-        padding: 4px 6px 4px 2px;
+        padding: 4px 4px 4px 8px;
     }
     .caption-title {
         font-weight: bold;

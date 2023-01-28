@@ -121,7 +121,7 @@ body {
 }
 
 main {
-  padding-top: 36px;
+  padding-top: 43px;
 }
 
 img {
@@ -137,16 +137,9 @@ a:hover {
   opacity: 0.8;
 }
 
-h2 {
-  font-size: 1.6rem;
-  margin-top: 20px;
-  border-left: solid 4px #ff49d9;
-  padding-left: 4px;
-}
-
 #app {
   display: grid;
-  grid-template-rows: auto 1fr auto;
+  grid-template-rows: 1fr auto;
   grid-template-columns: 100%;
   min-height: 100vh;
 }

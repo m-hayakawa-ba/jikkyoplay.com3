@@ -1,34 +1,30 @@
 <template>
-    <h2>新着実況プレイ動画</h2>
-    <section>
 
-        <!-- 新着動画一覧 -->
-        <div
-            v-for="program in youtube_programs"
-            class="program-wrap"
-        >
-            <ProgramWrap
-                :rank="null"
-                :program="program"
-            />   
-        </div>
-        <div
-            v-for="program in nicovideo_programs"
-            class="program-wrap"
-        >
-            <ProgramWrap
-                :rank="null"
-                :program="program"
-            />   
-        </div>
+    <!-- 新着動画一覧 -->
+    <div
+        v-for="program in youtube_programs"
+        class="program-wrap"
+    >
+        <ProgramWrap
+            :rank="null"
+            :program="program"
+        />   
+    </div>
+    <div
+        v-for="program in nicovideo_programs"
+        class="program-wrap"
+    >
+        <ProgramWrap
+            :rank="null"
+            :program="program"
+        />   
+    </div>
 
-        <!-- 動画一覧へのリンク -->
-        <PageLink
-            href="/ranking"
-            link_name="すべての動画を見る"
-        />
-
-    </section>
+    <!-- 動画一覧へのリンク -->
+    <PageLink
+        href="/ranking"
+        link_name="すべての動画を見る"
+    />
 </template>
 
 <script>
@@ -62,21 +58,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-
-    section {
-        margin-top: 4px;
-        display: flex;
-        flex-wrap: wrap;
-        @media screen and (min-width: $bp) {
-            padding-left: 8px;
-        }
-    }
     .program-wrap {
         position: relative;
         margin: 8px 0 0;
         width: 100%;
         @media screen and (min-width: $bp) {
-            width: 50%;
+            width: 49%;
         }
     }
 

@@ -68,6 +68,8 @@ export default {
         }
     }
     .view-count {
+        position: relative;
+        top: 2px;
         font-weight: bold;
         color: #401409fc;
         span {

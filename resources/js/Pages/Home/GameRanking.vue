@@ -1,24 +1,21 @@
 <template>
-    <h2>今週の実況動画ランキング</h2>
-    <section>
 
-        <!-- ランキング一覧 -->
-        <div
-            v-for="(ranking, index) in rankings"
-            class="ranking-wrap"
-        >
-            <ProgramPart
-                :rank="index + 1"
-                :program="ranking"
-            />   
-        </div>
+    <!-- ランキング一覧 -->
+    <div
+        v-for="(ranking, index) in rankings"
+        class="ranking-wrap"
+    >
+        <ProgramPart
+            :rank="index + 1"
+            :program="ranking"
+        />   
+    </div>
 
-        <!-- ランキング一覧へのリンク -->
-        <PageLink
-            href="/ranking"
-            link_name="すべてのランキング"
-        />
-    </section>
+    <!-- ランキング一覧へのリンク -->
+    <PageLink
+        href="/ranking"
+        link_name="すべてのランキング"
+    />
 </template>
 
 
@@ -50,21 +47,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-
-    section {
-        margin-top: 4px;
-        display: flex;
-        flex-wrap: wrap;
-        @media screen and (min-width: $bp) {
-            padding-left: 8px;
-        }
-    }
     .ranking-wrap {
         position: relative;
         margin: 8px 0 0;
         width: 100%;
         @media screen and (min-width: $bp) {
-            width: 50%;
+            width: 49%;
         }
     }
 

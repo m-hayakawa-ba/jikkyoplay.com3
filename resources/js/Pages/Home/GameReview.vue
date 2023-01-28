@@ -1,54 +1,51 @@
 <template>
-    <h2>おすすめ動画レビュー</h2>
-    <section>
 
-        <!-- レビュー一覧 -->
-        <div
-            v-for="review in reviews"
-            class="review-wrap"
+    <!-- レビュー一覧 -->
+    <div
+        v-for="review in reviews"
+        class="review-wrap"
+    >
+
+        <!-- 再生回数表示 -->
+        <ProgramViewCount
+            :rank="null"
+            :view_count="review.view_count"
+        />
+
+        <Link
+            class="review-item"
+            :href="'/program/' + review.program_id"
         >
 
-            <!-- 再生回数表示 -->
-            <ProgramViewCount
-                :rank="null"
-                :view_count="review.view_count"
+            <!-- 番組のサムネイル -->
+            <ProgramThumbnail
+                :thumbnail_url="review.image_url"
+                :site_id="review.site_id"
+                style="width: 45%;"
             />
 
-            <Link
-                class="review-item"
-                :href="'/program/' + review.program_id"
-            >
+            <!-- 番組の説明文 -->
+            <ProgramCaption
+                :title="review.title"
+                :creater_name="review.creater_name"
+                :creater_icon_url="review.user_icon_url"
+                :published_at="review.published_at"
+                style="width: 55%;"
+            />
 
-                <!-- 番組のサムネイル -->
-                <ProgramThumbnail
-                    :thumbnail_url="review.image_url"
-                    :site_id="review.site_id"
-                    style="width: 45%;"
-                />
+            <!-- レビュー本文 -->
+            <div
+                class="review-detail"
+                v-html="review.detail"
+            ></div>
+        </Link>
+    </div>
 
-                <!-- 番組の説明文 -->
-                <ProgramCaption
-                    :title="review.title"
-                    :creater_name="review.creater_name"
-                    :creater_icon_url="review.user_icon_url"
-                    :published_at="review.published_at"
-                    style="width: 55%;"
-                />
-
-                <!-- レビュー本文 -->
-                <div
-                    class="review-detail"
-                    v-html="review.detail"
-                ></div>
-            </Link>
-        </div>
-
-        <!-- レビュー一覧へのリンク -->
-        <PageLink
-            href="/review"
-            link_name="すべてのレビューを見る"
-        />
-    </section>
+    <!-- レビュー一覧へのリンク -->
+    <PageLink
+        href="/review"
+        link_name="すべてのレビューを見る"
+    />
 </template>
 
 
@@ -86,33 +83,32 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-
-    section {
-        margin-top: 4px;
-        display: flex;
-        flex-wrap: wrap;
-        @media screen and (min-width: $bp) {
-            padding-left: 8px;
-        }
-    }
     .review-wrap {
         position: relative;
         margin: 8px 0 0;
         width: 100%;
         @media screen and (min-width: $bp) {
-            width: 50%;
+            width: 49%;
         }
     }
     .review-item {
-        margin: 0 0 6px;
+        margin: 2px 0;
+        padding: 4px;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
         width: 100%;
         cursor: pointer;
+        background-color: #fff;
+        border: solid 1px #fff0f0;
+        border-radius: 4px;
+        box-shadow: 1px 1px 2px #21003421;
         &:hover {
             background-color: #d4f9ff;
             border-radius: 8px;
+        }
+        @media screen and (min-width: $bp) {
+            height: 196px;
         }
     }
     .program-view-count {

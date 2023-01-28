@@ -55,14 +55,14 @@ export default {
     .thumbnail-wrap {
         position: relative;
         width: 100%;
-        padding: 0 4px 4px 8px;
+        padding: 2px;
     }
     .thumbnail-img {
         aspect-ratio: 16 / 9;
         object-fit: cover;
         width: 100%;
-        border-radius: 6px;
-        box-shadow: 1px 1px 4px #20060654;
+        border-radius: 2px;
+        box-shadow: 1px 1px 4px rgb(32 6 6 / 12%);
     }
     .thumbnail-icon {
         position: absolute;

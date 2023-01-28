@@ -64,11 +64,16 @@ export default {
 @import "@/sass/variables";
 
     .program-item {
-        margin: 0 0 6px;
+        margin: 0;
+        padding: 4px;
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
         width: 100%;
+        background-color: #fff;
+        border: solid 1px #fff0f0;
+        border-radius: 4px;
+        box-shadow: 1px 1px 2px #21003421;
         cursor: pointer;
         &:hover {
             background-color: #d4f9ff;

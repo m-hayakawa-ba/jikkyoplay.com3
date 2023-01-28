@@ -1,35 +1,32 @@
 <template>
-    <h2>ゲーム実況ニュース</h2>
-    <section>
-        <a
-            v-for="news in newses"
-            class="news-item"
-            :href="news.url"
-            target="_blank"
-        >
-            <div class="news-image">
-                <img :src="news.image_url" />
+    <a
+        v-for="news in newses"
+        class="news-item"
+        :href="news.url"
+        target="_blank"
+    >
+        <div class="news-image">
+            <img :src="news.image_url" />
+        </div>
+        <div class="news-caption">
+            <div class="news-text">
+                {{ news.title }}
             </div>
-            <div class="news-caption">
-                <div class="news-text">
-                    {{ news.title }}
-                </div>
-                <div class="news-published-at">
-                    {{ format(news.published_at) }}
-                </div>
-                <div class="news-source">
-                    <img v-if="news.news_source.favicon_url" :src="news.news_source.favicon_url" :alt="news.news_source.name">
-                    <span>{{ news.news_source.name }}</span>
-                </div>
+            <div class="news-published-at">
+                {{ format(news.published_at) }}
             </div>
-        </a>
+            <div class="news-source">
+                <img v-if="news.news_source.favicon_url" :src="news.news_source.favicon_url" :alt="news.news_source.name">
+                <span>{{ news.news_source.name }}</span>
+            </div>
+        </div>
+    </a>
 
-        <!-- ニュース一覧へのリンク -->
-        <PageLink
-            href="/news"
-            link_name="その他のニュース"
-        />
-    </section>
+    <!-- ニュース一覧へのリンク -->
+    <PageLink
+        href="/news"
+        link_name="その他のニュース"
+    />
 </template>
 
 
@@ -68,24 +65,20 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../sass/variables";
-
-    section {
-        margin-top: 4px;
-        display: flex;
-        flex-wrap: wrap;
-        @media screen and (min-width: $bp) {
-            padding-left: 8px;
-        }
-    }
     .news-item {
-        margin: 6px 0;
+        margin: 2px 0;
+        padding: 4px;
+        width: 100%;
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
-        width: 100%;
+        background-color: #fff;
+        border: solid 1px #fff0f0;
+        border-radius: 4px;
+        box-shadow: 1px 1px 2px #21003421;
         cursor: pointer;
         @media screen and (min-width: $bp) {
-            width: 50%;
+            width: 49%;
         }
         &:hover {
             background-color: #d4f9ff;
@@ -94,18 +87,18 @@ export default {
     }
     .news-image {
         width: 45%;
-        padding: 4px 4px 4px 8px;
+        padding: 2px;
         img {
             aspect-ratio: 16 / 9;
             object-fit: cover;
             width: 100%;
-            border-radius: 6px;
-            box-shadow: 1px 1px 4px #20060654;
+            border-radius: 2px;
+            box-shadow: 1px 1px 4px rgb(32 6 6 / 12%);
         }
     }
     .news-caption {
         width: 55%;
-        padding: 4px 6px 4px 2px;
+        padding: 4px 4px 4px 8px;
     }
     .news-text {
         font-weight: bold;
