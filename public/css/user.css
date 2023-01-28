@@ -120,6 +120,10 @@ body {
   color: #18100c;
 }
 
+main {
+  padding-top: 36px;
+}
+
 img {
   max-width: 100%;
 }

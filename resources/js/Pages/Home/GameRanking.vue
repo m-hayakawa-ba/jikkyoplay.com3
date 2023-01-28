@@ -24,8 +24,8 @@
 
 <script>
 import {usePage} from "@inertiajs/inertia-vue3";
-import ProgramPart from '../../Components/ProgramPart.vue';
-import PageLink from '../../Components/PageLink.vue';
+import ProgramPart from '@/js/Components/ProgramPart/ProgramWrap.vue';
+import PageLink from '@/js/Components/PageLink.vue';
 export default {
 
     //コンポーネント内で使用する変数
@@ -49,7 +49,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../../../sass/variables";
+@import "@/sass/variables";
 
     section {
         margin-top: 4px;

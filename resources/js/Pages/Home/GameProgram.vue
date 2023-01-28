@@ -7,7 +7,7 @@
             v-for="program in youtube_programs"
             class="program-wrap"
         >
-            <ProgramPart
+            <ProgramWrap
                 :rank="null"
                 :program="program"
             />   
@@ -16,7 +16,7 @@
             v-for="program in nicovideo_programs"
             class="program-wrap"
         >
-            <ProgramPart
+            <ProgramWrap
                 :rank="null"
                 :program="program"
             />   
@@ -33,8 +33,8 @@
 
 <script>
 import {usePage} from "@inertiajs/inertia-vue3";
-import ProgramPart from '../../Components/ProgramPart.vue';
-import PageLink from '../../Components/PageLink.vue';
+import ProgramWrap from '@/js/Components/ProgramPart/ProgramWrap.vue';
+import PageLink from '@/js/Components/PageLink.vue';
 export default {
 
     //コンポーネント内で使用する変数
@@ -47,7 +47,7 @@ export default {
 
     //読み込んだコンポーネント
     components: {
-        ProgramPart,
+        ProgramWrap,
         PageLink,
     },
 
@@ -61,7 +61,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../../../sass/variables";
+@import "@/sass/variables";
 
     section {
         margin-top: 4px;

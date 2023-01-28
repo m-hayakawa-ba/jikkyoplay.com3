@@ -10,6 +10,10 @@ body {
     text-align: justify;
     color: $black;
 }
+// サイトの本体部分
+main {
+    padding-top: 36px;
+}
 //画像は常に親要素の100%
 img {
     max-width: 100%;
@@ -39,7 +43,7 @@ h2 {
     min-height: 100vh;
 }
 
-//サイト全体の本体部分
+//サイト各ページの本体部分
 .inner {
     width: 100%;
     margin: 0 auto;

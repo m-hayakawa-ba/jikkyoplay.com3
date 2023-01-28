@@ -49,7 +49,7 @@ export default {
 
     .search-item-wrap {
         margin: 0 auto;
-        padding: 12px 0px;
+        padding: 24px 0px 16px;
         width: 100%;
         text-align: center;
         white-space: nowrap;

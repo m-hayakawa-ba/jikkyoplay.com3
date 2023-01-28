@@ -49,6 +49,10 @@ export default {
 @import "../../sass/variables";
 
     header {
+        position: fixed;
+        width: 100%;
+        background-color: #ffffffe0;
+        z-index: 10;
         border-bottom: solid 1px #ddd;
         box-shadow: 0px 0px 4px #00000020;
     }

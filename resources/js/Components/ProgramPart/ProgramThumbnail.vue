@@ -1,24 +1,24 @@
 <template>
-    <div class="program-image">
+    <div class="thumbnail-wrap">
 
         <!-- 画像本体 -->
         <img
             :src="thumbnail_url"
-            class="program-thumbnail"
+            class="thumbnail-img"
         />
 
         <!-- YouTubeのアイコン -->
         <img
             v-if="site_id == constants.site.youtube"
             src="/image/logo_youtube.webp"
-            class="program-site-icon"
+            class="thumbnail-icon"
         >
 
         <!-- ニコニコ動画のアイコン -->
         <img
             v-if="site_id == constants.site.nicovideo"
             src="/image/logo_nicovideo.webp"
-            class="program-site-icon"
+            class="thumbnail-icon"
         >
     </div>
 </template>
@@ -51,20 +51,20 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../../sass/variables";
-    .program-image {
+@import "@/sass/variables";
+    .thumbnail-wrap {
         position: relative;
         width: 100%;
         padding: 0 4px 4px 8px;
     }
-    .program-thumbnail {
+    .thumbnail-img {
         aspect-ratio: 16 / 9;
         object-fit: cover;
         width: 100%;
         border-radius: 6px;
         box-shadow: 1px 1px 4px #20060654;
     }
-    .program-site-icon {
+    .thumbnail-icon {
         position: absolute;
         width: 22%;
         right: 3%;

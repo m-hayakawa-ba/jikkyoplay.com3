@@ -8,12 +8,11 @@
             class="review-wrap"
         >
 
-            <div
-                class="program-view-count"
-                style="padding-left: 8px;"
-            >
-                <span>{{ review.view_count.toLocaleString() }}</span> 回再生
-            </div>
+            <!-- 再生回数表示 -->
+            <ProgramViewCount
+                :rank="null"
+                :view_count="review.view_count"
+            />
 
             <Link
                 class="review-item"
@@ -24,31 +23,23 @@
                 <ProgramThumbnail
                     :thumbnail_url="review.image_url"
                     :site_id="review.site_id"
-                    class="program_thumbnail"
+                    style="width: 45%;"
                 />
 
                 <!-- 番組の説明文 -->
-                <div class="program-caption">
-                    <div class="program-text">
-                        {{ review.title }}
-                    </div>
-                    <div class="creater-data">
-                        <div class="creater-icon">
-                            <img :src="review.user_icon_url" :alt="review.creater_name">
-                        </div>
-                        <div class="program-detail">
-                            {{ review.creater_name }}<br>
-                            {{ format(review.published_at) }} 投稿<br>
-                        </div>
-                    </div>
-                </div>
+                <ProgramCaption
+                    :title="review.title"
+                    :creater_name="review.creater_name"
+                    :creater_icon_url="review.user_icon_url"
+                    :published_at="review.published_at"
+                    style="width: 55%;"
+                />
 
                 <!-- レビュー本文 -->
                 <div
                     class="review-detail"
                     v-html="review.detail"
                 ></div>
-
             </Link>
         </div>
 
@@ -63,9 +54,10 @@
 
 <script>
 import { usePage, Link } from "@inertiajs/inertia-vue3";
-import moment from 'moment';
-import PageLink from '../../Components/PageLink.vue';
-import ProgramThumbnail from "../../Components/ProgramThumbnail.vue";
+import PageLink from '@/js/Components/PageLink.vue';
+import ProgramViewCount from "@/js/Components/ProgramPart/ProgramViewCount.vue";
+import ProgramThumbnail from "@/js/Components/ProgramPart/ProgramThumbnail.vue";
+import ProgramCaption from "@/js/Components/ProgramPart/ProgramCaption.vue";
 export default {
 
     //コンポーネント内で使用する変数
@@ -79,14 +71,9 @@ export default {
     components: {
         Link,
         PageLink,
+        ProgramViewCount,
         ProgramThumbnail,
-    },
-
-    //コンポーネント内で使用するメソッド
-    methods: {
-        format(date) {
-            return moment(date).format('YYYY年M月D日')
-        }
+        ProgramCaption,
     },
 
     //初回読み込み時に実行
@@ -98,7 +85,7 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../../../sass/variables";
+@import "@/sass/variables";
 
     section {
         margin-top: 4px;
@@ -134,36 +121,6 @@ export default {
         span {
             font-size: $font-l;
         }
-    }
-    .program_thumbnail {
-        width: 45%;
-    }
-    .program-caption {
-        width: 55%;
-        padding: 4px 6px 4px 2px;
-    }
-    .program-text {
-        font-weight: bold;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
-    }
-    .creater-data {
-        display: flex;
-        align-items: center;
-    }
-    .creater-icon {
-        width: 38px;
-        border-radius: 50%;
-        overflow: hidden;
-        span {
-            width: 58px;
-        }
-    }
-    .program-detail {
-        margin-left: 8px;
-        font-size: $font-s;
     }
     .review-detail {
         padding: 4px 8px;
