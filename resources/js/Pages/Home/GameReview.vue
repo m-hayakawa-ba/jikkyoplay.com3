@@ -78,7 +78,7 @@ export default {
 
     //初回読み込み時に実行
     mounted() {
-        console.log(this.reviews);
+        // console.log(this.reviews);
     }
 }
 </script>

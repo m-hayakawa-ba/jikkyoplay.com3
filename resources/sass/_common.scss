@@ -21,7 +21,11 @@ img {
 //リンク設定
 a {
     color: $black;
-    transition: opacity 0.3s, background-color 0.3s;
+    transition:
+        color 0.3s,
+        opacity 0.3s,
+        background-color 0.3s,
+        transform 0.3s;
     text-decoration: none;
     &:hover {
         opacity: 0.8;

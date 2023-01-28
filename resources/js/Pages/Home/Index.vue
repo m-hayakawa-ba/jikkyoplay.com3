@@ -18,12 +18,16 @@
         <!-- おすすめ動画レビュー -->
         <GameReview />
 
+        <!-- 人気の検索ワード -->
+        <SearchWord />
+
     </div>
 
 </template>
 
 <script>
 import SearchItem from "./SearchItem.vue";
+import SearchWord from "./SearchWord.vue";
 import GameNews from "./GameNews.vue";
 import GameRanking from "./GameRanking.vue";
 import GameProgram from "./GameProgram.vue";
@@ -33,6 +37,7 @@ export default {
     //読み込んだコンポーネント
     components: {
         SearchItem,
+        SearchWord,
         GameNews,
         GameRanking,
         GameProgram,

@@ -69,6 +69,12 @@ export default {
         border-color: #626262;
         background-color: #ffffff;
         box-shadow: 1px 1px 1px #3c3c3c5e;
+        &:hover {
+            background-color: #4f70ff;
+            border-color: #4f70ff;
+            color: #fff;
+            transform: scale(1.2);
+        }
     }
 
 </style>

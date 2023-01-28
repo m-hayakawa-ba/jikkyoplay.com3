@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\News\NewsReadService;
 use App\Services\Program\ProgramReadService;
 use App\Services\Review\ReviewReadService;
+use App\Services\SearchWord\SearchWordReadService;
 use Inertia\Inertia;
 
 class HomeController extends Controller
@@ -12,10 +13,12 @@ class HomeController extends Controller
     /**
      * 定数定義
      */
-    private $max_news_count = 4;    //表示させる最新ニュース
-    private $max_ranking_count = 4; //表示させるランキング
-    private $max_program_count = 2; //サイトごとの表示させる新着動画
-    private $max_review_count = 2;  //表示させるレビュー数
+    private $max_news_count     = 4;          //表示させる最新ニュース
+    private $max_ranking_count  = 4;          //表示させるランキング
+    private $max_program_count  = 2;          //サイトごとの表示させる新着動画
+    private $max_review_count   = 2;          //表示させるレビュー数
+    private $max_search_word    = 20;         //表示させる検索ワードの数
+    private $period_search_word = '-1 year';  //表示させる検索ワードの集計期間
 
     /**
      * コンストラクタ
@@ -24,6 +27,7 @@ class HomeController extends Controller
         private NewsReadService $newsReadService,
         private ProgramReadService $programReadService,
         private ReviewReadService $reviewReadService,
+        private SearchWordReadService $searchWordReadService,
     ){
     }
 
@@ -33,10 +37,14 @@ class HomeController extends Controller
     public function index()
     {
         //最新ニュースを取得
-        $newses = $this->newsReadService->getNewsAtHome($this->max_news_count);
+        $newses = $this->newsReadService->getNewsAtHome(
+            $this->max_news_count
+        );
 
         //今週のランキングを取得
-        $rankings = $this->programReadService->getRankings($this->max_ranking_count);
+        $rankings = $this->programReadService->getRankings(
+            $this->max_ranking_count
+        );
 
         //新着動画を取得
         $youtube_programs = $this->programReadService->getLatestProgramsEverySite(
@@ -49,7 +57,15 @@ class HomeController extends Controller
         );
 
         //おすすめレビューを取得
-        $reviews = $this->reviewReadService->getReviews($this->max_review_count);
+        $reviews = $this->reviewReadService->getReviews(
+            $this->max_review_count
+        );
+
+        //人気の検索ワードを取得
+        $search_words = $this->searchWordReadService->getSearchWords(
+            $this->max_search_word,
+            $this->period_search_word,
+        );
 
         //viewへ遷移
         return Inertia::render('Home/Index', compact(
@@ -58,6 +74,7 @@ class HomeController extends Controller
             'youtube_programs',
             'nicovideo_programs',
             'reviews',
+            'search_words',
         ));
     }
 }
