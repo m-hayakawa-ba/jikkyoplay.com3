@@ -60,6 +60,7 @@ export default {
             left: 50%;
             font-size: $font-l;
             font-weight: bold;
+            white-space: nowrap;
             color: #462107;
             transform: translateX(-50%);
             span {

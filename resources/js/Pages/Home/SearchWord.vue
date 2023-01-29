@@ -30,7 +30,7 @@ export default {
 
     //初回読み込み時に実行
     mounted() {
-        console.log(this.search_words);
+        // console.log(this.search_words);
     }
 
 }
@@ -41,7 +41,7 @@ export default {
 @import "@/sass/variables";
 
     section {
-        margin: 40px 0 60px;
+        margin: 40px 0 24px;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;

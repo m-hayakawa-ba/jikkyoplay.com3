@@ -1,6 +1,8 @@
 //最上位htmlの設定
 html {
     font-size: 10px;
+    scroll-behavior: smooth;
+    scroll-padding-top: 48px;
 }
 
 //サイト全体の基本設定
@@ -12,7 +14,10 @@ body {
 }
 // サイトの本体部分
 main {
-    padding-top: 43px;
+    position: relative;
+    width: 1160px;
+    max-width: 100%;
+    margin: 0 auto;
 }
 //画像は常に親要素の100%
 img {
