@@ -40,6 +40,7 @@ export default {
 
     //初回読み込み時に実行
     mounted() {
+        console.log();
     }
 }
 </script>

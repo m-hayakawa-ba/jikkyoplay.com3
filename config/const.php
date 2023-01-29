@@ -13,4 +13,13 @@ return [
         'nicovideo' => 2,
         'openrec' => 3,
     ],
+
+    //動画の音声の種類
+    'voice' => [
+        'male'     => 1,
+        'female'   => 2,
+        'vocaloid' => 3,
+        'other'    => 4,
+        'none'     => 5,
+    ],
 ];

@@ -113,7 +113,7 @@ export default {
             {name: '検索ワード', id: "game-word",    pos: 0},
         ];
 
-        console.log(this.anker);
+        // console.log(this.anker);
     }
 };
 </script>

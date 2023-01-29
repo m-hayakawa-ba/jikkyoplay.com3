@@ -27,13 +27,13 @@ class RankingController extends Controller
     public function index()
     {
         //ランキング一覧を取得
-        $rankings = $this->programReadService->getRankings(
-            $this->max_ranking_count
+        $total_rankings = $this->programReadService->getRankings(
+            $this->max_ranking_count,
         );
 
         //viewへ遷移
         return Inertia::render('Ranking/Index', compact(
-            'rankings'
+            'total_rankings'
         ));
     }
 }

@@ -17,7 +17,7 @@
         <!-- ランキング一覧 -->
         <section>
             <div
-                v-for="(ranking, index) in rankings"
+                v-for="(ranking, index) in total_rankings"
                 class="ranking-wrap"
             >
                 <ProgramPart
@@ -45,7 +45,7 @@ export default {
     //コンポーネント内で使用する変数
     data() {
         return {
-            rankings: usePage().props.value.rankings,
+            total_rankings: usePage().props.value.total_rankings,
         };
     },
 };
