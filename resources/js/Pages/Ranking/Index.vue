@@ -45,9 +45,19 @@ export default {
     //コンポーネント内で使用する変数
     data() {
         return {
-            total_rankings: usePage().props.value.total_rankings,
+            total_rankings:   usePage().props.value.total_rankings,
+            creater_rankings: usePage().props.value.creater_rankings,
+            male_rankings:    usePage().props.value.male_rankings,
+            female_rankings:  usePage().props.value.female_rankings,
+            horror_rankings:  usePage().props.value.horror_rankings,
+            retro_rankings:   usePage().props.value.retro_rankings,
         };
     },
+
+    //初回読み込み時に実行
+    mounted() {
+        console.log(this.retro_rankings);
+    }
 };
 </script>
 

@@ -20104,7 +20104,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   //初回読み込み時に実行
   mounted: function mounted() {
-    console.log();
+    // console.log();
   }
 });
 
@@ -20314,8 +20314,17 @@ __webpack_require__.r(__webpack_exports__);
   //コンポーネント内で使用する変数
   data: function data() {
     return {
-      total_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.total_rankings
+      total_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.total_rankings,
+      creater_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.creater_rankings,
+      male_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.male_rankings,
+      female_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.female_rankings,
+      horror_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.horror_rankings,
+      retro_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.retro_rankings
     };
+  },
+  //初回読み込み時に実行
+  mounted: function mounted() {
+    console.log(this.retro_rankings);
   }
 });
 

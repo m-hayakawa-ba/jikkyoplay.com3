@@ -22,4 +22,23 @@ return [
         'other'    => 4,
         'none'     => 5,
     ],
+
+    //ゲームハード
+    'hard' => [
+        'famicom'           => 1,
+        'disk_system'       => 2,
+        'super_famicon'     => 3,
+        
+        'mega_drive'        => 19,
+
+        'pc_engine'         => 22,
+
+        'game_boy'          => 31,
+        'game_boy_color'    => 32,
+        'virtual_boy'       => 33,
+        'game_boy_advance'  => 34,
+
+        'wonder_swan'       => 39,
+        'game_gear'         => 40,
+    ],
 ];

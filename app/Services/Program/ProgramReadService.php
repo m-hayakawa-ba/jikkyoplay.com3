@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\DB;
 
 class ProgramReadService
 {
-
     /**
      * コンストラクタ
      */
@@ -21,30 +20,44 @@ class ProgramReadService
      * 今週の動画ランキングを取得
      * 
      * @param int $count 取得する件数
-     * @param string $where 絞り込み条件
+     * @param string $count 取得する期間（strtotimeに渡せる形式で）
+     * @param string $period 絞り込み条件
      *  'total'     総合ランキング
      *  'male'      男性実況者ランキング
      *  'female'    女性実況者ランキング
+     *  'horror'    ホラーゲームランキング
      *  'retro'     レトロゲームランキング
      * 
      * @return Collection
      */
-    public function getRankings(int $count, string $where = 'total') : Collection
+    public function getRankings(int $count, string $period, string $where = 'total') : Collection
     {
-        
         //検索条件を設定
         $programs = match($where) {
             'male'   => $this->programModel->where('programs.voice_id', config('const.male')),
             'female' => $this->programModel->where('programs.voice_id', config('const.female')),
-            'retro'  => $this->programModel->whereIn('games.hard_id', [
-                    
+            'horror' => $this->programModel->where('programs.title', 'like', '%ホラー%'),
+            'retro'  => $this->programModel
+                ->join('games', 'programs.game_id', '=', 'games.id')
+                ->whereIn('games.hard_id', [
+                    config('const.hard.famicom'),
+                    config('const.hard.disk_system'),
+                    config('const.hard.super_famicon'),
+                    config('const.hard.mega_drive'),
+                    config('const.hard.pc_engine'),
+                    config('const.hard.game_boy'),
+                    config('const.hard.game_boy_color'),
+                    config('const.hard.virtual_boy'),
+                    config('const.hard.game_boy_advance'),
+                    config('const.hard.wonder_swan'),
+                    config('const.hard.game_gear'),
                 ]),
             default  => $this->programModel,
         };
 
         $programs = $programs->orderBy('view_count', 'DESC')
             ->SelectIndex()
-            ->where('published_at', '>=', date("Y-m-d H:i:s",strtotime("-1 year")))
+            ->where('published_at', '>=', date("Y-m-d H:i:s", strtotime($period)))
             ->limit($count)
             ->get();
         
