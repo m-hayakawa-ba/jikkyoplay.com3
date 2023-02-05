@@ -22,15 +22,11 @@
             </a>
             <a href="#creater-ranking" class="page-anker-link">
                 <img src="/icon/crown.svg">
-                実況者ランキング
-            </a>
-            <a href="#male-ranking" class="page-anker-link">
-                <img src="/icon/crown.svg">
-                男性実況動画ランキング
+                人気実況者ランキング
             </a>
             <a href="#female-ranking" class="page-anker-link">
                 <img src="/icon/crown.svg">
-                女性実況動画ランキング
+                女性実況ランキング
             </a>
             <a href="#horror-ranking" class="page-anker-link">
                 <img src="/icon/crown.svg">
@@ -42,11 +38,12 @@
             </a>
         </div>
         
-        <!-- ランキング一覧 -->
-        <section>
+        <!-- 総合ランキング -->
+        <section id="total-ranking">
+
             <RankingBanner
-                image_url="/image/banner/ranking_female.jpg"
-                title="女性実況動画ランキング"
+                image_url="/image/banner/ranking_total.jpg"
+                title="総合ランキング"
             />
             <div
                 v-for="(ranking, index) in total_rankings"
@@ -58,8 +55,83 @@
                 />   
             </div>
         </section>
+        
+        <!-- 人気実況者ランキング -->
+        <section id="creater-ranking">
 
+            <RankingBanner
+                image_url="/image/banner/ranking_creater.jpg"
+                title="人気実況者ランキング"
+            />
+        </section>
+        
+        <!-- 女性実況動画ランキング -->
+        <section id="female-ranking">
+
+            <RankingBanner
+                image_url="/image/banner/ranking_female.jpg"
+                title="女性実況動画ランキング"
+            />
+            <div
+                v-for="(ranking, index) in female_rankings"
+                class="ranking-wrap"
+            >
+                <ProgramWrap
+                    :rank="index + 1"
+                    :program="ranking"
+                />   
+            </div>
+        </section>
+        
+        <!-- ホラー実況ランキング -->
+        <section id="horror-ranking">
+
+            <RankingBanner
+                image_url="/image/banner/ranking_horror.jpg"
+                title="ホラー実況ランキング"
+            />
+            <div
+                v-for="(ranking, index) in horror_rankings"
+                class="ranking-wrap"
+            >
+                <ProgramWrap
+                    :rank="index + 1"
+                    :program="ranking"
+                />   
+            </div>
+        </section>
+        
+        <!-- レトロゲーム実況ランキング -->
+        <section id="retro-ranking">
+
+            <RankingBanner
+                image_url="/image/banner/ranking_retro.jpg"
+                title="レトロゲーム実況ランキング"
+            />
+            <div
+                v-for="(ranking, index) in retro_rankings"
+                class="ranking-wrap"
+            >
+                <ProgramWrap
+                    :rank="index + 1"
+                    :program="ranking"
+                />   
+            </div>
+        </section>
     </div>
+
+    <!-- アンカーリンク -->
+    <AnkerLink
+        v-if="anker"
+        :anker="anker"
+        mode="prev"
+    />
+    <AnkerLink
+        v-if="anker"
+        :anker="anker"
+        mode="next"
+    />
+
 </template>
 
 <script>
@@ -67,6 +139,7 @@ import {usePage} from "@inertiajs/inertia-vue3";
 import H2Title from "@/js/Components/H2Title.vue";
 import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
 import RankingBanner from '@/js/Components/Ranking/RankingBanner.vue';
+import AnkerLink from "@/js/Components/AnkerLink.vue";
 export default {
 
     //読み込んだコンポーネント
@@ -74,6 +147,7 @@ export default {
         H2Title,
         ProgramWrap,
         RankingBanner,
+        AnkerLink,
     },
 
     //コンポーネント内で使用する変数
@@ -81,16 +155,27 @@ export default {
         return {
             total_rankings:   usePage().props.value.total_rankings,
             creater_rankings: usePage().props.value.creater_rankings,
-            male_rankings:    usePage().props.value.male_rankings,
             female_rankings:  usePage().props.value.female_rankings,
             horror_rankings:  usePage().props.value.horror_rankings,
             retro_rankings:   usePage().props.value.retro_rankings,
+            anker: null,
         };
     },
 
     //初回読み込み時に実行
     mounted() {
-        console.log(this.retro_rankings);
+        
+        //スクロール用のidの位置を設定
+        this.anker = [
+            {name: 'トップ',     id: "app",             pos: 0},
+            {name: '総合',       id: "total-ranking",   pos: 0},
+            {name: '人気実況者', id: "creater-ranking", pos: 0},
+            {name: '女性実況',   id: "female-ranking",  pos: 0},
+            {name: 'ホラー実況', id: "horror-ranking",  pos: 0},
+            {name: 'レトロゲー', id: "retro-ranking",   pos: 0},
+        ];
+        
+        // console.log(this.retro_rankings);
     }
 };
 </script>
@@ -99,7 +184,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/sass/variables";
     section {
-        margin-top: 4px;
+        margin-bottom: 60px;
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
@@ -112,17 +197,24 @@ export default {
     }
     .page-anker-wrap {
         max-width: 480px;
-        margin: 0 auto 20px;
+        margin: 40px auto 40px;
         padding: 8px;
         font-size: $font-l;
         text-align: center;
     }
     .page-anker-link {
         display: block;
-        margin: 6px;
+        margin: 12px 0;
+        padding: 4px 0;
+        border: solid 1px #7e7563;
+        border-radius: 4px;
+        box-shadow: 1px 1px 2px #9f78605c;
+        color: #381b06;
         img {
-            width: 16px;
+            position: relative;
+            top: 2px;
             display: inline;
+            width: 20px;
         }
     }
     .ranking-wrap {

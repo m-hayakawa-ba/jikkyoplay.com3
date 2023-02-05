@@ -43,7 +43,7 @@ class HomeController extends Controller
         );
 
         //今週のランキングを取得
-        $rankings = $this->programReadService->getRankings(
+        $rankings = $this->programReadService->getTotalRanking(
             $this->max_ranking_count,
             $this->period_ranking,
         );

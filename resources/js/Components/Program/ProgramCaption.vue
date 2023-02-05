@@ -65,6 +65,7 @@ export default {
         -webkit-line-clamp: 3;
         overflow: hidden;
         line-height: 2.0rem;
+        word-break: break-all;
     }
     .caption-creater {
         display: flex;

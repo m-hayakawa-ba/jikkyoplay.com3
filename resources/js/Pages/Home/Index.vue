@@ -103,14 +103,13 @@ export default {
     //初回読み込み時に実行
     mounted() {
         
-        //スクロール用のidの位置を取得
+        //スクロール用のidの位置を設定
         this.anker = [
             {name: 'トップ',     id: "app",          pos: 0},
             {name: 'ニュース',   id: "game-news",    pos: 0},
             {name: 'ランキング', id: "game-ranking", pos: 0},
             {name: '新着動画',   id: "game-program", pos: 0},
             {name: 'レビュー',   id: "game-review",  pos: 0},
-            {name: '検索ワード', id: "game-word",    pos: 0},
         ];
 
         // console.log(this.anker);

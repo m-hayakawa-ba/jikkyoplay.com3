@@ -31,31 +31,25 @@ class RankingController extends Controller
     public function index()
     {
         //ランキング一覧を取得
-        $total_rankings = $this->programReadService->getRankings(
-            $this->max_ranking_count_l,
-            $this->period_ranking,
-            'total',
-        );
-        $creater_rankings = $this->createrReadService->getRankings(
-            $this->max_ranking_count_l,
-            $this->period_ranking,
-        );
-        $male_rankings = $this->programReadService->getRankings(
+        $total_rankings = $this->programReadService->getTotalRanking(
             $this->max_ranking_count_s,
             $this->period_ranking,
-            'male',
         );
-        $female_rankings = $this->programReadService->getRankings(
+        $creater_rankings = $this->createrReadService->getRankings(
+            $this->max_ranking_count_s,
+            $this->period_ranking,
+        );
+        $female_rankings = $this->programReadService->getFemaleRanking(
             $this->max_ranking_count_s,
             $this->period_ranking,
             'female',
         );
-        $horror_rankings = $this->programReadService->getRankings(
+        $horror_rankings = $this->programReadService->getHorrorRanking(
             $this->max_ranking_count_s,
             $this->period_ranking,
             'horror',
         );
-        $retro_rankings = $this->programReadService->getRankings(
+        $retro_rankings = $this->programReadService->getRetroRanking(
             $this->max_ranking_count_s,
             $this->period_ranking,
             'retro',
@@ -65,7 +59,6 @@ class RankingController extends Controller
         return Inertia::render('Ranking/Index', compact(
             'total_rankings',
             'creater_rankings',
-            'male_rankings',
             'female_rankings',
             'horror_rankings',
             'retro_rankings',

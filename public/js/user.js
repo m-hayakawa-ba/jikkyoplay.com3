@@ -19685,7 +19685,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       anker_array: [],
       anker_name: '',
-      anker_id: ''
+      anker_id: '',
+      anker_display: true
     };
   },
   //メソッド一覧
@@ -19701,22 +19702,25 @@ __webpack_require__.r(__webpack_exports__);
     setLink: function setLink() {
       var _this = this;
       //スクロール位置と配列の値を比較する
+      this.anker_name = "　";
+      this.anker_id = "";
+      this.anker_display = false;
       if (this.mode == 'prev') {
         var offset = window.pageYOffset;
         this.anker_array.forEach(function (e) {
-          if (e.pos <= offset) {
+          if (e.pos < offset) {
             _this.anker_name = e.name;
             _this.anker_id = e.id;
+            _this.anker_display = true;
           }
         });
       } else if (this.mode == 'next') {
-        this.anker_name = "　";
-        this.anker_id = "";
         var offset = window.pageYOffset + 64;
         this.anker_array.some(function (e) {
           if (e.pos > offset) {
             _this.anker_name = e.name;
             _this.anker_id = e.id;
+            _this.anker_display = true;
             return true;
           }
         });
@@ -20271,7 +20275,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   //初回読み込み時に実行
   mounted: function mounted() {
-    //スクロール用のidの位置を取得
+    //スクロール用のidの位置を設定
     this.anker = [{
       name: 'トップ',
       id: "app",
@@ -20291,10 +20295,6 @@ __webpack_require__.r(__webpack_exports__);
     }, {
       name: 'レビュー',
       id: "game-review",
-      pos: 0
-    }, {
-      name: '検索ワード',
-      id: "game-word",
       pos: 0
     }];
 
@@ -20438,6 +20438,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _js_Components_H2Title_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/Components/H2Title.vue */ "./resources/js/Components/H2Title.vue");
 /* harmony import */ var _js_Components_Program_ProgramWrap_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/Components/Program/ProgramWrap.vue */ "./resources/js/Components/Program/ProgramWrap.vue");
 /* harmony import */ var _js_Components_Ranking_RankingBanner_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/Components/Ranking/RankingBanner.vue */ "./resources/js/Components/Ranking/RankingBanner.vue");
+/* harmony import */ var _js_Components_AnkerLink_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/js/Components/AnkerLink.vue */ "./resources/js/Components/AnkerLink.vue");
+
 
 
 
@@ -20447,22 +20449,50 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     H2Title: _js_Components_H2Title_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
     ProgramWrap: _js_Components_Program_ProgramWrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
-    RankingBanner: _js_Components_Ranking_RankingBanner_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
+    RankingBanner: _js_Components_Ranking_RankingBanner_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
+    AnkerLink: _js_Components_AnkerLink_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
   },
   //コンポーネント内で使用する変数
   data: function data() {
     return {
       total_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.total_rankings,
       creater_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.creater_rankings,
-      male_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.male_rankings,
       female_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.female_rankings,
       horror_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.horror_rankings,
-      retro_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.retro_rankings
+      retro_rankings: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.retro_rankings,
+      anker: null
     };
   },
   //初回読み込み時に実行
   mounted: function mounted() {
-    console.log(this.retro_rankings);
+    //スクロール用のidの位置を設定
+    this.anker = [{
+      name: 'トップ',
+      id: "app",
+      pos: 0
+    }, {
+      name: '総合',
+      id: "total-ranking",
+      pos: 0
+    }, {
+      name: '人気実況者',
+      id: "creater-ranking",
+      pos: 0
+    }, {
+      name: '女性実況',
+      id: "female-ranking",
+      pos: 0
+    }, {
+      name: 'ホラー実況',
+      id: "horror-ranking",
+      pos: 0
+    }, {
+      name: 'レトロゲー',
+      id: "retro-ranking",
+      pos: 0
+    }];
+
+    // console.log(this.retro_rankings);
   }
 });
 
@@ -20492,25 +20522,32 @@ var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
     src: "/icon/arrow_up.svg"
   })], -1 /* HOISTED */);
 });
-var _hoisted_3 = ["href"];
-var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_3 = {
+  key: 1,
+  "class": "anker-prev anker-display-false"
+};
+var _hoisted_4 = ["href"];
+var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
     "class": "anker-arrow"
   }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: "/icon/arrow_down.svg"
   })], -1 /* HOISTED */);
 });
-
+var _hoisted_6 = {
+  key: 3,
+  "class": "anker-next anker-display-false"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 上方向へのアンカーリンク "), $props.mode == 'prev' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 上方向へのアンカーリンク "), $props.mode == 'prev' && $data.anker_display ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
     key: 0,
     href: '#' + $data.anker_id,
     "class": "anker-prev"
-  }, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.anker_name), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_1)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 下方向へのアンカーリンク "), $props.mode == 'next' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
-    key: 1,
+  }, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.anker_name), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_1)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.mode == 'prev' && !$data.anker_display ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_3)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 下方向へのアンカーリンク "), $props.mode == 'next' && $data.anker_display ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("a", {
+    key: 2,
     href: '#' + $data.anker_id,
     "class": "anker-next"
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.anker_name) + " ", 1 /* TEXT */), _hoisted_4], 8 /* PROPS */, _hoisted_3)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
+  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.anker_name) + " ", 1 /* TEXT */), _hoisted_5], 8 /* PROPS */, _hoisted_4)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $props.mode == 'next' && !$data.anker_display ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_6)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -21510,26 +21547,86 @@ var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
     "class": "page-caption"
   }, " 過去1週間に投稿されたゲーム実況動画の再生数をもとにしたランキングです！ ", -1 /* HOISTED */);
 });
-var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"page-anker-wrap\" data-v-df475380><a href=\"#total-ranking\" class=\"page-anker-link\" data-v-df475380><img src=\"/icon/crown.svg\" data-v-df475380> 総合ランキング </a><a href=\"#creater-ranking\" class=\"page-anker-link\" data-v-df475380><img src=\"/icon/crown.svg\" data-v-df475380> 実況者ランキング </a><a href=\"#male-ranking\" class=\"page-anker-link\" data-v-df475380><img src=\"/icon/crown.svg\" data-v-df475380> 男性実況動画ランキング </a><a href=\"#female-ranking\" class=\"page-anker-link\" data-v-df475380><img src=\"/icon/crown.svg\" data-v-df475380> 女性実況動画ランキング </a><a href=\"#horror-ranking\" class=\"page-anker-link\" data-v-df475380><img src=\"/icon/crown.svg\" data-v-df475380> ホラー実況ランキング </a><a href=\"#retro-ranking\" class=\"page-anker-link\" data-v-df475380><img src=\"/icon/crown.svg\" data-v-df475380> レトロゲーム実況ランキング </a></div>", 1);
+var _hoisted_3 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<div class=\"page-anker-wrap\" data-v-df475380><a href=\"#total-ranking\" class=\"page-anker-link\" data-v-df475380><img src=\"/icon/crown.svg\" data-v-df475380> 総合ランキング </a><a href=\"#creater-ranking\" class=\"page-anker-link\" data-v-df475380><img src=\"/icon/crown.svg\" data-v-df475380> 人気実況者ランキング </a><a href=\"#female-ranking\" class=\"page-anker-link\" data-v-df475380><img src=\"/icon/crown.svg\" data-v-df475380> 女性実況ランキング </a><a href=\"#horror-ranking\" class=\"page-anker-link\" data-v-df475380><img src=\"/icon/crown.svg\" data-v-df475380> ホラー実況ランキング </a><a href=\"#retro-ranking\" class=\"page-anker-link\" data-v-df475380><img src=\"/icon/crown.svg\" data-v-df475380> レトロゲーム実況ランキング </a></div>", 1);
 var _hoisted_4 = {
+  id: "total-ranking"
+};
+var _hoisted_5 = {
+  "class": "ranking-wrap"
+};
+var _hoisted_6 = {
+  id: "creater-ranking"
+};
+var _hoisted_7 = {
+  id: "female-ranking"
+};
+var _hoisted_8 = {
+  "class": "ranking-wrap"
+};
+var _hoisted_9 = {
+  id: "horror-ranking"
+};
+var _hoisted_10 = {
+  "class": "ranking-wrap"
+};
+var _hoisted_11 = {
+  id: "retro-ranking"
+};
+var _hoisted_12 = {
   "class": "ranking-wrap"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_H2Title = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("H2Title");
   var _component_RankingBanner = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("RankingBanner");
   var _component_ProgramWrap = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ProgramWrap");
+  var _component_AnkerLink = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("AnkerLink");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" サイト本体部分 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 今週のランキング "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_H2Title, {
     title_jp: "今週の実況動画ランキング",
     title_en: "GAME RANKING"
-  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ランキングの説明 "), _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ページ内リンク "), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ランキング一覧 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_RankingBanner, {
-    image_url: "/image/banner/ranking_female.jpg",
-    title: "女性実況動画ランキング"
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ランキングの説明 "), _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ページ内リンク "), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 総合ランキング "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_RankingBanner, {
+    image_url: "/image/banner/ranking_total.jpg",
+    title: "総合ランキング"
   }), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.total_rankings, function (ranking, index) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProgramWrap, {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProgramWrap, {
       rank: index + 1,
       program: ranking
     }, null, 8 /* PROPS */, ["rank", "program"])]);
-  }), 256 /* UNKEYED_FRAGMENT */))])])], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
+  }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 人気実況者ランキング "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_RankingBanner, {
+    image_url: "/image/banner/ranking_creater.jpg",
+    title: "人気実況者ランキング"
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 女性実況動画ランキング "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_RankingBanner, {
+    image_url: "/image/banner/ranking_female.jpg",
+    title: "女性実況動画ランキング"
+  }), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.female_rankings, function (ranking, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProgramWrap, {
+      rank: index + 1,
+      program: ranking
+    }, null, 8 /* PROPS */, ["rank", "program"])]);
+  }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ホラー実況ランキング "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_RankingBanner, {
+    image_url: "/image/banner/ranking_horror.jpg",
+    title: "ホラー実況ランキング"
+  }), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.horror_rankings, function (ranking, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProgramWrap, {
+      rank: index + 1,
+      program: ranking
+    }, null, 8 /* PROPS */, ["rank", "program"])]);
+  }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" レトロゲーム実況ランキング "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_RankingBanner, {
+    image_url: "/image/banner/ranking_retro.jpg",
+    title: "レトロゲーム実況ランキング"
+  }), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.retro_rankings, function (ranking, index) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProgramWrap, {
+      rank: index + 1,
+      program: ranking
+    }, null, 8 /* PROPS */, ["rank", "program"])]);
+  }), 256 /* UNKEYED_FRAGMENT */))])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" アンカーリンク "), $data.anker ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_AnkerLink, {
+    key: 0,
+    anker: $data.anker,
+    mode: "prev"
+  }, null, 8 /* PROPS */, ["anker"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), $data.anker ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_AnkerLink, {
+    key: 1,
+    anker: $data.anker,
+    mode: "next"
+  }, null, 8 /* PROPS */, ["anker"])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
@@ -21716,7 +21813,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".anker-prev[data-v-4995a16a],\n.anker-next[data-v-4995a16a] {\n  position: fixed;\n  display: block;\n  right: 8px;\n  width: 64px;\n  height: 48px;\n  text-align: center;\n  padding: 4px 0;\n  border-radius: 8px;\n  background-color: #ff49c0;\n  color: #fff;\n  font-size: 1.2rem;\n  opacity: 0.9;\n  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);\n}\n.anker-prev[data-v-4995a16a] {\n  bottom: 64px;\n}\n.anker-next[data-v-4995a16a] {\n  bottom: 8px;\n}\n.anker-arrow[data-v-4995a16a] {\n  position: relative;\n  margin: 0 auto;\n  width: 24px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".anker-prev[data-v-4995a16a],\n.anker-next[data-v-4995a16a] {\n  position: fixed;\n  display: block;\n  right: 8px;\n  width: 64px;\n  height: 48px;\n  text-align: center;\n  padding: 4px 0;\n  border-radius: 8px;\n  background-color: #ff49c0;\n  color: #fff;\n  font-size: 1.2rem;\n  opacity: 0.9;\n  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.25);\n}\n.anker-prev[data-v-4995a16a] {\n  bottom: 64px;\n}\n.anker-next[data-v-4995a16a] {\n  bottom: 8px;\n}\n.anker-display-false[data-v-4995a16a] {\n  opacity: 0.4;\n}\n.anker-arrow[data-v-4995a16a] {\n  position: relative;\n  margin: 0 auto;\n  width: 24px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21764,7 +21861,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".news-item[data-v-4ae2a0de] {\n  margin: 0;\n  padding: 2px;\n  display: flex;\n  flex-wrap: nowrap;\n  align-items: center;\n  width: 100%;\n  background-color: #fff;\n  border: solid 1px #8b9699;\n  border-radius: 4px;\n  box-shadow: 1px 1px 2px rgba(33, 0, 52, 0.1294117647);\n  cursor: pointer;\n}\n.news-item[data-v-4ae2a0de]:hover {\n  background-color: #d4f9ff;\n  border-radius: 8px;\n}\n.news-image[data-v-4ae2a0de] {\n  width: 50%;\n  padding: 2px;\n}\n.news-image img[data-v-4ae2a0de] {\n  aspect-ratio: 16/9;\n  -o-object-fit: cover;\n     object-fit: cover;\n  width: 100%;\n  border-radius: 2px;\n  box-shadow: 1px 1px 4px rgba(32, 6, 6, 0.12);\n}\n.news-caption[data-v-4ae2a0de] {\n  width: 50%;\n  padding: 4px;\n}\n.news-text[data-v-4ae2a0de] {\n  font-weight: bold;\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 3;\n  overflow: hidden;\n  line-height: 2rem;\n}\n.news-published-at[data-v-4ae2a0de] {\n  text-align: right;\n  font-size: 1.2rem;\n}\n.news-source[data-v-4ae2a0de] {\n  text-align: right;\n  font-size: 1.2rem;\n  line-height: 1rem;\n}\n.news-source img[data-v-4ae2a0de] {\n  display: inline;\n  width: 16px;\n  aspect-ratio: 1/1;\n  -o-object-fit: cover;\n     object-fit: cover;\n  vertical-align: middle;\n}\n.news-source span[data-v-4ae2a0de] {\n  margin-left: 4px;\n  vertical-align: middle;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".news-item[data-v-4ae2a0de] {\n  margin: 0;\n  padding: 2px;\n  display: flex;\n  flex-wrap: nowrap;\n  align-items: center;\n  width: 100%;\n  background-color: #fff;\n  border: solid 1px #8b9699;\n  border-radius: 4px;\n  box-shadow: 1px 1px 2px rgba(33, 0, 52, 0.1294117647);\n  cursor: pointer;\n}\n.news-item[data-v-4ae2a0de]:hover {\n  background-color: #d4f9ff;\n  border-radius: 8px;\n}\n.news-image[data-v-4ae2a0de] {\n  width: 50%;\n  padding: 2px;\n}\n.news-image img[data-v-4ae2a0de] {\n  aspect-ratio: 16/9;\n  -o-object-fit: cover;\n     object-fit: cover;\n  width: 100%;\n  border-radius: 2px;\n  box-shadow: 1px 1px 4px rgba(32, 6, 6, 0.12);\n}\n.news-caption[data-v-4ae2a0de] {\n  width: 50%;\n  padding: 4px;\n}\n.news-text[data-v-4ae2a0de] {\n  font-weight: bold;\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 3;\n  overflow: hidden;\n  line-height: 2rem;\n  word-break: break-all;\n}\n.news-published-at[data-v-4ae2a0de] {\n  text-align: right;\n  font-size: 1.2rem;\n}\n@media screen and (min-width: 640px) {\n.news-published-at[data-v-4ae2a0de] {\n    margin-top: 8px;\n}\n}\n.news-source[data-v-4ae2a0de] {\n  text-align: right;\n  font-size: 1.2rem;\n  line-height: 1rem;\n}\n.news-source img[data-v-4ae2a0de] {\n  display: inline;\n  width: 16px;\n  aspect-ratio: 1/1;\n  -o-object-fit: cover;\n     object-fit: cover;\n  vertical-align: middle;\n}\n.news-source span[data-v-4ae2a0de] {\n  margin-left: 4px;\n  vertical-align: middle;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21812,7 +21909,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".caption-wrap[data-v-16295758] {\n  width: 100%;\n  padding: 2px 4px 0;\n}\n@media screen and (min-width: 640px) {\n.caption-wrap[data-v-16295758] {\n    padding: 4px;\n}\n}\n.caption-title[data-v-16295758] {\n  font-weight: bold;\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 3;\n  overflow: hidden;\n  line-height: 2rem;\n}\n.caption-creater[data-v-16295758] {\n  display: flex;\n  align-items: center;\n}\n@media screen and (min-width: 640px) {\n.caption-creater[data-v-16295758] {\n    margin-top: 8px;\n}\n}\n.caption-creater-icon[data-v-16295758] {\n  width: 38px;\n  height: 38px;\n  border-radius: 50%;\n  overflow: hidden;\n}\n.caption-creater-icon span[data-v-16295758] {\n  width: 58px;\n}\n.caption-creater-detail[data-v-16295758] {\n  margin-left: 8px;\n  font-size: 1.2rem;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".caption-wrap[data-v-16295758] {\n  width: 100%;\n  padding: 2px 4px 0;\n}\n@media screen and (min-width: 640px) {\n.caption-wrap[data-v-16295758] {\n    padding: 4px;\n}\n}\n.caption-title[data-v-16295758] {\n  font-weight: bold;\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 3;\n  overflow: hidden;\n  line-height: 2rem;\n  word-break: break-all;\n}\n.caption-creater[data-v-16295758] {\n  display: flex;\n  align-items: center;\n}\n@media screen and (min-width: 640px) {\n.caption-creater[data-v-16295758] {\n    margin-top: 8px;\n}\n}\n.caption-creater-icon[data-v-16295758] {\n  width: 38px;\n  height: 38px;\n  border-radius: 50%;\n  overflow: hidden;\n}\n.caption-creater-icon span[data-v-16295758] {\n  width: 58px;\n}\n.caption-creater-detail[data-v-16295758] {\n  margin-left: 8px;\n  font-size: 1.2rem;\n  white-space: nowrap;\n  overflow: hidden;\n  text-overflow: ellipsis;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -21908,7 +22005,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".banner-wrap[data-v-aa7b71e4] {\n  position: relative;\n  border-radius: 4px;\n  overflow: hidden;\n}\n.banner-title[data-v-aa7b71e4] {\n  width: 100%;\n  padding: 0;\n  background-color: #220000;\n  text-align: center;\n  color: #fff;\n  font-size: 1.6rem;\n}\n@media screen and (min-width: 640px) {\n.banner-title[data-v-aa7b71e4] {\n    padding: 8px 0;\n    background-color: rgba(34, 0, 0, 0.6901960784);\n    position: absolute;\n    bottom: 0;\n    letter-spacing: 2px;\n    font-size: 1.8rem;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".banner-wrap[data-v-aa7b71e4] {\n  position: relative;\n  margin-bottom: 6px;\n  width: 100%;\n  border-radius: 4px;\n  overflow: hidden;\n}\n.banner-image[data-v-aa7b71e4] {\n  padding-top: 31.25%;\n  height: 0;\n  overflow: hidden;\n}\n.banner-image img[data-v-aa7b71e4] {\n  position: absolute;\n  top: 0;\n}\n.banner-title[data-v-aa7b71e4] {\n  width: 100%;\n  padding: 0;\n  background-color: #220000;\n  text-align: center;\n  color: #fff;\n  font-size: 1.6rem;\n}\n@media screen and (min-width: 640px) {\n.banner-title[data-v-aa7b71e4] {\n    padding: 8px 0;\n    background-color: rgba(34, 0, 0, 0.6901960784);\n    position: absolute;\n    bottom: 0;\n    letter-spacing: 2px;\n    font-size: 1.8rem;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -22196,7 +22293,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "section[data-v-df475380] {\n  margin-top: 4px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-around;\n}\n@media screen and (min-width: 640px) {\nsection[data-v-df475380] {\n    padding-left: 8px;\n}\n}\n.page-caption[data-v-df475380] {\n  margin: 10px 0 5px;\n}\n.page-anker-wrap[data-v-df475380] {\n  max-width: 480px;\n  margin: 0 auto 20px;\n  padding: 8px;\n  font-size: 1.6rem;\n  text-align: center;\n}\n.page-anker-link[data-v-df475380] {\n  display: block;\n  margin: 6px;\n}\n.page-anker-link img[data-v-df475380] {\n  width: 16px;\n  display: inline;\n}\n.ranking-wrap[data-v-df475380] {\n  position: relative;\n  margin: 8px 0 0;\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.ranking-wrap[data-v-df475380] {\n    width: 49%;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "section[data-v-df475380] {\n  margin-bottom: 60px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-around;\n}\n@media screen and (min-width: 640px) {\nsection[data-v-df475380] {\n    padding-left: 8px;\n}\n}\n.page-caption[data-v-df475380] {\n  margin: 10px 0 5px;\n}\n.page-anker-wrap[data-v-df475380] {\n  max-width: 480px;\n  margin: 40px auto 40px;\n  padding: 8px;\n  font-size: 1.6rem;\n  text-align: center;\n}\n.page-anker-link[data-v-df475380] {\n  display: block;\n  margin: 12px 0;\n  padding: 4px 0;\n  border: solid 1px #7e7563;\n  border-radius: 4px;\n  box-shadow: 1px 1px 2px rgba(159, 120, 96, 0.3607843137);\n  color: #381b06;\n}\n.page-anker-link img[data-v-df475380] {\n  position: relative;\n  top: 2px;\n  display: inline;\n  width: 20px;\n}\n.ranking-wrap[data-v-df475380] {\n  position: relative;\n  margin: 8px 0 0;\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.ranking-wrap[data-v-df475380] {\n    width: 49%;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

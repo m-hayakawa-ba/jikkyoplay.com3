@@ -3,7 +3,7 @@
     
     <!-- 上方向へのアンカーリンク -->
     <a
-        v-if="mode == 'prev'"
+        v-if="mode == 'prev' && anker_display"
         :href="'#' + anker_id"
         class="anker-prev"
     >
@@ -12,10 +12,15 @@
         </div>
         {{ anker_name }}
     </a>
+    <div
+        v-if="mode == 'prev' && !anker_display"
+        class="anker-prev anker-display-false"
+    >
+    </div>
 
     <!-- 下方向へのアンカーリンク -->
     <a
-        v-if="mode == 'next'"
+        v-if="mode == 'next' && anker_display"
         :href="'#' + anker_id"
         class="anker-next"
     >
@@ -24,6 +29,11 @@
             <img src="/icon/arrow_down.svg">
         </div>
     </a>
+    <div
+        v-if="mode == 'next' && !anker_display"
+        class="anker-next anker-display-false"
+    >
+    </div>
         
 </template>
 
@@ -47,6 +57,7 @@ export default {
             anker_array: [],
             anker_name: '',
             anker_id: '',
+            anker_display: true,
         };
     },
 
@@ -65,22 +76,25 @@ export default {
         setLink: function () {
 
             //スクロール位置と配列の値を比較する
+            this.anker_name = "　";
+            this.anker_id = "";
+            this.anker_display = false;
             if (this.mode == 'prev') {
                 var offset = window.pageYOffset;
                 this.anker_array.forEach(e => {
-                    if (e.pos <= offset) {
+                    if (e.pos < offset) {
                         this.anker_name = e.name;
                         this.anker_id   = e.id;
+                        this.anker_display = true;
                     }
                 });
             } else if (this.mode == 'next') {
-                this.anker_name = "　";
-                this.anker_id = "";
                 var offset = window.pageYOffset + 64;
                 this.anker_array.some(e => {
                     if (e.pos > offset) {
-                        this.anker_name = e.name;
-                        this.anker_id   = e.id;
+                        this.anker_name    = e.name;
+                        this.anker_id      = e.id;
+                        this.anker_display = true;
                         return true;
                     }
                 });
@@ -131,6 +145,9 @@ export default {
     }
     .anker-next {
         bottom: 8px;
+    }
+    .anker-display-false {
+        opacity: 0.40;
     }
     .anker-arrow {
         position: relative;

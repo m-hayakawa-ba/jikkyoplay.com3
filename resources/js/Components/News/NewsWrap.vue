@@ -107,10 +107,14 @@ export default {
         -webkit-line-clamp: 3;
         overflow: hidden;
         line-height: 2.0rem;
+        word-break: break-all;
     }
     .news-published-at {
         text-align: right;
         font-size: $font-s;
+        @media screen and (min-width: $bp) {
+            margin-top: 8px;
+        }
     }
     .news-source {
         text-align: right;

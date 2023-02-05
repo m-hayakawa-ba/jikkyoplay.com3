@@ -17,51 +17,91 @@ class ProgramReadService
     }
 
     /**
-     * 今週の動画ランキングを取得
+     * 今週の総合ランキングを取得
      * 
      * @param int $count 取得する件数
-     * @param string $count 取得する期間（strtotimeに渡せる形式で）
-     * @param string $period 絞り込み条件
-     *  'total'     総合ランキング
-     *  'male'      男性実況者ランキング
-     *  'female'    女性実況者ランキング
-     *  'horror'    ホラーゲームランキング
-     *  'retro'     レトロゲームランキング
+     * @param string $period 取得する期間（strtotimeに渡せる形式で）
      * 
      * @return Collection
      */
-    public function getRankings(int $count, string $period, string $where = 'total') : Collection
+    public function getTotalRanking(int $count, string $period) : Collection
     {
-        //検索条件を設定
-        $programs = match($where) {
-            'male'   => $this->programModel->where('programs.voice_id', config('const.male')),
-            'female' => $this->programModel->where('programs.voice_id', config('const.female')),
-            'horror' => $this->programModel->where('programs.title', 'like', '%ホラー%'),
-            'retro'  => $this->programModel
-                ->join('games', 'programs.game_id', '=', 'games.id')
-                ->whereIn('games.hard_id', [
-                    config('const.hard.famicom'),
-                    config('const.hard.disk_system'),
-                    config('const.hard.super_famicon'),
-                    config('const.hard.mega_drive'),
-                    config('const.hard.pc_engine'),
-                    config('const.hard.game_boy'),
-                    config('const.hard.game_boy_color'),
-                    config('const.hard.virtual_boy'),
-                    config('const.hard.game_boy_advance'),
-                    config('const.hard.wonder_swan'),
-                    config('const.hard.game_gear'),
-                ]),
-            default  => $this->programModel,
-        };
-
-        $programs = $programs->orderBy('view_count', 'DESC')
+        return $this->programModel
             ->SelectIndex()
             ->where('published_at', '>=', date("Y-m-d H:i:s", strtotime($period)))
+            ->orderBy('view_count', 'DESC')
             ->limit($count)
             ->get();
-        
-        return $programs;
+    }
+
+    /**
+     * 今週の女性実況ランキングを取得
+     * 
+     * @param int $count 取得する件数
+     * @param string $period 取得する期間（strtotimeに渡せる形式で）
+     * 
+     * @return Collection
+     */
+    public function getFemaleRanking(int $count, string $period) : Collection
+    {
+        return $this->programModel
+            ->SelectIndex()
+            ->where('published_at', '>=', date("Y-m-d H:i:s", strtotime($period)))
+            ->where('programs.voice_id', config('const.voice.female'))
+            ->orderBy('view_count', 'DESC')
+            ->limit($count)
+            ->get();
+    }
+
+    /**
+     * 今週のホラー実況ランキングを取得
+     * 
+     * @param int $count 取得する件数
+     * @param string $period 取得する期間（strtotimeに渡せる形式で）
+     * 
+     * @return Collection
+     */
+    public function getHorrorRanking(int $count, string $period) : Collection
+    {
+        return $this->programModel
+            ->SelectIndex()
+            ->where('published_at', '>=', date("Y-m-d H:i:s", strtotime($period)))
+            ->where('programs.title', 'like', '%ホラー%')
+            ->orderBy('view_count', 'DESC')
+            ->limit($count)
+            ->get();
+    }
+
+    /**
+     * 今週のレトロゲーム実況ランキングを取得
+     * 
+     * @param int $count 取得する件数
+     * @param string $period 取得する期間（strtotimeに渡せる形式で）
+     * 
+     * @return Collection
+     */
+    public function getRetroRanking(int $count, string $period) : Collection
+    {
+        return $this->programModel
+            ->SelectIndex()
+            ->join('games', 'programs.game_id', '=', 'games.id')
+            ->where('published_at', '>=', date("Y-m-d H:i:s", strtotime($period)))
+            ->whereIn('games.hard_id', [
+                config('const.hard.famicom'),
+                config('const.hard.disk_system'),
+                config('const.hard.super_famicon'),
+                config('const.hard.mega_drive'),
+                config('const.hard.pc_engine'),
+                config('const.hard.game_boy'),
+                config('const.hard.game_boy_color'),
+                config('const.hard.virtual_boy'),
+                config('const.hard.game_boy_advance'),
+                config('const.hard.wonder_swan'),
+                config('const.hard.game_gear'),
+            ])
+            ->orderBy('view_count', 'DESC')
+            ->limit($count)
+            ->get();
     }
 
     /**

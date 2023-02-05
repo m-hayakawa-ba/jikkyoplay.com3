@@ -27,11 +27,19 @@ export default {
 @import "@/sass/variables";
     .banner-wrap {
         position: relative;
+        margin-bottom: 6px;
+        width: 100%;
         border-radius: 4px;
         overflow: hidden;
     }
     .banner-image {
-
+        padding-top: calc(100% / 16 * 5);
+        height: 0;
+        overflow: hidden;
+        img {
+            position: absolute;
+            top: 0;
+        }
     }
     .banner-title {
         width: 100%;
