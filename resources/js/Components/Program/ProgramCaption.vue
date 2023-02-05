@@ -53,21 +53,25 @@ export default {
 
     .caption-wrap {
         width: 100%;
-        padding: 4px 4px 4px 8px;
+        padding: 2px 4px 0;
+        @media screen and (min-width: $bp) {
+            padding: 4px;
+        }
     }
     .caption-title {
         font-weight: bold;
         display: -webkit-box;
         -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
+        -webkit-line-clamp: 3;
         overflow: hidden;
-        @media screen and (min-width: $bp) {
-            -webkit-line-clamp: 3;
-        }
+        line-height: 2.0rem;
     }
     .caption-creater {
         display: flex;
         align-items: center;
+        @media screen and (min-width: $bp) {
+            margin-top: 8px;
+        }
     }
     .caption-creater-icon {
         width: 38px;
@@ -81,5 +85,8 @@ export default {
     .caption-creater-detail {
         margin-left: 8px;
         font-size: $font-s;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 </style>

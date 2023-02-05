@@ -15,7 +15,7 @@
         <ProgramThumbnail
             :thumbnail_url="program.image_url"
             :site_id="program.site_id"
-            style="width: 45%;"
+            style="width: 50%;"
         />
 
         <!-- 番組情報 -->
@@ -24,7 +24,7 @@
             :creater_name="program.creater_name"
             :creater_icon_url="program.user_icon_url"
             :published_at="program.published_at"
-            style="width: 55%;"
+            style="width: 50%;"
         />
     </Link>
 
@@ -33,9 +33,9 @@
 
 <script>
 import {Link} from "@inertiajs/inertia-vue3";
-import ProgramViewCount from "@/js/Components/ProgramPart/ProgramViewCount.vue";
-import ProgramThumbnail from "@/js/Components/ProgramPart/ProgramThumbnail.vue";
-import ProgramCaption from "@/js/Components/ProgramPart/ProgramCaption.vue";
+import ProgramViewCount from "@/js/Components/Program/ProgramViewCount.vue";
+import ProgramThumbnail from "@/js/Components/Program/ProgramThumbnail.vue";
+import ProgramCaption from "@/js/Components/Program/ProgramCaption.vue";
 export default {
 
     //呼び出し元から渡された引数
@@ -65,13 +65,13 @@ export default {
 
     .program-item {
         margin: 0;
-        padding: 4px;
+        padding: 2px;
         display: flex;
         flex-wrap: nowrap;
         align-items: center;
         width: 100%;
         background-color: #fff;
-        border: solid 1px #fff0f0;
+        border: solid 1px #8b9699;
         border-radius: 4px;
         box-shadow: 1px 1px 2px #21003421;
         cursor: pointer;

@@ -52,6 +52,7 @@ export default {
         position: sticky;
         top: 0;
         width: 100%;
+        height: min-content;
         background-color: #ffffffe0;
         z-index: 10;
         border-bottom: solid 1px #ddd;

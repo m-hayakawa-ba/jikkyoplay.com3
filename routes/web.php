@@ -10,7 +10,7 @@ use App\Http\Controllers\ProgramController;
 Route::get('/', [HomeController::class, 'index']);
 
 //ニュース一覧
-Route::get('/news', [NewsController::class, 'index']);
+Route::get('/news/{month?}', [NewsController::class, 'index']);
 
 //ランキング
 Route::get('/ranking', [RankingController::class, 'index']);

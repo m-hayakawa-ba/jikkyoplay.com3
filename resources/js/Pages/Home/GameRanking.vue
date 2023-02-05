@@ -5,7 +5,7 @@
         v-for="(ranking, index) in rankings"
         class="ranking-wrap"
     >
-        <ProgramPart
+        <ProgramWrap
             :rank="index + 1"
             :program="ranking"
         />   
@@ -21,7 +21,7 @@
 
 <script>
 import {usePage} from "@inertiajs/inertia-vue3";
-import ProgramPart from '@/js/Components/ProgramPart/ProgramWrap.vue';
+import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
 import PageLink from '@/js/Components/PageLink.vue';
 export default {
 
@@ -34,7 +34,7 @@ export default {
 
     //読み込んだコンポーネント
     components: {
-        ProgramPart,
+        ProgramWrap,
         PageLink,
     },
 

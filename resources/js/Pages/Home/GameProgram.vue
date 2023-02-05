@@ -29,7 +29,7 @@
 
 <script>
 import {usePage} from "@inertiajs/inertia-vue3";
-import ProgramWrap from '@/js/Components/ProgramPart/ProgramWrap.vue';
+import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
 import PageLink from '@/js/Components/PageLink.vue';
 export default {
 

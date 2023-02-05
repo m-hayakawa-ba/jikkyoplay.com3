@@ -39,8 +39,11 @@ a {
 
 // フッターが画面下に張り付くように記述
 #app {
+    //一番上：ヘッダー
+    //2番目：メインコンテンツ
+    //3番目：フッター
     display: grid;
-    grid-template-rows: 1fr auto;
+    grid-template-rows: min-content 1fr auto;
     grid-template-columns: 100%;
     min-height: 100vh;
 }

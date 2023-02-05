@@ -52,9 +52,9 @@
 <script>
 import { usePage, Link } from "@inertiajs/inertia-vue3";
 import PageLink from '@/js/Components/PageLink.vue';
-import ProgramViewCount from "@/js/Components/ProgramPart/ProgramViewCount.vue";
-import ProgramThumbnail from "@/js/Components/ProgramPart/ProgramThumbnail.vue";
-import ProgramCaption from "@/js/Components/ProgramPart/ProgramCaption.vue";
+import ProgramViewCount from "@/js/Components/Program/ProgramViewCount.vue";
+import ProgramThumbnail from "@/js/Components/Program/ProgramThumbnail.vue";
+import ProgramCaption from "@/js/Components/Program/ProgramCaption.vue";
 export default {
 
     //コンポーネント内で使用する変数
@@ -100,7 +100,7 @@ export default {
         width: 100%;
         cursor: pointer;
         background-color: #fff;
-        border: solid 1px #fff0f0;
+        border: solid 1px #8b9699;
         border-radius: 4px;
         box-shadow: 1px 1px 2px #21003421;
         &:hover {

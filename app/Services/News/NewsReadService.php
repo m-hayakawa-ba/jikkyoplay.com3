@@ -55,4 +55,22 @@ class NewsReadService
             ->limit($count)
             ->get();
     }
+
+    /**
+     * ニュース一覧に表示させるニュースを取得
+     * 
+     * @param string $month "2023-01" の形式で、年と月を渡す
+     * 
+     * @return Collection
+     */
+    public function getNewsMonth(string $month) : Collection
+    {
+        return $this->newsModel
+            ->with('news_source')
+            ->orderBy('published_at', 'desc')
+            ->where('flag_enabled', 1)
+            ->where('published_at', '>=', date('Y-m-d', strtotime('first day of ' . $month)) . ' 00:00:00')
+            ->where('published_at', '<=', date('Y-m-d', strtotime('last day of '  . $month)) . ' 23:59:59')
+            ->get();
+    }
 }

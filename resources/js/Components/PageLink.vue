@@ -3,12 +3,12 @@
         :href="href"
         class="link-wrap"
     >
-        <div class="link_name">
+        <div class="link-name">
             {{ link_name }}
         </div>
-        <div class="link-arrow">
-            <img src="/icon/right.svg">
-        </div>
+        <svg fill="currentColor" class="link-arrow">
+            <use xlink:href="/icon/right.svg#right" />
+        </svg>
     </Link>
 </template>
 
@@ -41,11 +41,14 @@ export default {
         margin: 10px 0 0 auto;
     }
     .link-name {
-
+        color: $font-color-link;
+        font-weight: bold;
     }
     .link-arrow {
         width: 20px;
+        height: 20px;
         margin-left: 4px;
+        color: $font-color-link;
     }
 
 </style>

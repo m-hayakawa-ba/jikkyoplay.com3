@@ -1,26 +1,12 @@
 <template>
-    <a
+
+    <!-- ニュース記事 -->
+    <div
         v-for="news in newses"
-        class="news-item"
-        :href="news.url"
-        target="_blank"
+        class="news-wrap"
     >
-        <div class="news-image">
-            <img :src="news.image_url" />
-        </div>
-        <div class="news-caption">
-            <div class="news-text">
-                {{ news.title }}
-            </div>
-            <div class="news-published-at">
-                {{ format(news.published_at) }}
-            </div>
-            <div class="news-source">
-                <img v-if="news.news_source.favicon_url" :src="news.news_source.favicon_url" :alt="news.news_source.name">
-                <span>{{ news.news_source.name }}</span>
-            </div>
-        </div>
-    </a>
+        <NewsWrap :news="news" />
+    </div>
 
     <!-- ニュース一覧へのリンク -->
     <PageLink
@@ -32,8 +18,8 @@
 
 <script>
 import {usePage} from "@inertiajs/inertia-vue3";
-import moment from 'moment';
-import PageLink from '../../Components/PageLink.vue';
+import PageLink from '@/js/Components/PageLink.vue';
+import NewsWrap from '@/js/Components/News/NewsWrap.vue';
 export default {
 
     //コンポーネント内で使用する変数
@@ -46,13 +32,7 @@ export default {
     //読み込んだコンポーネント
     components: {
         PageLink,
-    },
-
-    //コンポーネント内で使用するメソッド
-    methods: {
-        format(date) {
-            return moment(date).format('YYYY年M月D日')
-        }
+        NewsWrap,
     },
 
     //初回読み込み時に実行
@@ -64,69 +44,13 @@ export default {
 
 
 <style lang="scss" scoped>
-@import "../../../sass/variables";
-    .news-item {
-        margin: 2px 0;
-        padding: 4px;
+@import "@/sass/variables";
+    .news-wrap {
+        position: relative;
+        margin: 8px 0 0;
         width: 100%;
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        background-color: #fff;
-        border: solid 1px #fff0f0;
-        border-radius: 4px;
-        box-shadow: 1px 1px 2px #21003421;
-        cursor: pointer;
         @media screen and (min-width: $bp) {
             width: 49%;
-        }
-        &:hover {
-            background-color: #d4f9ff;
-            border-radius: 8px;
-        }
-    }
-    .news-image {
-        width: 45%;
-        padding: 2px;
-        img {
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
-            width: 100%;
-            border-radius: 2px;
-            box-shadow: 1px 1px 4px rgb(32 6 6 / 12%);
-        }
-    }
-    .news-caption {
-        width: 55%;
-        padding: 4px 4px 4px 8px;
-    }
-    .news-text {
-        font-weight: bold;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 2;
-        overflow: hidden;
-        @media screen and (min-width: $bp) {
-            -webkit-line-clamp: 3;
-        }
-    }
-    .news-published-at {
-        text-align: right;
-        font-size: $font-s;
-    }
-    .news-source {
-        text-align: right;
-        font-size: $font-s;
-        img {
-            display: inline;
-            width: 16px;
-            aspect-ratio: 1 / 1;
-            object-fit: cover;
-            vertical-align: middle;
-        }
-        span {
-            margin-left: 4px;
-            vertical-align: middle;
         }
     }
 
