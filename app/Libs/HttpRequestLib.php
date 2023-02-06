@@ -37,8 +37,12 @@ class HttpRequestLib
      */
     public static function isStatus200(string $url) : bool
     {
-        $headers = get_headers($url);
-        $status_code = substr($headers[0], 9, 3);
-        return $status_code == 200;
+        try {
+            $headers = get_headers($url);
+            $status_code = substr($headers[0], 9, 3);
+            return $status_code == 200;
+        } catch (\Exception $ex) {
+            return false;
+        }
     }
 }
