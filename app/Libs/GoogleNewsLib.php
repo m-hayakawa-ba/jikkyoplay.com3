@@ -71,4 +71,27 @@ class GoogleNewsLib
         //取得したデータを返す
         return $response;
     }
+
+    /**
+     * googleニュースのリダイレクト先のurlを取得する
+     * 
+     * @param string $url
+     * 
+     * @return ?string 取得できなかった場合はnullが返る
+     */
+    public static function getRedirectUrl(string $url) : string
+    {
+        //urlの先のhtmlをすべて取得する
+        $html = HttpRequestLib::getHtmlCurl($url);
+
+        //正規表現を用いて、リダイレクト先のurlを探す
+        preg_match('/data-n-au="(.*?)"/', $html, $match);
+
+        //取得できた値を返す
+        if (!empty($match)) {
+            return $match[1];
+        } else {
+            return null;
+        }
+    }
 }

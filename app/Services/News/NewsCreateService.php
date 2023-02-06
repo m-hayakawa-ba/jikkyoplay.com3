@@ -3,6 +3,7 @@
 namespace App\Services\News;
 
 use App\Libs\HttpRequestLib;
+use App\Libs\GoogleNewsLib;
 use App\Models\News;
 use App\Services\News\NewsReadService;
 use App\Services\NewsSource\NewsSourceCreateService;
@@ -54,12 +55,9 @@ class NewsCreateService
         }
 
         //リンクをリダイレクト先のURLに変換
-        $url = get_headers($source_url, 1)['Location'];
-        if (empty($url)) {
+        $url = GoogleNewsLib::getRedirectUrl($source_url);
+        if (is_null($url)) {
             return "リダイレクト先のURLを取得できませんでした";
-        }
-        if (is_array($url)) {
-            $url = $url[0];
         }
 
         //ニュースソースを作成
