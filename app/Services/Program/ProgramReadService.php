@@ -115,7 +115,7 @@ class ProgramReadService
     {
         return $this->programModel
             ->SelectIndex()
-            ->where('site_id', $site_id)
+            ->where('creaters.site_id', $site_id)
             ->orderBy(DB::raw("DATE_FORMAT(published_at,'%Y%m%d')"), 'desc')
             ->orderBy('view_count', 'desc')
             ->limit($count)
