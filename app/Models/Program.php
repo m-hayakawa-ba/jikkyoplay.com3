@@ -27,10 +27,10 @@ class Program extends Model
         return $query->select(
                 'programs.id as id',
                 'programs.image_url as image_url',
-                'programs.site_id as site_id',
                 'programs.title as title',
                 'programs.view_count',
                 'programs.published_at as published_at',
+                'creaters.site_id as site_id',
                 'creaters.user_icon_url as user_icon_url',
                 'creaters.name as creater_name',
             )

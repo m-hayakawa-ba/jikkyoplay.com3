@@ -63,6 +63,15 @@
                 image_url="/image/banner/ranking_creater.jpg"
                 title="人気実況者ランキング"
             />
+            <div
+                v-for="(ranking, index) in creater_rankings"
+                class="ranking-wrap"
+            >
+                <CreaterWrap
+                    :rank="index + 1"
+                    :creater="ranking"
+                />   
+            </div>
         </section>
         
         <!-- 女性実況動画ランキング -->
@@ -138,6 +147,7 @@
 import {usePage} from "@inertiajs/inertia-vue3";
 import H2Title from "@/js/Components/H2Title.vue";
 import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
+import CreaterWrap from '@/js/Components/Creater/CreaterWrap.vue';
 import RankingBanner from '@/js/Components/Ranking/RankingBanner.vue';
 import AnkerLink from "@/js/Components/AnkerLink.vue";
 export default {
@@ -146,6 +156,7 @@ export default {
     components: {
         H2Title,
         ProgramWrap,
+        CreaterWrap,
         RankingBanner,
         AnkerLink,
     },
@@ -174,8 +185,6 @@ export default {
             {name: 'ホラー実況', id: "horror-ranking",  pos: 0},
             {name: 'レトロゲー', id: "retro-ranking",   pos: 0},
         ];
-        
-        // console.log(this.retro_rankings);
     }
 };
 </script>

@@ -34,11 +34,11 @@ class ReviewReadService
                 'reviews.displayed_at',
                 'programs.title',
                 'programs.image_url',
-                'programs.site_id',
                 'programs.view_count',
                 'programs.published_at',
                 'creaters.name as creater_name',
-                'creaters.user_icon_url'
+                'creaters.site_id',
+                'creaters.user_icon_url',
             )
             ->join('programs', 'reviews.program_id', '=', 'programs.id')
             ->join('creaters', 'programs.creater_id', '=', 'creaters.id')
