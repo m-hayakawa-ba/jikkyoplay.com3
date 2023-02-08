@@ -27,12 +27,16 @@
 
             <!-- その他の動画 -->
             <Link href="/" class="creater-other-program">
-                この実況者の他の動画を見る
+                <span>この実況者の他の動画を見る</span>
+                <svg fill="currentColor" class="link-arrow">
+                    <use xlink:href="/icon/right.svg#right"></use>
+                </svg>
             </Link>
 
             <!-- もとのページへ -->
-            <a :href="getChannelUrl()" target="_blank">
-                チャンネルページへ行く <img src="/icon/external_link.svg">
+            <a :href="getChannelUrl()" class="site-link" target="_blank">
+                <img :src="getSiteIconUrl()">
+                <span>チャンネルページへ行く</span>
             </a>
         </div>
 
@@ -77,7 +81,16 @@ export default {
             } else if (this.creater.site_id == this.constants.site.nicovideo) {
                 return `https://www.nicovideo.jp/user/${this.creater.user_id}`;
             }
-        }
+        },
+
+        //そのユーザーの外部サイトのアイコンURLを返す
+        getSiteIconUrl() {
+            if (this.creater.site_id == this.constants.site.youtube) {
+                return "/image/logo_youtube.webp";
+            } else if (this.creater.site_id == this.constants.site.nicovideo) {
+                return "/image/logo_nicovideo.webp";
+            }
+        },
     },
 
     //初回読み込み時に実行
@@ -93,7 +106,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/sass/variables";
     .creater-item {
-        margin: 0;
+        margin: 0 0 4px;
         padding: 2px;
         display: flex;
         flex-wrap: nowrap;
@@ -115,10 +128,56 @@ export default {
         }
     }
     .caption-wrap {
-        padding: 4px;
+        margin-left: 2px;
+        padding: 2px 16px;
+        width: calc(100% - 98px);
+    }
+    .creater-name {
+        font-weight: bold;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
     .creater-other-program {
         display: block;
+        margin-top: 2px;
+        span {
+            vertical-align: middle;
+            font-weight: bold;
+            color: $font-color-link;
+        }
+        .link-arrow {
+            display: inline;
+            position: relative;
+            bottom: 0.5px;
+            width: 20px;
+            height: 20px;
+            margin-left: 2px;
+            color: $font-color-link;
+            vertical-align: middle;
+        }
+    }
+    .site-link {
+        position: relative;
+        display: block;
+        margin: 6px 0px 0;
+        padding: 2px 0 3px;
+        border: solid 1px #8d8186;
+        background-color: #ffffff;
+        border-radius: 4px;
+        text-align: center;
+        font-weight: bold;
+        img {
+            display: inline;
+            width: 28px;
+            vertical-align: middle;
+        }
+        span {
+            position: relative;
+            top: 2px;
+            margin-left: 4px;
+            vertical-align: middle;
+        }
     }
 
 </style>
