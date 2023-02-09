@@ -8,11 +8,6 @@ use Inertia\Inertia;
 class NewsController extends Controller
 {
     /**
-     * 定数定義
-     */
-    private $get_news_count = 20; //一度に取得するニュース数
-
-    /**
      * コンストラクタ
      */
     public function __construct(
@@ -31,7 +26,6 @@ class NewsController extends Controller
         $newses = $this->newsReadService->getNewsMonth($month);
 
         //viewへ遷移
-        
         return Inertia::render('News/Index', compact(
             'month',
             'newses',

@@ -12,7 +12,11 @@
 
             <!-- 投稿者アイコン -->
             <div class="caption-creater-icon">
-                <img :src="creater_icon_url" :alt="creater_name">
+                <img
+                    :src="creater_icon_url"
+                    :alt="creater_name"
+                    @error="noImage"
+                >
             </div>
 
             <!-- 投稿者名と投稿日 -->
@@ -41,7 +45,11 @@ export default {
     methods: {
         format(date) {
             return moment(date).format('YYYY年M月D日')
-        }
+        },
+        
+        noImage(element){
+            element.target.src = '/image/noimage_trans.png'
+        },
     },
 
 }

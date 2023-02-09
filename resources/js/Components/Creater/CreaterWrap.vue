@@ -14,7 +14,11 @@
 
         <!-- 投稿者の顔アイコン -->
         <div class="creater-image">
-            <img :src="creater.user_icon_url" :alt="creater.name">
+            <img
+                :src="creater.user_icon_url"
+                :alt="creater.name"
+                @error="noImage"
+            >
         </div>
 
         <!-- 投稿者の情報 -->
@@ -27,7 +31,7 @@
 
             <!-- その他の動画 -->
             <Link href="/" class="creater-other-program">
-                <span>この実況者の他の動画を見る</span>
+                <span>この実況者の動画を見る</span>
                 <svg fill="currentColor" class="link-arrow">
                     <use xlink:href="/icon/right.svg#right"></use>
                 </svg>
@@ -91,6 +95,10 @@ export default {
                 return "/image/logo_nicovideo.webp";
             }
         },
+        
+        noImage(element){
+            element.target.src = '/image/noimage.png'
+        }
     },
 
     //初回読み込み時に実行

@@ -22,7 +22,7 @@
 
     <!-- 動画一覧へのリンク -->
     <PageLink
-        href="/ranking"
+        href="/program"
         link_name="すべての動画を見る"
     />
 </template>

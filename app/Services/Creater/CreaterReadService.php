@@ -36,6 +36,7 @@ class CreaterReadService
             )
             ->selectRaw('SUM(programs.view_count) as view_count')
             ->join('programs', 'creaters.id', '=', 'programs.creater_id')
+            ->whereNotNull('creaters.user_icon_url')
             ->where('programs.published_at', '>=', date("Y-m-d H:i:s", strtotime($period)))
             ->groupBy('creaters.id')
             ->orderBy('view_count', 'desc')
