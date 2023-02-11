@@ -17,14 +17,14 @@ class ProgramSearchService
     }
 
     /**
-     * 動画を検索して表示する
+     * 動画を検索して、個数とCollectionを返す
      * 
      * @param Request $request 検索やソートの条件
      * @param int     $count   取得する動画の件数
      * 
-     * @return Collection
+     * @return array
      */
-    public function searchPrograms(Request $request, int $count) : Collection
+    public function searchPrograms(Request $request, int $count) : array
     {
         $programs = $this->programModel
             ->SelectIndex();
@@ -41,11 +41,18 @@ class ProgramSearchService
             }
         );
 
-        //取得個数を設定
+        //検索結果の個数を取得
+        $collection_count = $programs->count();
+
+        //取得個数を設定してでーたを取得する
         $programs = $programs->limit($count)
-            ->offset(($request->query('page', 1) - 1) * $count);
-        
-        //検索したプログラムを返す
-        return $programs->get();
+            ->offset(($request->query('page', 1) - 1) * $count)
+            ->get();
+
+        //結果を配列で返して終了
+        return [
+            'count' => $collection_count,
+            'programs' => $programs,
+        ];
     }
 }

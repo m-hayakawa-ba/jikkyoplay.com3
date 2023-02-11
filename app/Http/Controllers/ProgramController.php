@@ -29,13 +29,16 @@ class ProgramController extends Controller
     public function index(Request $request)
     {
         //動画を取得
-        $programs = $this->programSearchService->searchPrograms(
+        $array = $this->programSearchService->searchPrograms(
             $request,
             $this->get_program_count,
         );
+        $count = $array['count'];
+        $programs = $array['programs'];
 
         //viewへ遷移
         return Inertia::render('Program/Index', compact(
+            'count',
             'programs',
         ));
     }

@@ -203,6 +203,9 @@ export default {
     }
     .page-caption {
         margin: 10px 0 5px;
+        @media screen and (min-width: $bp) {
+            margin-left: 16px;
+        }
     }
     .page-anker-wrap {
         max-width: 480px;
