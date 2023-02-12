@@ -12,9 +12,9 @@ class RankingController extends Controller
     /**
      * 定数定義
      */
-    private $max_ranking_count_l = 20;      //表示させるランキング数（多い場合）
-    private $max_ranking_count_s = 10;      //表示させるランキング数（少ない場合）
-    private $period_ranking = '-1 year';  //表示させるランキングの集計期間
+    private $max_ranking_count_l = 20;   //表示させるランキング数（多い場合）
+    private $max_ranking_count_s = 10;   //表示させるランキング数（少ない場合）
+    private $period_ranking = '-1 week'; //表示させるランキングの集計期間
 
     /**
      * コンストラクタ
