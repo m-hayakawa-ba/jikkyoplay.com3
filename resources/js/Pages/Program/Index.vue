@@ -42,7 +42,12 @@
         </section>
 
         <!-- ページネーション -->
-        
+        <PageList
+            :page_current="Number(page_current)"
+            :page_last="Number(page_last)"
+            base_url="/program"
+            :queries="queries"
+        />
 
     </div>
 </template>
@@ -52,20 +57,25 @@
 import {usePage} from "@inertiajs/inertia-vue3";
 import H2Title from "@/js/Components/H2Title.vue";
 import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
+import PageList from '@/js/Components/PageList.vue';
 export default {
 
     //読み込んだコンポーネント
     components: {
         H2Title,
         ProgramWrap,
+        PageList,
     },
 
     //コンポーネント内で使用する変数
     data() {
         return {
-            count:    usePage().props.value.count,
-            programs: usePage().props.value.programs,
-            sort:     'date_desc',
+            count:        usePage().props.value.count,
+            programs:     usePage().props.value.programs,
+            page_current: usePage().props.value.page_current,
+            page_last:    usePage().props.value.page_last,
+            queries:      usePage().props.value.queries,
+            sort:         'date_desc',
         };
     },
 
@@ -73,6 +83,12 @@ export default {
     methods: {
         
     },
+
+    
+    //初回読み込み時に実行
+    mounted() {
+        console.log(this.page_current);
+    }
     
 }
 </script>

@@ -36,10 +36,23 @@ class ProgramController extends Controller
         $count = $array['count'];
         $programs = $array['programs'];
 
+        //ページネーションのためのページ番号を取得
+        $page_current = $request->query('page', 1);
+        $page_last    = $this->programSearchService->getMaxPageNumber(
+            $count,
+            $this->get_program_count,
+        );
+
+        //検索クエリを取得
+        $queries = $request->all();
+
         //viewへ遷移
         return Inertia::render('Program/Index', compact(
             'count',
             'programs',
+            'page_current',
+            'page_last',
+            'queries',
         ));
     }
 

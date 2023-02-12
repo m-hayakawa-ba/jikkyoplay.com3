@@ -13,7 +13,7 @@
 import {Link} from "@inertiajs/inertia-vue3";
 export default {
 
-//呼び出し元から渡された引数
+    //呼び出し元から渡された引数
     props: [
         "href", //リンク先のurl
     ],

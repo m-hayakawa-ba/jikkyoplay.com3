@@ -55,4 +55,17 @@ class ProgramSearchService
             'programs' => $programs,
         ];
     }
+
+    /**
+     * ページネーションの最大ページ番号を返却する
+     * 
+     * @param int $max_item すべての要素数
+     * @param int $per_page 1ページあたりの要素数
+     * 
+     * @return int 最大ページ番号
+     */
+    public function getMaxPageNumber(int $max_item, int $per_page) : int
+    {
+        return ceil($max_item / $per_page);
+    }
 }
