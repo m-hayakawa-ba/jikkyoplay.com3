@@ -18,11 +18,13 @@
             </div>
 
             <!-- 並び順選択 -->
-            <select v-model="sort">
+            <select v-model="sort" @change="redirectNewSort">
                 <option value="date_desc">投稿日の新しい順</option>
                 <option value="date_asc">投稿日の古い順</option>
                 <option value="view_desc">再生数の多い順</option>
                 <option value="view_asc">再生数の少ない順</option>
+                <option value="sale_desc">ゲーム発売年の新しい順</option>
+                <option value="sale_asc">ゲーム発売年の古い順</option>
             </select>
         </div>
 
@@ -32,6 +34,7 @@
             <!-- 動画一覧 -->
             <div
                 v-for="program in programs"
+                :key="program.id"
                 class="program-wrap"
             >
                 <ProgramWrap
@@ -82,12 +85,52 @@ export default {
     //コンポーネント内で使用するメソッド
     methods: {
         
+        //並び順を新しくしたとき画面を読み込み直す
+        redirectNewSort() {
+
+            //クエリを整理する
+            var params = new URLSearchParams(this.queries);
+            params.set('page', 1);
+            switch(this.sort) {
+                case 'date_desc':
+                    params.set('sort', 'date');
+                    params.set('order', 'desc');
+                    break;
+                case 'date_asc':
+                    params.set('sort', 'date');
+                    params.set('order', 'asc');
+                    break;
+                case 'view_desc':
+                    params.set('sort', 'view');
+                    params.set('order', 'desc');
+                    break;
+                case 'view_asc':
+                    params.set('sort', 'view');
+                    params.set('order', 'asc');
+                    break;
+                case 'sale_desc':
+                    params.set('sort', 'sale');
+                    params.set('order', 'desc');
+                    break;
+                case 'sale_asc':
+                    params.set('sort', 'sale');
+                    params.set('order', 'asc');
+                    break;
+            }
+
+            //ソート順を変更してリダイレクト
+            this.$inertia.visit('/program' + '?' + params.toString(), {
+                method: 'get',
+            });
+        },
     },
 
     
     //初回読み込み時に実行
     mounted() {
-        console.log(this.page_current);
+
+        //渡されたクエリからソート順セレクトボックスの初期値を設定
+        this.sort = this.queries.sort + '_' + this.queries.order;
     }
     
 }

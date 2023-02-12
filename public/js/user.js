@@ -19951,6 +19951,7 @@ __webpack_require__.r(__webpack_exports__);
 
   //コンポーネント内で使用するメソッド
   methods: {
+    //ページネーションのページ番号を作成する
     getPageNumber: function getPageNumber(number) {
       if (this.page_current <= 3) {
         return number;
@@ -19960,6 +19961,7 @@ __webpack_require__.r(__webpack_exports__);
         return this.page_current - (this.list_num + 1) / 2 + number;
       }
     },
+    //ページ遷移時のクエリ文字列を生成する
     makePageQuery: function makePageQuery(page) {
       var params = new URLSearchParams(this.queries);
       if (page) {
@@ -19970,7 +19972,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   //初回読み込み時に実行
   mounted: function mounted() {
-    console.log(this.page_current);
+    // console.log(this.page_current);
   }
 });
 
@@ -20612,10 +20614,49 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   //コンポーネント内で使用するメソッド
-  methods: {},
+  methods: {
+    //並び順を新しくしたとき画面を読み込み直す
+    redirectNewSort: function redirectNewSort() {
+      //クエリを整理する
+      var params = new URLSearchParams(this.queries);
+      params.set('page', 1);
+      switch (this.sort) {
+        case 'date_desc':
+          params.set('sort', 'date');
+          params.set('order', 'desc');
+          break;
+        case 'date_asc':
+          params.set('sort', 'date');
+          params.set('order', 'asc');
+          break;
+        case 'view_desc':
+          params.set('sort', 'view');
+          params.set('order', 'desc');
+          break;
+        case 'view_asc':
+          params.set('sort', 'view');
+          params.set('order', 'asc');
+          break;
+        case 'sale_desc':
+          params.set('sort', 'sale');
+          params.set('order', 'desc');
+          break;
+        case 'sale_asc':
+          params.set('sort', 'sale');
+          params.set('order', 'asc');
+          break;
+      }
+
+      //ソート順を変更してリダイレクト
+      this.$inertia.visit('/program' + '?' + params.toString(), {
+        method: 'get'
+      });
+    }
+  },
   //初回読み込み時に実行
   mounted: function mounted() {
-    console.log(this.page_current);
+    //渡されたクエリからソート順セレクトボックスの初期値を設定
+    this.sort = this.queries.sort + '_' + this.queries.order;
   }
 });
 
@@ -22030,30 +22071,8 @@ var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
     "class": "sp-only"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-    value: "date_desc"
-  }, "投稿日の新しい順", -1 /* HOISTED */);
-});
-var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-    value: "date_asc"
-  }, "投稿日の古い順", -1 /* HOISTED */);
-});
-var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-    value: "view_desc"
-  }, "再生数の多い順", -1 /* HOISTED */);
-});
-var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("option", {
-    value: "view_asc"
-  }, "再生数の少ない順", -1 /* HOISTED */);
-});
-var _hoisted_8 = [_hoisted_4, _hoisted_5, _hoisted_6, _hoisted_7];
-var _hoisted_9 = {
-  "class": "program-wrap"
-};
+var _hoisted_4 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createStaticVNode)("<option value=\"date_desc\" data-v-380e9f0e>投稿日の新しい順</option><option value=\"date_asc\" data-v-380e9f0e>投稿日の古い順</option><option value=\"view_desc\" data-v-380e9f0e>再生数の多い順</option><option value=\"view_asc\" data-v-380e9f0e>再生数の少ない順</option><option value=\"sale_desc\" data-v-380e9f0e>ゲーム発売年の新しい順</option><option value=\"sale_asc\" data-v-380e9f0e>ゲーム発売年の古い順</option>", 6);
+var _hoisted_10 = [_hoisted_4];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_H2Title = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("H2Title");
   var _component_ProgramWrap = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ProgramWrap");
@@ -22064,13 +22083,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 動画の総数 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ヒット数 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 検索項目"), _hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)("（ヒット数：" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.count.toLocaleString()) + "） ", 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 並び順選択 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return $data.sort = $event;
+    }),
+    onChange: _cache[1] || (_cache[1] = function () {
+      return $options.redirectNewSort && $options.redirectNewSort.apply($options, arguments);
     })
-  }, _hoisted_8, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.sort]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 動画一覧 "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.programs, function (program) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProgramWrap, {
+  }, _hoisted_10, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.sort]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 動画一覧 "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.programs, function (program) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      key: program.id,
+      "class": "program-wrap"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProgramWrap, {
       rank: null,
       program: program
     }, null, 8 /* PROPS */, ["program"])]);
-  }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ページネーション "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_PageList, {
+  }), 128 /* KEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ページネーション "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_PageList, {
     page_current: Number($data.page_current),
     page_last: Number($data.page_last),
     base_url: "/program",

@@ -35,6 +35,7 @@ class Program extends Model
                 'creaters.name as creater_name',
             )
             ->join('creaters', 'programs.creater_id', '=', 'creaters.id')
+            ->join('games', 'programs.game_id', '=', 'games.id')
             ->where('flag_enabled', 1);
     }
 }

@@ -130,6 +130,7 @@ export default {
     //コンポーネント内で使用するメソッド
     methods: {
 
+        //ページネーションのページ番号を作成する
         getPageNumber(number) {
             if (this.page_current <= 3) {
                 return number;
@@ -140,8 +141,8 @@ export default {
             }
         },
         
+        //ページ遷移時のクエリ文字列を生成する
         makePageQuery(page) {
-
             var params = new URLSearchParams(this.queries);
             if (page) {
                 params.set('page', page);
@@ -150,10 +151,9 @@ export default {
         },
     },
 
-    
     //初回読み込み時に実行
     mounted() {
-        console.log(this.page_current);
+        // console.log(this.page_current);
     }
 
 }

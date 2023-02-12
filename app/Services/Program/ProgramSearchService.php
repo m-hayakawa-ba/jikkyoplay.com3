@@ -33,6 +33,7 @@ class ProgramSearchService
         $programs = $programs->orderBy(
             match($request->query('sort', 'date')) {
                 'view'    => 'programs.view_count',
+                'sale'    => 'games.releace_year',
                 default   => 'programs.published_at',
             },
             match($request->query('order', 'desc')) {
@@ -44,7 +45,7 @@ class ProgramSearchService
         //検索結果の個数を取得
         $collection_count = $programs->count();
 
-        //取得個数を設定してでーたを取得する
+        //取得個数を設定してデータを取得する
         $programs = $programs->limit($count)
             ->offset(($request->query('page', 1) - 1) * $count)
             ->get();
