@@ -7,17 +7,13 @@
             :href="base_url + '?' + makePageQuery(1)"
             class="page-item"
         >
-            <svg fill="currentColor" class="page-svg">
-                <use xlink:href="/icon/double_left.svg#double_left"></use>
-            </svg>
+            <SvgIcon icon="double_left" />
         </Link>
         <div
             v-else
             class="page-item page-disable"
         >
-            <svg fill="currentColor" class="page-svg">
-                <use xlink:href="/icon/double_left.svg#double_left"></use>
-            </svg>
+            <SvgIcon icon="double_left" />
         </div>
 
         <!-- 一つ前のページへ -->
@@ -26,17 +22,13 @@
             :href="base_url + '?' + makePageQuery(page_current - 1)"
             class="pc-only page-item"
         >
-            <svg fill="currentColor" class="page-svg">
-                <use xlink:href="/icon/single_left.svg#single_left"></use>
-            </svg>
+            <SvgIcon icon="single_left" />
         </Link>
         <div
             v-else
             class="pc-only page-item page-disable"
         >
-            <svg fill="currentColor" class="page-svg">
-                <use xlink:href="/icon/single_left.svg#single_left"></use>
-            </svg>
+            <SvgIcon icon="single_left" />
         </div>
 
         <!-- ページ数指定 -->
@@ -67,17 +59,13 @@
             :href="base_url + '?' + makePageQuery(page_current + 1)"
             class="pc-only page-item"
         >
-            <svg fill="currentColor" class="page-svg">
-                <use xlink:href="/icon/single_right.svg#single_right"></use>
-            </svg>
+            <SvgIcon icon="single_right" />
         </Link>
         <div
             v-else
             class="pc-only page-item page-disable"
         >
-            <svg fill="currentColor" class="page-svg">
-                <use xlink:href="/icon/single_right.svg#single_right"></use>
-            </svg>
+            <SvgIcon icon="single_right" />
         </div>
 
         <!-- 最後のページへ -->
@@ -86,17 +74,13 @@
             :href="base_url + '?' + makePageQuery(page_last)"
             class="page-item"
         >
-            <svg fill="currentColor" class="page-svg">
-                <use xlink:href="/icon/double_right.svg#double_right"></use>
-            </svg>
+            <SvgIcon icon="double_right" />
         </Link>
         <div
             v-else
             class="page-item page-disable"
         >
-            <svg fill="currentColor" class="page-svg">
-                <use xlink:href="/icon/double_right.svg#double_right"></use>
-            </svg>
+            <SvgIcon icon="double_right" />
         </div>
 
     </div>
@@ -104,7 +88,8 @@
 
 
 <script>
-import {Link} from "@inertiajs/inertia-vue3";
+import {Link}  from "@inertiajs/inertia-vue3";
+import SvgIcon from "@/js/Components/SvgIcon.vue";
 export default {
 
     //呼び出し元から渡された引数
@@ -118,6 +103,7 @@ export default {
     //読み込んだコンポーネント
     components: {
         Link,
+        SvgIcon,
     },
 
     //コンポーネント内で使用する変数

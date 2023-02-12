@@ -17,6 +17,20 @@ class ProgramReadService
     }
 
     /**
+     * 動画の詳細データを取得
+     * 
+     * @param int $program_id
+     * 
+     * @return Program
+     */
+    public function getProgram(int $program_id) : Program
+    {
+        return $this->programModel
+            ->where('id', $program_id)
+            ->first();
+    }
+
+    /**
      * 今週の総合ランキングを取得
      * 
      * @param int $count 取得する件数
@@ -84,7 +98,6 @@ class ProgramReadService
     {
         return $this->programModel
             ->SelectIndex()
-            ->join('games', 'programs.game_id', '=', 'games.id')
             ->where('published_at', '>=', date("Y-m-d H:i:s", strtotime($period)))
             ->whereIn('games.hard_id', [
                 config('const.hard.famicom'),

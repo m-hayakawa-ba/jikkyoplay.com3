@@ -29,14 +29,14 @@ class ProgramSearchService
         $programs = $this->programModel
             ->SelectIndex();
         
-        //ソート順を設定
+        //ソート順を設定（デフォルト値はControllerで設定済み）
         $programs = $programs->orderBy(
-            match($request->query('sort', 'date')) {
+            match($request->query('sort')) {
                 'view'    => 'programs.view_count',
                 'sale'    => 'games.releace_year',
                 default   => 'programs.published_at',
             },
-            match($request->query('order', 'desc')) {
+            match($request->query('order')) {
                 'asc'     => 'asc',
                 default   => 'desc',
             }

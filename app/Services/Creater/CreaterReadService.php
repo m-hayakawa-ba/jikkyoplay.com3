@@ -17,7 +17,21 @@ class CreaterReadService
     }
 
     /**
-     * 配信者のランキングを取得
+     * 投稿者の詳細情報を取得
+     * 
+     * @param int $creater_id
+     * 
+     * @return Creater
+     */
+    public function getCreater(int $creater_id) : Creater
+    {
+        return $this->createrModel
+            ->where('id', $creater_id)
+            ->first();
+    }
+
+    /**
+     * 投稿者のランキングを取得
      * 
      * @param int $count 取得する件数
      * @param string $period 取得する期間（strtotimeに渡せる形式で）

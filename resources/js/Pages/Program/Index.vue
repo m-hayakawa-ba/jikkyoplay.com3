@@ -46,7 +46,7 @@
 
         <!-- ページネーション -->
         <PageList
-            :page_current="Number(page_current)"
+            :page_current="Number(queries.page)"
             :page_last="Number(page_last)"
             base_url="/program"
             :queries="queries"
@@ -75,7 +75,6 @@ export default {
         return {
             count:        usePage().props.value.count,
             programs:     usePage().props.value.programs,
-            page_current: usePage().props.value.page_current,
             page_last:    usePage().props.value.page_last,
             queries:      usePage().props.value.queries,
             sort:         'date_desc',
@@ -125,7 +124,6 @@ export default {
         },
     },
 
-    
     //初回読み込み時に実行
     mounted() {
 
