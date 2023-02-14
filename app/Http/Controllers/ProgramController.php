@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Services\Creater\CreaterReadService;
+use App\Services\Game\GameReadService;
 use App\Services\Program\ProgramReadService;
 use App\Services\Program\ProgramSearchService;
 use Illuminate\Http\Request;
@@ -20,6 +21,7 @@ class ProgramController extends Controller
      */
     public function __construct(
         private CreaterReadService   $createrReadService,
+        private GameReadService      $gameReadService,
         private ProgramReadService   $programReadService,
         private ProgramSearchService $programSearchService,
     ){
@@ -80,10 +82,14 @@ class ProgramController extends Controller
         //投稿者情報を取得
         $creater = $this->createrReadService->getCreater($program->creater_id);
 
+        //ゲーム情報を取得
+        $game = $this->gameReadService->getGame($program->game_id);
+
         //viewへ遷移
         return Inertia::render('Program/Show', compact(
             'program',
             'creater',
+            'game',
         ));
     }
 }

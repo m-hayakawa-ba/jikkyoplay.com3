@@ -26,6 +26,13 @@ class CreaterReadService
     public function getCreater(int $creater_id) : Creater
     {
         return $this->createrModel
+            ->select(
+                'id',
+                'name',
+                'site_id',
+                'user_id',
+                'user_icon_url',
+            )
             ->where('id', $creater_id)
             ->first();
     }

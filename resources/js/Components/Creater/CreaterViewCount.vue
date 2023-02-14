@@ -37,7 +37,6 @@ export default {
         "rank",       //再生回数が何位か（表示しない場合はnull）
         "view_count", //再生回数
     ],
-
 }
 </script>
 

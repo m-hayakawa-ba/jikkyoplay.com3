@@ -49,6 +49,20 @@
             <SvgIcon icon="external_link" class="external-icon" />
         </a>
 
+        <!-- 動画情報と投稿者情報 -->
+        <div class="information-wrap">
+            <div class="game-data-wrap">
+                <GameWrap 
+                    :game="game"
+                />
+            </div>
+            <div class="creater-wrap">
+                <CreaterWrap
+                    :creater="creater"
+                />
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -56,6 +70,8 @@
 <script>
 import {usePage} from "@inertiajs/inertia-vue3";
 import moment from 'moment';
+import CreaterWrap from '@/js/Components/Creater/CreaterWrap.vue';
+import GameWrap from '@/js/Components/Game/GameWrap.vue';
 import EmbedYoutube from '@/js/Components/Program/EmbedYoutube.vue';
 import EmbedNicovideo from '@/js/Components/Program/EmbedNicovideo.vue';
 import SvgIcon from "@/js/Components/SvgIcon.vue";
@@ -63,6 +79,8 @@ export default {
 
     //読み込んだコンポーネント
     components: {
+        CreaterWrap,
+        GameWrap,
         EmbedYoutube,
         EmbedNicovideo,
         SvgIcon,
@@ -82,6 +100,7 @@ export default {
         return {
             program:  usePage().props.value.program,
             creater:  usePage().props.value.creater,
+            game:     usePage().props.value.game,
         };
     },
 
@@ -98,7 +117,6 @@ export default {
 
     //初回読み込み時に実行
     mounted() {
-
     }
 
 }
@@ -150,6 +168,18 @@ export default {
         height: 24px;
         margin-left: 4px;
         vertical-align: top;
+    }
+
+    .information-wrap {
+        display: flex;
+        justify-content: space-between;
+        margin: 40px 0 0 0;
+    }
+    .game-data-wrap {
+        width: 48%;
+    }
+    .creater-wrap {
+        width: 48%;
     }
 
 </style>

@@ -2,6 +2,7 @@
 
     <!-- 再生回数表示 -->
     <CreaterViewCount
+        v-if="creater.view_count"
         :rank="rank"
         :view_count="creater.view_count"
     />
@@ -103,8 +104,6 @@ export default {
 
     //初回読み込み時に実行
     mounted() {
-
-        // console.log(this.creater);
     }
 
 }
