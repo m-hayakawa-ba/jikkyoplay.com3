@@ -6,6 +6,7 @@ use App\Services\Creater\CreaterReadService;
 use App\Services\Game\GameReadService;
 use App\Services\Program\ProgramReadService;
 use App\Services\Program\ProgramSearchService;
+use App\Services\Review\ReviewReadService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -24,6 +25,7 @@ class ProgramController extends Controller
         private GameReadService      $gameReadService,
         private ProgramReadService   $programReadService,
         private ProgramSearchService $programSearchService,
+        private ReviewReadService    $reviewReadService,
     ){
     }
 
@@ -85,11 +87,15 @@ class ProgramController extends Controller
         //ゲーム情報を取得
         $game = $this->gameReadService->getGame($program->game_id);
 
+        //レビューを取得
+        $reviews = $this->reviewReadService->getProgramReviews($program_id);
+
         //viewへ遷移
         return Inertia::render('Program/Show', compact(
             'program',
             'creater',
             'game',
+            'reviews',
         ));
     }
 }

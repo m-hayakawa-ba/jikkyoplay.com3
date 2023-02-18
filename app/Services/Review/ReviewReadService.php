@@ -17,7 +17,7 @@ class ReviewReadService
     }
 
     /**
-     * レビューを取得
+     * トップ画面表示用のレビューを取得
      * 
      * @param int $count 取得する件数
      * 
@@ -46,6 +46,22 @@ class ReviewReadService
             ->where('programs.flag_enabled', 1)
             ->orderBy('displayed_at', 'desc')
             ->limit($count)
+            ->get();
+    }
+
+    /**
+     * 動画詳細画面用のレビューを取得
+     * 
+     * @param int $program_id
+     * 
+     * @return Collection
+     */
+    public function getProgramReviews (int $program_id) : Collection
+    {
+        return $this->reviewModel
+            ->where('program_id', $program_id)
+            ->where('flag_enabled', 1)
+            ->orderBy('displayed_at', 'desc')
             ->get();
     }
 }

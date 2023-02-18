@@ -8,7 +8,12 @@
                     ゲーム名：
                 </th>
                 <td>
-                    {{ game.name }}
+                    <Link href="/" class="link-flex">
+                        {{ game.name }}
+                        <div class="svg_icon">
+                            <SvgIcon icon="right" />
+                        </div>
+                    </Link>
                 </td>
             </tr>
             <tr>
@@ -16,7 +21,12 @@
                     ハード：
                 </th>
                 <td>
-                    {{ game.hard_name }}
+                    <Link href="/" class="link-flex">
+                        {{ game.hard_name }}
+                        <div class="svg_icon">
+                            <SvgIcon icon="right" />
+                        </div>
+                    </Link>
                 </td>
             </tr>
             <tr>
@@ -24,7 +34,12 @@
                     メーカー：
                 </th>
                 <td>
-                    {{ game.maker_name }}
+                    <Link href="/" class="link-flex">
+                        {{ game.maker_name }}
+                        <div class="svg_icon">
+                            <SvgIcon icon="right" />
+                        </div>
+                    </Link>
                 </td>
             </tr>
             <tr>
@@ -32,7 +47,12 @@
                     発売年：
                 </th>
                 <td>
-                    {{ game.releace_year }}年
+                    <Link href="/" class="link-flex">
+                        {{ game.releace_year }}年
+                        <div class="svg_icon">
+                            <SvgIcon icon="right" />
+                        </div>
+                    </Link>
                 </td>
             </tr>
         </table>
@@ -42,6 +62,8 @@
 
 
 <script>
+import {Link} from "@inertiajs/inertia-vue3";
+import SvgIcon from "@/js/Components/SvgIcon.vue";
 export default {
 
     //呼び出し元から渡された引数
@@ -49,11 +71,17 @@ export default {
         "game",
     ],
 
-//初回読み込み時に実行
-    mounted() {
-        console.log(this.game);
+    //読み込んだコンポーネント
+    components: {
+        Link,
+        SvgIcon,
+    },
+
+    //初回読み込み時に実行
+        mounted() {
+            console.log(this.game);
+        }
     }
-}
 </script>
 
 
@@ -67,6 +95,19 @@ export default {
         border: solid 1px #8b9699;
         border-radius: 4px;
         box-shadow: 1px 1px 2px #21003421;
+    }
+    th {
+        font-weight: normal;
+    }
+    .link-flex {
+        display: flex;
+        color: $font-color-link;
+        font-weight: bold;
+    }
+    .svg_icon {
+        width: 20px;
+        height: 20px;
+        margin-left: 2px;
     }
 
 </style>

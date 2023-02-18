@@ -19844,9 +19844,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
+/* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
+/* harmony import */ var _js_Components_SvgIcon_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/Components/SvgIcon.vue */ "./resources/js/Components/SvgIcon.vue");
+
+
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //呼び出し元から渡された引数
   props: ["game"],
+  //読み込んだコンポーネント
+  components: {
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
+    SvgIcon: _js_Components_SvgIcon_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
+  },
   //初回読み込み時に実行
   mounted: function mounted() {
     console.log(this.game);
@@ -20797,7 +20806,8 @@ __webpack_require__.r(__webpack_exports__);
     return {
       program: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.program,
       creater: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.creater,
-      game: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.game
+      game: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.game,
+      reviews: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.reviews
     };
   },
   //コンポーネント内で使用するメソッド
@@ -21094,18 +21104,71 @@ var _hoisted_1 = {
 var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, " ゲーム名： ", -1 /* HOISTED */);
 });
-var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_3 = {
+  "class": "svg_icon"
+};
+var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, " ハード： ", -1 /* HOISTED */);
 });
-var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_5 = {
+  "class": "svg_icon"
+};
+var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, " メーカー： ", -1 /* HOISTED */);
 });
-var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_7 = {
+  "class": "svg_icon"
+};
+var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("th", null, " 発売年： ", -1 /* HOISTED */);
 });
-
+var _hoisted_9 = {
+  "class": "svg_icon"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲーム情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.game.name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.game.hard_name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.game.maker_name), 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_5, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.game.releace_year) + "年 ", 1 /* TEXT */)])])])], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
+  var _component_SvgIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SvgIcon");
+  var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲーム情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("table", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+    href: "/",
+    "class": "link-flex"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.game.name) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
+        icon: "right"
+      })])];
+    }),
+    _: 1 /* STABLE */
+  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+    href: "/",
+    "class": "link-flex"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.game.hard_name) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
+        icon: "right"
+      })])];
+    }),
+    _: 1 /* STABLE */
+  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+    href: "/",
+    "class": "link-flex"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.game.maker_name) + " ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
+        icon: "right"
+      })])];
+    }),
+    _: 1 /* STABLE */
+  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("tr", null, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("td", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+    href: "/",
+    "class": "link-flex"
+  }, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($props.game.releace_year) + "年 ", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
+        icon: "right"
+      })])];
+    }),
+    _: 1 /* STABLE */
+  })])])])])], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
 }
 
 /***/ }),
@@ -22372,9 +22435,29 @@ var _hoisted_8 = {
 var _hoisted_9 = {
   "class": "game-data-wrap"
 };
-var _hoisted_10 = {
+var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "ゲーム情報", -1 /* HOISTED */);
+});
+var _hoisted_11 = {
   "class": "creater-wrap"
 };
+var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "実況者情報", -1 /* HOISTED */);
+});
+var _hoisted_13 = {
+  "class": "review_wrap"
+};
+var _hoisted_14 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "動画レビュー", -1 /* HOISTED */);
+});
+var _hoisted_15 = ["innerHTML"];
+var _hoisted_16 = {
+  "class": "review-reviewer"
+};
+var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
+});
+
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_EmbedYoutube = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("EmbedYoutube");
   var _component_EmbedNicovideo = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("EmbedNicovideo");
@@ -22403,11 +22486,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, [_hoisted_7, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
     icon: "external_link",
     "class": "external-icon"
-  })], 8 /* PROPS */, _hoisted_6)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 動画情報と投稿者情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_GameWrap, {
+  })], 8 /* PROPS */, _hoisted_6)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 動画情報と投稿者情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_GameWrap, {
     game: $data.game
-  }, null, 8 /* PROPS */, ["game"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CreaterWrap, {
+  }, null, 8 /* PROPS */, ["game"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CreaterWrap, {
     creater: $data.creater
-  }, null, 8 /* PROPS */, ["creater"])])])])], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
+  }, null, 8 /* PROPS */, ["creater"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲームレビュー "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.reviews, function (review) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+      key: review.id,
+      "class": "review-item"
+    }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+      innerHTML: review.detail
+    }, null, 8 /* PROPS */, _hoisted_15), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)((0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.format(review.displayed_at)), 1 /* TEXT */), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" reviewer:" + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(review.reviewer), 1 /* TEXT */)])]);
+  }), 128 /* KEYED_FRAGMENT */))])])], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
 }
 
 /***/ }),
@@ -22783,7 +22873,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".game-item[data-v-f98fc784] {\n  margin: 0 0 4px;\n  padding: 2px;\n  width: 100%;\n  background-color: #fff;\n  border: solid 1px #8b9699;\n  border-radius: 4px;\n  box-shadow: 1px 1px 2px rgba(33, 0, 52, 0.1294117647);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".game-item[data-v-f98fc784] {\n  margin: 0 0 4px;\n  padding: 2px;\n  width: 100%;\n  background-color: #fff;\n  border: solid 1px #8b9699;\n  border-radius: 4px;\n  box-shadow: 1px 1px 2px rgba(33, 0, 52, 0.1294117647);\n}\nth[data-v-f98fc784] {\n  font-weight: normal;\n}\n.link-flex[data-v-f98fc784] {\n  display: flex;\n  color: #229;\n  font-weight: bold;\n}\n.svg_icon[data-v-f98fc784] {\n  width: 20px;\n  height: 20px;\n  margin-left: 2px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -23383,7 +23473,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".program-background[data-v-b671b41e] {\n  margin: 20px 0 8px;\n  background-color: #000;\n  border-radius: 4px;\n  overflow: hidden;\n}\n@media screen and (min-width: 640px) {\n.program-background[data-v-b671b41e] {\n    padding: 0 72px;\n}\n}\n.program-title[data-v-b671b41e] {\n  font-size: 1.6rem;\n}\n@media screen and (min-width: 640px) {\n.program-title[data-v-b671b41e] {\n    font-size: 1.8rem;\n}\n}\n.link-youtube[data-v-b671b41e],\n.link-nicovideo[data-v-b671b41e] {\n  display: block;\n  margin: 24px auto 0;\n  width: 208px;\n  text-align: center;\n  font-size: 1.6rem;\n  padding: 8px 0px;\n  border-radius: 10px;\n}\n.link-youtube[data-v-b671b41e] {\n  color: #fff;\n  background-color: #f00;\n  border: solid 2px #f00;\n}\n.link-nicovideo[data-v-b671b41e] {\n  color: #fff;\n  background-color: #424be4;\n  border: solid 2px #424be4;\n}\n.external-icon[data-v-b671b41e] {\n  position: relative;\n  bottom: 3px;\n  display: inline;\n  width: 24px;\n  height: 24px;\n  margin-left: 4px;\n  vertical-align: top;\n}\n.information-wrap[data-v-b671b41e] {\n  display: flex;\n  justify-content: space-between;\n  margin: 40px 0 0 0;\n}\n.game-data-wrap[data-v-b671b41e] {\n  width: 48%;\n}\n.creater-wrap[data-v-b671b41e] {\n  width: 48%;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".program-background[data-v-b671b41e] {\n  margin: 20px 0 8px;\n  background-color: #000;\n  border-radius: 4px;\n  overflow: hidden;\n}\n@media screen and (min-width: 640px) {\n.program-background[data-v-b671b41e] {\n    padding: 0 72px;\n}\n}\n.program-title[data-v-b671b41e] {\n  font-size: 1.6rem;\n}\n@media screen and (min-width: 640px) {\n.program-title[data-v-b671b41e] {\n    font-size: 1.8rem;\n}\n}\n.link-youtube[data-v-b671b41e],\n.link-nicovideo[data-v-b671b41e] {\n  display: block;\n  margin: 30px auto 0;\n  width: 208px;\n  text-align: center;\n  font-size: 1.6rem;\n  padding: 8px 0px;\n  border-radius: 10px;\n}\n.link-youtube[data-v-b671b41e] {\n  color: #fff;\n  background-color: #f00;\n  border: solid 2px #f00;\n}\n.link-nicovideo[data-v-b671b41e] {\n  color: #fff;\n  background-color: #424be4;\n  border: solid 2px #424be4;\n}\n.external-icon[data-v-b671b41e] {\n  position: relative;\n  bottom: 3px;\n  display: inline;\n  width: 24px;\n  height: 24px;\n  margin-left: 4px;\n  vertical-align: top;\n}\n.information-wrap[data-v-b671b41e] {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between;\n  margin: 30px 0 0 0;\n}\nh3[data-v-b671b41e] {\n  font-size: 1.6rem;\n  font-weight: bold;\n  margin: 12px 0 4px;\n  border-bottom: solid 1px #888;\n}\n.game-data-wrap[data-v-b671b41e] {\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.game-data-wrap[data-v-b671b41e] {\n    width: 49%;\n}\n}\n.creater-wrap[data-v-b671b41e] {\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.creater-wrap[data-v-b671b41e] {\n    width: 49%;\n}\n}\n.review-item[data-v-b671b41e] {\n  margin: 0 0 4px;\n  padding: 4px 6px;\n  width: 100%;\n  background-color: #fff;\n  border: solid 1px #8b9699;\n  border-radius: 4px;\n  box-shadow: 1px 1px 2px rgba(33, 0, 52, 0.13);\n}\n.review-reviewer[data-v-b671b41e] {\n  font-size: 1.2rem;\n  text-align: right;\n  color: #666;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

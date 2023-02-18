@@ -52,14 +52,32 @@
         <!-- 動画情報と投稿者情報 -->
         <div class="information-wrap">
             <div class="game-data-wrap">
+                <h3>ゲーム情報</h3>
                 <GameWrap 
                     :game="game"
                 />
             </div>
             <div class="creater-wrap">
+                <h3>実況者情報</h3>
                 <CreaterWrap
                     :creater="creater"
                 />
+            </div>
+        </div>
+
+        <!-- ゲームレビュー -->
+        <div class="review_wrap">
+            <h3>動画レビュー</h3>
+            <div
+                v-for="review in reviews"
+                :key="review.id"
+                class="review-item"
+            >
+                <div v-html="review.detail"></div>
+                <div class="review-reviewer">
+                    {{ format(review.displayed_at) }}<br>
+                    reviewer:{{ review.reviewer }}
+                </div>
             </div>
         </div>
 
@@ -101,6 +119,7 @@ export default {
             program:  usePage().props.value.program,
             creater:  usePage().props.value.creater,
             game:     usePage().props.value.game,
+            reviews:  usePage().props.value.reviews,
         };
     },
 
@@ -143,7 +162,7 @@ export default {
     .link-youtube,
     .link-nicovideo {
         display: block;
-        margin: 24px auto 0;
+        margin: 30px auto 0;
         width: 208px;
         text-align: center;
         font-size: 1.6rem;
@@ -172,14 +191,43 @@ export default {
 
     .information-wrap {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-between;
-        margin: 40px 0 0 0;
+        margin: 30px 0 0 0;
+    }
+    h3 {
+        font-size: $font-l;
+        font-weight: bold;
+        margin: 12px 0 4px;
+        border-bottom: solid 1px #888;
     }
     .game-data-wrap {
-        width: 48%;
+        width: 100%;
+        @media screen and (min-width: $bp) {
+            width: 49%;
+        }
     }
     .creater-wrap {
-        width: 48%;
+        width: 100%;
+        @media screen and (min-width: $bp) {
+            width: 49%;
+        }
     }
-
+    .review_wrap {
+        
+    }
+    .review-item {
+        margin: 0 0 4px;
+        padding: 4px 6px;
+        width: 100%;
+        background-color: #fff;
+        border: solid 1px #8b9699;
+        border-radius: 4px;
+        box-shadow: 1px 1px 2px rgb(33 0 52 / 13%);
+    }
+    .review-reviewer {
+        font-size: $font-s;
+        text-align: right;
+        color: #666;
+    }
 </style>
