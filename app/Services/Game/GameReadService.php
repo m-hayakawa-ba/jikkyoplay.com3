@@ -23,8 +23,11 @@ class GameReadService
     {
         return $this->gameModel
             ->select(
+                'games.id as id',
                 'games.name as name',
+                'hards.id as hard_id',
                 'hards.name as hard_name',
+                'makers.id as maker_id',
                 'makers.name as maker_name',
                 'games.releace_year',
             )

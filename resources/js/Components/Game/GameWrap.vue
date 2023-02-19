@@ -8,10 +8,13 @@
                     ゲーム名：
                 </th>
                 <td>
-                    <Link href="/" class="link-flex">
+                    <Link
+                        :href="'/program?game_id=' + game.id"
+                        class="link-flex"
+                    >
                         {{ game.name }}
                         <div class="svg_icon">
-                            <SvgIcon icon="right" />
+                            <SvgIcon icon="right" size="24px" />
                         </div>
                     </Link>
                 </td>
@@ -21,7 +24,10 @@
                     ハード：
                 </th>
                 <td>
-                    <Link href="/" class="link-flex">
+                    <Link
+                        :href="'/program?hard_id=' + game.hard_id"
+                        class="link-flex"
+                    >
                         {{ game.hard_name }}
                         <div class="svg_icon">
                             <SvgIcon icon="right" />
@@ -34,7 +40,10 @@
                     メーカー：
                 </th>
                 <td>
-                    <Link href="/" class="link-flex">
+                    <Link
+                        :href="'/program?maker_id=' + game.maker_id"
+                        class="link-flex"
+                    >
                         {{ game.maker_name }}
                         <div class="svg_icon">
                             <SvgIcon icon="right" />
@@ -47,7 +56,10 @@
                     発売年：
                 </th>
                 <td>
-                    <Link href="/" class="link-flex">
+                    <Link
+                        :href="'/program?year=' + game.releace_year"
+                        class="link-flex"
+                    >
                         {{ game.releace_year }}年
                         <div class="svg_icon">
                             <SvgIcon icon="right" />
@@ -79,7 +91,7 @@ export default {
 
     //初回読み込み時に実行
         mounted() {
-            console.log(this.game);
+            // console.log(this.game);
         }
     }
 </script>

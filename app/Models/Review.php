@@ -12,11 +12,18 @@ class Review extends Model
     /**
      * カラムの設定
      */
+    protected $fillable = [
+        'program_id',
+        'reviewer',
+        'detail',
+        'ip_address',
+        'cookie_string',
+    ];
     protected $hidden = [
         'ip_address',
         'cookie_string',
         'flag_enabled',
-        'created_at',
+        'displayed_at',
         'updated_at',
     ];
 

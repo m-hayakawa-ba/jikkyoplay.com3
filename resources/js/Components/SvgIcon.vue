@@ -1,5 +1,8 @@
 <template>
-    <svg fill="currentColor" class="svg-wrap">
+    <svg
+        fill="currentColor"
+        class="svg-wrap"
+    >
         <use :xlink:href="'/icon/' + icon + '.svg#' + icon"></use>
     </svg>
 </template>
@@ -18,7 +21,7 @@ export default {
 
 <style lang="scss" scoped>
     .svg-wrap {
-        width: 100%;
+        display: inline;
         height: 100%;
     }
 </style>

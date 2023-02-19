@@ -38,4 +38,25 @@ class Program extends Model
             ->join('games', 'programs.game_id', '=', 'games.id')
             ->where('flag_enabled', 1);
     }
+    /**
+     * スコープ
+     * ソート順を設定する
+     * 
+     * @param string $sort
+     * @param string $order
+     */
+    public function scopeSetOrderBy(Builder $query, string $sort, string $order)
+    {
+        return $query->orderBy(
+            match($sort) {
+                'view'    => 'programs.view_count',
+                'sale'    => 'games.releace_year',
+                default   => 'programs.published_at',
+            },
+            match($order) {
+                'asc'     => 'asc',
+                default   => 'desc',
+            }
+        );
+    }
 }

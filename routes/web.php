@@ -3,8 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
-use App\Http\Controllers\RankingController;
 use App\Http\Controllers\ProgramController;
+use App\Http\Controllers\RankingController;
+use App\Http\Controllers\ReviewController;
 
 //トップページ
 Route::get('/', [HomeController::class, 'index']);
@@ -18,3 +19,6 @@ Route::get('/ranking', [RankingController::class, 'index']);
 //動画ページ
 Route::get('/program', [ProgramController::class, 'index']);
 Route::get('/program/{program_id}', [ProgramController::class, 'show']);
+
+//レビューページ
+Route::post('/review', [ReviewController::class, 'store']);

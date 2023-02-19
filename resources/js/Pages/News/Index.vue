@@ -115,7 +115,7 @@ export default {
 
     //初回読み込み時に実行
     mounted() {
-        console.log(this.newses);
+        // console.log(this.newses);
     },
 
 }

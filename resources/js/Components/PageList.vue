@@ -33,24 +33,26 @@
 
         <!-- ページ数指定 -->
         <template v-for="i of list_num">
-            <Link
-                v-if="page_current != getPageNumber(i)"
-                :href="base_url + '?' + makePageQuery(getPageNumber(i))"
-                class="page-item"
-            >
-                <div class="page-number">
-                    {{ getPageNumber(i) }}
+            <template v-if="getPageNumber(i) <= page_last">
+                <Link
+                    v-if="page_current != getPageNumber(i)"
+                    :href="base_url + '?' + makePageQuery(getPageNumber(i))"
+                    class="page-item"
+                >
+                    <div class="page-number">
+                        {{ getPageNumber(i) }}
+                    </div>
+                </Link>
+                <div
+                    v-else
+                    :href="base_url + '?' + makePageQuery(getPageNumber(i))"
+                    class="page-item page-disable"
+                >
+                    <div class="page-number">
+                        {{ getPageNumber(i) }}
+                    </div>
                 </div>
-            </Link>
-            <div
-                v-else
-                :href="base_url + '?' + makePageQuery(getPageNumber(i))"
-                class="page-item page-disable"
-            >
-                <div class="page-number">
-                    {{ getPageNumber(i) }}
-                </div>
-            </div>
+            </template>
         </template>
 
         <!-- 一つ先のページへ -->
@@ -140,6 +142,7 @@ export default {
     //初回読み込み時に実行
     mounted() {
         // console.log(this.page_current);
+        // console.log(this.page_last);
     }
 
 }

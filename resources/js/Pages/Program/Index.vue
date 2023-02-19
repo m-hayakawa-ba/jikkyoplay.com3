@@ -159,7 +159,7 @@ export default {
         margin-top: 4px;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: space-between;
         @media screen and (min-width: $bp) {
             padding-left: 8px;
         }
@@ -169,7 +169,7 @@ export default {
         margin: 8px 0 0;
         width: 100%;
         @media screen and (min-width: $bp) {
-            width: 49%;
+            width: 49.5%;
         }
     }
 </style>

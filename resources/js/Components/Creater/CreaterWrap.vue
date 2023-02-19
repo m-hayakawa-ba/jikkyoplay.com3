@@ -31,7 +31,10 @@
             </div>
 
             <!-- その他の動画 -->
-            <Link href="/" class="creater-other-program">
+            <Link
+                :href="'/program?creater_id=' + creater.id"
+                class="creater-other-program"
+            >
                 <span>この実況者の動画を見る</span>
                 <svg fill="currentColor" class="link-arrow">
                     <use xlink:href="/icon/right.svg#right"></use>

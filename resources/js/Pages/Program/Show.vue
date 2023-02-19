@@ -68,17 +68,33 @@
         <!-- ゲームレビュー -->
         <div class="review_wrap">
             <h3>動画レビュー</h3>
+
+            <!-- 各々のレビュー -->
             <div
                 v-for="review in reviews"
                 :key="review.id"
                 class="review-item"
             >
-                <div v-html="review.detail"></div>
+                <!-- レビュー本文 -->
+                <div
+                    v-html="review.detail"
+                    class="review-detail"
+                ></div>
+
+                <!-- 投稿日とレビュワー名 -->
                 <div class="review-reviewer">
-                    {{ format(review.displayed_at) }}<br>
+                    {{ format(review.created_at) }}<br>
                     reviewer:{{ review.reviewer }}
                 </div>
             </div>
+
+            <!-- レビューを書くボタン -->
+            <ModalCreateReview
+                :program_id="program.id"
+                :creater_name="creater.name"
+                @push_review="pushReview"
+            />
+
         </div>
 
     </div>
@@ -92,6 +108,7 @@ import CreaterWrap from '@/js/Components/Creater/CreaterWrap.vue';
 import GameWrap from '@/js/Components/Game/GameWrap.vue';
 import EmbedYoutube from '@/js/Components/Program/EmbedYoutube.vue';
 import EmbedNicovideo from '@/js/Components/Program/EmbedNicovideo.vue';
+import ModalCreateReview from '@/js/Components/Review/ModalCreateReview.vue';
 import SvgIcon from "@/js/Components/SvgIcon.vue";
 export default {
 
@@ -101,6 +118,7 @@ export default {
         GameWrap,
         EmbedYoutube,
         EmbedNicovideo,
+        ModalCreateReview,
         SvgIcon,
     },
 
@@ -125,17 +143,26 @@ export default {
 
     //コンポーネント内で使用するメソッド
     methods: {
+
+        //日時の表示
         format(date) {
             return moment(date).format('YYYY年M月D日')
         },
         
+        //画像がなかった場合の表示
         noImage(element){
             element.target.src = '/image/noimage_trans.png'
+        },
+
+        //レビューを追加する
+        pushReview(review) {
+            this.reviews.push(review);
         },
     },
 
     //初回読み込み時に実行
     mounted() {
+        console.log(this.reviews);
     }
 
 }
@@ -162,7 +189,7 @@ export default {
     .link-youtube,
     .link-nicovideo {
         display: block;
-        margin: 30px auto 0;
+        margin: 30px auto 30px;
         width: 208px;
         text-align: center;
         font-size: 1.6rem;
@@ -193,7 +220,6 @@ export default {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-between;
-        margin: 30px 0 0 0;
     }
     h3 {
         font-size: $font-l;
@@ -201,20 +227,20 @@ export default {
         margin: 12px 0 4px;
         border-bottom: solid 1px #888;
     }
-    .game-data-wrap {
-        width: 100%;
-        @media screen and (min-width: $bp) {
-            width: 49%;
-        }
-    }
+    .game-data-wrap,
     .creater-wrap {
         width: 100%;
+        margin-bottom: 20px;
         @media screen and (min-width: $bp) {
             width: 49%;
+            margin-bottom: 30px;
         }
     }
     .review_wrap {
-        
+        margin-bottom: 20px;
+        @media screen and (min-width: $bp) {
+            margin-bottom: 30px;
+        }
     }
     .review-item {
         margin: 0 0 4px;
@@ -224,6 +250,9 @@ export default {
         border: solid 1px #8b9699;
         border-radius: 4px;
         box-shadow: 1px 1px 2px rgb(33 0 52 / 13%);
+    }
+    .review-detail {
+        white-space: pre;
     }
     .review-reviewer {
         font-size: $font-s;
