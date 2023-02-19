@@ -1,28 +1,25 @@
 <template>
 
-    <!-- レビューを書くボタン -->
-    <div
+    <!-- モーダル表示ボタン -->
+    <ButtonOpen
+        button_text="動画レビューを書く"
         @click="display_flag=true"
-        class="review-modal-button"
-    >
-        動画レビューを書く
-        <SvgIcon icon="edit" class="edit-icon" />
-    </div>
+    />
 
     <!-- レビューモーダル -->
     <transition>
         <div
             v-if="display_flag"
-            class="black-layer"
+            class="modal-background-layer"
             v-on:click.self="display_flag=false"
         >
             <!-- モーダル全体 -->
             <div class="modal-wrap">
 
                 <!-- 閉じるボタン -->
-                <div class="close-button" @click="display_flag=false">
-                    <SvgIcon icon="cross" />
-                </div>
+                <ButtonClose
+                    @click="display_flag=false"
+                />
 
                 <!-- モーダルの内容 -->
                 <div class="review-description">
@@ -60,7 +57,7 @@
                     </ul>
 
                     <!-- 送信ボタン -->
-                    <button type="submit">レビューを投稿する</button>
+                    <ButtonSubmit button_text="レビューを投稿する" />
                 </form>
             </div>
         </div>
@@ -70,7 +67,9 @@
 
 
 <script>
-import SvgIcon from "@/js/Components/SvgIcon.vue";
+import ButtonOpen from "@/js/Components/Modal/ButtonOpen.vue";
+import ButtonClose from "@/js/Components/Modal/ButtonClose.vue";
+import ButtonSubmit from "@/js/Components/Modal/ButtonSubmit.vue";
 export default {
 
     //呼び出し元から渡された引数
@@ -97,7 +96,9 @@ export default {
 
     //読み込んだコンポーネント
     components: {
-        SvgIcon,
+        ButtonOpen,
+        ButtonClose,
+        ButtonSubmit,
     },
 
     // 入力の監視
@@ -176,70 +177,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-    .review-modal-button {
-        width: 172px;
-        margin: 0 0 0 auto;
-        padding-bottom: 2px;
-        border: solid 1px #8b9699;
-        border-radius: 4px;
-        text-align: center;
-        cursor: pointer;
-        transition: opacity 0.3s;
-        &:hover {
-            opacity: 0.8;
-        }
-    }
-    .edit-icon {
-        position: relative;
-        top: 4px;
-        width: 20px;
-        height: 20px;
-    }
-    .close-button {
-        position: absolute;
-        top: -36px;
-        right: 0px;
-        width: 30px;
-        height: 30px;
-        color: #fff;
-        cursor: pointer;
-        transition: opacity 0.3s;
-        &:hover {
-            opacity: 0.8;
-        }
-    }
-    .black-layer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100vw;
-        height: 100vh;
-        z-index: 10;
-        background-color: #0e080880;
-        backdrop-filter: blur(2px);
-    }
-    .modal-wrap {
-        background-color: #fff;
-        width: 640px;
-        max-width: 96%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        padding: 16px;
-        border-radius: 8px;
-        box-shadow: 2px 2px 4px #00000020;
-    }
-    //モーダルの表示アニメーション
-    .v-enter-from, .v-leave-to {
-        opacity: 0;
-    }
-    .v-enter-active, .v-leave-active {
-        transition: opacity 0.3s;
-    }
-    .v-enter-to, .v-leave {
-        opacity: 1;
-    }
     .review-description {
         margin-bottom: 12px;
         span {
@@ -274,24 +211,6 @@ export default {
             color: $font-color-error;
             text-align: center;
             font-weight: bold;
-        }
-        button {
-            display: block;
-            margin: 20px auto 0;
-            padding: 8px 16px;
-            background-color: unset;
-            border: solid 2px #6f528f;
-            color: #462966;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition:
-                background-color 0.3s,
-                color 0.3s;
-            &:hover{
-                background-color: #6f528f;
-                color: #fff;
-            }
         }
     }
 </style>

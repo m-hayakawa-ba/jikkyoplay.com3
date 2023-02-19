@@ -56,11 +56,15 @@
                 <GameWrap 
                     :game="game"
                 />
+                <ModalUpdateGame
+                />
             </div>
             <div class="creater-wrap">
                 <h3>実況者情報</h3>
                 <CreaterWrap
                     :creater="creater"
+                />
+                <ModalUpdateCreater
                 />
             </div>
         </div>
@@ -104,12 +108,14 @@
 <script>
 import {usePage} from "@inertiajs/inertia-vue3";
 import moment from 'moment';
-import CreaterWrap from '@/js/Components/Creater/CreaterWrap.vue';
-import GameWrap from '@/js/Components/Game/GameWrap.vue';
-import EmbedYoutube from '@/js/Components/Program/EmbedYoutube.vue';
-import EmbedNicovideo from '@/js/Components/Program/EmbedNicovideo.vue';
-import ModalCreateReview from '@/js/Components/Review/ModalCreateReview.vue';
-import SvgIcon from "@/js/Components/SvgIcon.vue";
+import CreaterWrap        from '@/js/Components/Creater/CreaterWrap.vue';
+import ModalUpdateCreater from '@/js/Components/Creater/ModalUpdateCreater.vue';
+import GameWrap           from '@/js/Components/Game/GameWrap.vue';
+import ModalUpdateGame    from '@/js/Components/Game/ModalUpdateGame.vue';
+import EmbedYoutube       from '@/js/Components/Program/EmbedYoutube.vue';
+import EmbedNicovideo     from '@/js/Components/Program/EmbedNicovideo.vue';
+import ModalCreateReview  from '@/js/Components/Review/ModalCreateReview.vue';
+import SvgIcon            from "@/js/Components/SvgIcon.vue";
 export default {
 
     //読み込んだコンポーネント
@@ -119,6 +125,8 @@ export default {
         EmbedYoutube,
         EmbedNicovideo,
         ModalCreateReview,
+        ModalUpdateGame,
+        ModalUpdateCreater,
         SvgIcon,
     },
 
