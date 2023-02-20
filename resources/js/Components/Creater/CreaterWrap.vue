@@ -23,30 +23,37 @@
         </div>
 
         <!-- 投稿者の情報 -->
-        <div class="caption-wrap">
+        <table>
 
             <!-- 実況者の名前 -->
-            <div class="creater-name">
+            <tr><th>
                 {{ creater.name }}
-            </div>
-
+            </th></tr>
+            
+            <!-- 音声 -->
+            <tr><td>
+                <SearchLink 
+                    :name="creater.voice_type"
+                    :query="'voice_id=' + creater.voice_id"
+                />
+            </td></tr>
+            
             <!-- その他の動画 -->
-            <Link
-                :href="'/program?creater_id=' + creater.id"
-                class="creater-other-program"
-            >
-                <span>この実況者の動画を見る</span>
-                <svg fill="currentColor" class="link-arrow">
-                    <use xlink:href="/icon/right.svg#right"></use>
-                </svg>
-            </Link>
-
+            <tr><td>
+                <SearchLink 
+                    name="この実況者さんの他の動画"
+                    :query="'creater_id=' + creater.id"
+                />
+            </td></tr>
+            
             <!-- もとのページへ -->
-            <a :href="getChannelUrl()" class="site-link" target="_blank">
-                <img :src="getSiteIconUrl()">
-                <span>チャンネルページへ行く</span>
-            </a>
-        </div>
+            <tr><td style="padding: 2px 0 1px;">
+                <a :href="getChannelUrl()" class="site-link" target="_blank">
+                    <img :src="getSiteIconUrl()">
+                    <span>チャンネルページへ行く</span>
+                </a>
+            </td></tr>
+        </table>
 
     </div>
 
@@ -55,6 +62,7 @@
 
 <script>
 import {Link} from "@inertiajs/inertia-vue3";
+import SearchLink from "@/js/Components/SearchLink.vue";
 import CreaterViewCount from "@/js/Components/Creater/CreaterViewCount.vue";
 export default {
 
@@ -76,6 +84,7 @@ export default {
     //読み込んだコンポーネント
     components: {
         Link,
+        SearchLink,
         CreaterViewCount,
     },
 
@@ -128,8 +137,9 @@ export default {
         box-shadow: 1px 1px 2px #21003421;
     }
     .creater-image {
-        width:  96px;
-        height: 96px;
+        width:  104px;
+        height: 104px;
+        margin: 0 8px;
         img {
             object-fit: cover;
             width: 100%;
@@ -142,36 +152,25 @@ export default {
         padding: 2px 16px;
         width: calc(100% - 98px);
     }
-    .creater-name {
+    table {
+        width: calc(100% - 128px);
+    }
+    th {
         font-weight: bold;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
     }
-    .creater-other-program {
-        display: block;
-        margin-top: 2px;
-        span {
-            vertical-align: middle;
-            font-weight: bold;
-            color: $font-color-link;
-        }
-        .link-arrow {
-            display: inline;
-            position: relative;
-            bottom: 0.5px;
-            width: 20px;
-            height: 20px;
-            margin-left: 2px;
-            color: $font-color-link;
-            vertical-align: middle;
-        }
+    td {
+        padding: 4px 0 4px 8px;
     }
     .site-link {
         position: relative;
         display: block;
-        margin: 6px 0px 0;
+        margin-left: 8px;
         padding: 2px 0 3px;
+        width: 80%;
+        min-width: 208px;
         border: solid 1px #8d8186;
         background-color: #ffffff;
         border-radius: 4px;

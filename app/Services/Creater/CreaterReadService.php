@@ -27,13 +27,16 @@ class CreaterReadService
     {
         return $this->createrModel
             ->select(
-                'id',
-                'name',
-                'site_id',
-                'user_id',
-                'user_icon_url',
+                'creaters.id as id',
+                'creaters.name as name',
+                'creaters.site_id',
+                'creaters.user_id',
+                'creaters.voice_id',
+                'creaters.user_icon_url',
+                'voices.type as voice_type',
             )
-            ->where('id', $creater_id)
+            ->join('voices', 'creaters.voice_id', '=', 'voices.id')
+            ->where('creaters.id', $creater_id)
             ->first();
     }
 
