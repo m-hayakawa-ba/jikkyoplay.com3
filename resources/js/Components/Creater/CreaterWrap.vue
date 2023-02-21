@@ -157,7 +157,7 @@ export default {
     }
     th {
         font-weight: bold;
-        white-space: nowrap;
+        word-break: break-all;
         overflow: hidden;
         text-overflow: ellipsis;
     }
