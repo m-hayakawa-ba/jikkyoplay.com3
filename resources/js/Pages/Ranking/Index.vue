@@ -16,26 +16,26 @@
 
         <!-- ページ内リンク -->
         <div class="page-anker-wrap">
-            <a href="#total-ranking" class="page-anker-link">
+            <SmoothLink anker="total-ranking" class="page-anker-link">
                 <img src="/icon/crown.svg">
                 総合ランキング
-            </a>
-            <a href="#creater-ranking" class="page-anker-link">
+            </SmoothLink>
+            <SmoothLink anker="creater-ranking" class="page-anker-link">
                 <img src="/icon/crown.svg">
                 人気実況者ランキング
-            </a>
-            <a href="#female-ranking" class="page-anker-link">
+            </SmoothLink>
+            <SmoothLink anker="female-ranking" class="page-anker-link">
                 <img src="/icon/crown.svg">
                 女性実況ランキング
-            </a>
-            <a href="#horror-ranking" class="page-anker-link">
+            </SmoothLink>
+            <SmoothLink anker="horror-ranking" class="page-anker-link">
                 <img src="/icon/crown.svg">
                 ホラー実況ランキング
-            </a>
-            <a href="#retro-ranking" class="page-anker-link">
+            </SmoothLink>
+            <SmoothLink anker="retro-ranking" class="page-anker-link">
                 <img src="/icon/crown.svg">
                 レトロゲーム実況ランキング
-            </a>
+            </SmoothLink>
         </div>
         
         <!-- 総合ランキング -->
@@ -146,6 +146,7 @@
 <script>
 import {usePage} from "@inertiajs/inertia-vue3";
 import H2Title from "@/js/Components/H2Title.vue";
+import SmoothLink from "@/js/Components/SmoothLink.vue";
 import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
 import CreaterWrap from '@/js/Components/Creater/CreaterWrap.vue';
 import RankingBanner from '@/js/Components/Ranking/RankingBanner.vue';
@@ -155,6 +156,7 @@ export default {
     //読み込んだコンポーネント
     components: {
         H2Title,
+        SmoothLink,
         ProgramWrap,
         CreaterWrap,
         RankingBanner,

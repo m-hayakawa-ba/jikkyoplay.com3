@@ -2,16 +2,16 @@
     
     
     <!-- 上方向へのアンカーリンク -->
-    <a
+    <SmoothLink
         v-if="mode == 'prev' && anker_display"
-        :href="'#' + anker_id"
+        :anker="anker_id"
         class="anker-prev"
     >
         <div class="anker-arrow">
             <img src="/icon/arrow_up.svg">
         </div>
         {{ anker_name }}
-    </a>
+    </SmoothLink>
     <div
         v-if="mode == 'prev' && !anker_display"
         class="anker-prev anker-display-false"
@@ -19,16 +19,16 @@
     </div>
 
     <!-- 下方向へのアンカーリンク -->
-    <a
+    <SmoothLink
         v-if="mode == 'next' && anker_display"
-        :href="'#' + anker_id"
+        :anker="anker_id"
         class="anker-next"
     >
         {{ anker_name }}
         <div class="anker-arrow">
             <img src="/icon/arrow_down.svg">
         </div>
-    </a>
+    </SmoothLink>
     <div
         v-if="mode == 'next' && !anker_display"
         class="anker-next anker-display-false"
@@ -39,6 +39,7 @@
 
 
 <script>
+import SmoothLink from "@/js/Components/SmoothLink.vue";
 export default {
 
     //呼び出し元から渡された引数
@@ -49,6 +50,7 @@ export default {
 
     //読み込んだコンポーネント
     components: {
+        SmoothLink,
     },
 
     //コンポーネント内で使用する変数
