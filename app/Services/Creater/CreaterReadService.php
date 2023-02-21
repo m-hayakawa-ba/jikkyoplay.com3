@@ -26,16 +26,7 @@ class CreaterReadService
     public function getCreater(int $creater_id) : Creater
     {
         return $this->createrModel
-            ->select(
-                'creaters.id as id',
-                'creaters.name as name',
-                'creaters.site_id',
-                'creaters.user_id',
-                'creaters.voice_id',
-                'creaters.user_icon_url',
-                'voices.type as voice_type',
-            )
-            ->join('voices', 'creaters.voice_id', '=', 'voices.id')
+            ->SelectIndex()
             ->where('creaters.id', $creater_id)
             ->first();
     }
@@ -51,13 +42,7 @@ class CreaterReadService
     public function getRankings(int $count, string $period) : Collection
     {
         return $this->createrModel
-            ->select(
-                'creaters.id',
-                'creaters.name',
-                'creaters.site_id',
-                'creaters.user_id',
-                'creaters.user_icon_url',
-            )
+            ->SelectIndex()
             ->selectRaw('SUM(programs.view_count) as view_count')
             ->join('programs', 'creaters.id', '=', 'programs.creater_id')
             ->whereNotNull('creaters.user_icon_url')
