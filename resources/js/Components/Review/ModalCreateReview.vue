@@ -7,68 +7,57 @@
     />
 
     <!-- レビューモーダル -->
-    <transition>
-        <div
-            v-if="display_flag"
-            class="modal-background-layer"
-            v-on:click.self="display_flag=false"
-        >
-            <!-- モーダル全体 -->
-            <div class="modal-wrap">
+    <ModalWrap
+        :display_flag="display_flag"
+        @set_display="setDisplay"
+    >
 
-                <!-- 閉じるボタン -->
-                <ButtonClose
-                    @click="display_flag=false"
-                />
-
-                <!-- モーダルの内容 -->
-                <div class="review-description">
-                    動画のレビューを書いて<span>{{ creater_name }}</span>さんを応援しよう！
-                </div>
-
-                <!-- フォーム -->
-                <form class="review-form" @submit.prevent="submit">
-                    <div class="review-form-item">
-                        <label for="reviewer">レビューを書く人の名前</label>
-                        <input
-                            type="text"
-                            id="reviewer"
-                            required
-                            v-model="reviewer"
-                        />
-                    </div>
-                    <div class="review-form-item">
-                        <label for="detail">レビュー本文</label>
-                        <textarea
-                            id="detail"
-                            required
-                            v-model="detail"
-                            :style="styles"
-                            ref="detail"
-                        ></textarea>
-                        <div class="review-length">文字数：{{ detail.length }} / 500</div>
-                    </div>
-
-                    <!-- エラーメッセージ -->
-                    <ul v-for="error in errors" class="error-message">
-                        <li>
-                            {{ error }}
-                        </li>
-                    </ul>
-
-                    <!-- 送信ボタン -->
-                    <ButtonSubmit button_text="レビューを投稿する" />
-                </form>
-            </div>
+        <!-- モーダルの内容 -->
+        <div class="review-description">
+            動画のレビューを書いて<span>{{ creater_name }}</span>さんを応援しよう！
         </div>
-    </transition>
 
+        <!-- フォーム -->
+        <form class="review-form" @submit.prevent="submit">
+            <div class="review-form-item">
+                <label for="reviewer">レビューを書く人の名前</label>
+                <input
+                    type="text"
+                    id="reviewer"
+                    required
+                    v-model="reviewer"
+                />
+            </div>
+            <div class="review-form-item">
+                <label for="detail">レビュー本文</label>
+                <textarea
+                    id="detail"
+                    required
+                    v-model="detail"
+                    :style="styles"
+                    ref="detail"
+                ></textarea>
+                <div class="review-length">文字数：{{ detail.length }} / 500</div>
+            </div>
+
+            <!-- エラーメッセージ -->
+            <ul v-for="error in errors" class="error-message">
+                <li>
+                    {{ error }}
+                </li>
+            </ul>
+
+            <!-- 送信ボタン -->
+            <ButtonSubmit button_text="レビューを投稿する" />
+            
+        </form>
+    </ModalWrap>
 </template>
 
 
 <script>
+import ModalWrap from "@/js/Components/Modal/ModalWrap.vue";
 import ButtonOpen from "@/js/Components/Modal/ButtonOpen.vue";
-import ButtonClose from "@/js/Components/Modal/ButtonClose.vue";
 import ButtonSubmit from "@/js/Components/Modal/ButtonSubmit.vue";
 export default {
 
@@ -96,8 +85,8 @@ export default {
 
     //読み込んだコンポーネント
     components: {
+        ModalWrap,
         ButtonOpen,
-        ButtonClose,
         ButtonSubmit,
     },
 
@@ -121,6 +110,11 @@ export default {
 
     //コンポーネント内で使う関数
     methods: {
+
+        //モーダルの表示非表示の切り替え
+        setDisplay(flag) {
+            this.display_flag = flag;
+        },
 
         //テキストエリアのリサイズ
         textareaResize() {

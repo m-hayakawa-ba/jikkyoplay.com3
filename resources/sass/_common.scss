@@ -72,38 +72,3 @@ a {
         display: none!important;
     }
 }
-
-
-//モーダル汎用
-.modal-background-layer {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    z-index: 10;
-    background-color: #0e080880;
-    backdrop-filter: blur(2px);
-}
-.modal-wrap {
-    background-color: #fff;
-    width: 640px;
-    max-width: 96%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    padding: 16px;
-    border-radius: 8px;
-    box-shadow: 2px 2px 4px #00000020;
-}
-//モーダルの表示アニメーション
-.v-enter-from, .v-leave-to {
-    opacity: 0;
-}
-.v-enter-active, .v-leave-active {
-    transition: opacity 0.3s;
-}
-.v-enter-to, .v-leave {
-    opacity: 1;
-}

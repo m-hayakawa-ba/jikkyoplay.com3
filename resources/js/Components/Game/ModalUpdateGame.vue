@@ -6,41 +6,31 @@
         @click="display_flag=true"
     />
 
-    <!-- モーダル全体 -->
-    <transition>
-        <div
-            v-if="display_flag"
-            class="modal-background-layer"
-            v-on:click.self="display_flag=false"
-        >
-            <!-- モーダル全体 -->
-            <div class="modal-wrap">
+    <!-- 編集モーダル -->
+    <ModalWrap
+        :display_flag="display_flag"
+        @set_display="setDisplay"
+    >
 
-                <!-- 閉じるボタン -->
-                <ButtonClose
-                    @click="display_flag=false"
-                />
-
-                <!-- モーダルの内容 -->
-                <div class="review-description">
-                    動画のゲーム情報が間違っていた場合、修正することができます。
-                </div>
-
-                <!-- フォーム -->
-                <form class="review-form" @submit.prevent="submit">
-
-                    <!-- 送信ボタン -->
-                    <ButtonSubmit button_text="送信する" />
-                </form>
-            </div>
+        <!-- モーダルの内容 -->
+        <div class="review-description">
+            動画のゲーム情報が間違っていた場合、修正することができます。
         </div>
-    </transition>
+
+        <!-- フォーム -->
+        <form class="review-form" @submit.prevent="submit">
+
+            <!-- 送信ボタン -->
+            <ButtonSubmit button_text="送信する" />
+            
+        </form>
+    </ModalWrap>
 </template>
 
 
 <script>
+import ModalWrap from "@/js/Components/Modal/ModalWrap.vue";
 import ButtonOpen from "@/js/Components/Modal/ButtonOpen.vue";
-import ButtonClose from "@/js/Components/Modal/ButtonClose.vue";
 import ButtonSubmit from "@/js/Components/Modal/ButtonSubmit.vue";
 export default {
 
@@ -53,10 +43,19 @@ export default {
 
     //読み込んだコンポーネント
     components: {
+        ModalWrap,
         ButtonOpen,
-        ButtonClose,
         ButtonSubmit,
     },
+
+    //コンポーネント内で使う関数
+    methods: {
+
+        //モーダルの表示非表示の切り替え
+        setDisplay(flag) {
+            this.display_flag = flag;
+        },
+    }
 
 }
 </script>
