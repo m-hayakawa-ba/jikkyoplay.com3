@@ -29,7 +29,7 @@ export default {
     .button {
         width: fit-content;
         margin: 0 0 0 auto;
-        padding: 2px 16px 4px;
+        padding: 2px 12px 4px;
         border: solid 1px #8b9699;
         border-radius: 4px;
         text-align: center;

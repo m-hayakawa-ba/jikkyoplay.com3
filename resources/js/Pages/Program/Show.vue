@@ -260,7 +260,7 @@ export default {
         box-shadow: 1px 1px 2px rgb(33 0 52 / 13%);
     }
     .review-detail {
-        white-space: pre;
+        white-space: pre-line;
     }
     .review-reviewer {
         font-size: $font-s;

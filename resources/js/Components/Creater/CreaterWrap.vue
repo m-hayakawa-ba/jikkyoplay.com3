@@ -162,7 +162,7 @@ export default {
         text-overflow: ellipsis;
     }
     td {
-        padding: 4px 0 4px 8px;
+        padding: 2px 0 2px 8px;
     }
     .site-link {
         position: relative;

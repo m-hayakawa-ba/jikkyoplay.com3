@@ -32,7 +32,7 @@
                 <td>
                     <SearchLink
                         :name="game.maker_name"
-                        :query="'makerid=' + game.maker_id"
+                        :query="'maker_id=' + game.maker_id"
                     />
                 </td>
             </tr>
@@ -87,10 +87,12 @@ export default {
         box-shadow: 1px 1px 2px #21003421;
     }
     th {
+        min-width: 72px;
+        white-space: nowrap;
         font-weight: normal;
     }
     td {
-        padding: 4px 0;
+        padding: 1px 0;
     }
 
 </style>

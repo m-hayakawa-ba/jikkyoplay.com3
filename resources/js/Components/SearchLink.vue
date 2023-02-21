@@ -32,6 +32,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/sass/variables";
     .search-link {
+        display: inline-block;
         padding: 3px 6px 3px 10px;
         border: solid 1px;
         border-radius: 10px;
