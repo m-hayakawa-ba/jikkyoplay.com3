@@ -15,7 +15,8 @@ class ProgramController extends Controller
     /**
      * 定数定義
      */
-    private $get_program_count = 20; //1ページあたりの動画数
+    private $get_program_count = 20;     //1ページあたりの動画数
+    private $relation_program_count = 4; //表示させる関連動画の個数
 
     /**
      * コンストラクタ
@@ -90,12 +91,21 @@ class ProgramController extends Controller
         //レビューを取得
         $reviews = $this->reviewReadService->getProgramReviews($program_id);
 
+        //関連動画を取得
+        $relation_programs = $this->programReadService->getRelationPrograms(
+            program_id: $program_id,
+            game_id: $program->game_id,
+            creater_id: $program->creater_id,
+            count: $this->relation_program_count,
+        );
+
         //viewへ遷移
         return Inertia::render('Program/Show', compact(
             'program',
             'creater',
             'game',
             'reviews',
+            'relation_programs',
         ));
     }
 }

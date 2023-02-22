@@ -64,7 +64,7 @@ export default {
         grid-template-columns: auto 42px 42px;
         max-width: $pc-width;
         margin: 0 auto;
-        padding: 8px $wrap_padding_x;
+        padding: 8px 12px;
     }
 
     .header-logo {

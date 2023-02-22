@@ -134,4 +134,35 @@ class ProgramReadService
             ->limit($count)
             ->get();
     }
+
+    /**
+     * ある動画の関連動画を取得
+     * 
+     * @param int $program_id 元の動画のprogram_id
+     * @param int $game_id 元の動画のgame_id
+     * @param int $creater_id 元の動画の投稿者id
+     * @param int $count 取得する関連動画の個数
+     * 
+     * @return Collection
+     */
+    public function getRelationPrograms(int $program_id, int $game_id, int $creater_id, int $count) : Collection
+    {
+        return $this->programModel
+            ->SelectIndex()
+            ->addSelect(DB::raw("
+                CASE
+                    WHEN programs.creater_id = {$creater_id} THEN 1
+                    ELSE 0
+                END AS creater_match_flag
+            "))
+            ->where('programs.id', '!=', $program_id)
+            ->where(function ($query) use ($game_id, $creater_id) {
+                $query->where('programs.game_id', $game_id)
+                      ->orWhere('programs.creater_id', $creater_id);
+            })
+            ->orderBy('creater_match_flag',  'DESC')
+            ->orderBy('programs.view_count', 'DESC')
+            ->limit($count)
+            ->get();
+    }
 }

@@ -70,7 +70,7 @@
         </div>
 
         <!-- ゲームレビュー -->
-        <div class="review_wrap">
+        <div class="review-wrap">
             <h3>動画レビュー</h3>
 
             <!-- 各々のレビュー -->
@@ -101,6 +101,22 @@
 
         </div>
 
+        <!-- 関連動画 -->
+        <div class="relation-program-wrap">
+            <h3>関連動画</h3>
+            <div class="program-wrap">
+                <div
+                    v-for="program in relation_programs"
+                    class="program-item"
+                >
+                    <ProgramWrap
+                        :rank="null"
+                        :program="program"
+                    />   
+                </div>
+            </div>
+        </div>
+
     </div>
 </template>
 
@@ -112,6 +128,7 @@ import CreaterWrap        from '@/js/Components/Creater/CreaterWrap.vue';
 import ModalUpdateCreater from '@/js/Components/Creater/ModalUpdateCreater.vue';
 import GameWrap           from '@/js/Components/Game/GameWrap.vue';
 import ModalUpdateGame    from '@/js/Components/Game/ModalUpdateGame.vue';
+import ProgramWrap        from '@/js/Components/Program/ProgramWrap.vue';
 import EmbedYoutube       from '@/js/Components/Program/EmbedYoutube.vue';
 import EmbedNicovideo     from '@/js/Components/Program/EmbedNicovideo.vue';
 import ModalCreateReview  from '@/js/Components/Review/ModalCreateReview.vue';
@@ -122,6 +139,7 @@ export default {
     components: {
         CreaterWrap,
         GameWrap,
+        ProgramWrap,
         EmbedYoutube,
         EmbedNicovideo,
         ModalCreateReview,
@@ -142,10 +160,11 @@ export default {
     //コンポーネント内で使用する変数
     data() {
         return {
-            program:  usePage().props.value.program,
-            creater:  usePage().props.value.creater,
-            game:     usePage().props.value.game,
-            reviews:  usePage().props.value.reviews,
+            program:            usePage().props.value.program,
+            creater:            usePage().props.value.creater,
+            game:               usePage().props.value.game,
+            reviews:            usePage().props.value.reviews,
+            relation_programs:  usePage().props.value.relation_programs,
         };
     },
 
@@ -170,7 +189,7 @@ export default {
 
     //初回読み込み時に実行
     mounted() {
-        console.log(this.reviews);
+        console.log(this.relation_programs);
     }
 
 }
@@ -244,7 +263,7 @@ export default {
             margin-bottom: 30px;
         }
     }
-    .review_wrap {
+    .review-wrap {
         margin-bottom: 20px;
         @media screen and (min-width: $bp) {
             margin-bottom: 30px;
@@ -266,5 +285,25 @@ export default {
         font-size: $font-s;
         text-align: right;
         color: #666;
+    }
+    .relation-program-wrap {
+        margin-bottom: 20px;
+        @media screen and (min-width: $bp) {
+            margin-bottom: 30px;
+        }
+    }
+    .program-wrap {
+        margin-top: 4px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+    }
+    .program-item {
+        position: relative;
+        margin: 8px 0 0;
+        width: 100%;
+        @media screen and (min-width: $bp) {
+            width: 49%;
+        }
     }
 </style>
