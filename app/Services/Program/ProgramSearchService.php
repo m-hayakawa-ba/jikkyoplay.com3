@@ -39,6 +39,8 @@ class ProgramSearchService
 
         //検索条件を追加
         $programs = $this->SearchWord       ($programs, $request); //動画タイトル・ゲーム名で絞り込み
+        $programs = $this->searchSiteId     ($programs, $request); //サイトidで絞り込み
+        $programs = $this->searchVoiceId    ($programs, $request); //声idで絞り込み
         $programs = $this->searchCreaterName($programs, $request); //投稿者名で絞り込み
         $programs = $this->searchCreaterId  ($programs, $request); //投稿者idで絞り込み
         $programs = $this->searchGameId     ($programs, $request); //ゲームidで絞り込み
@@ -105,6 +107,36 @@ class ProgramSearchService
                 //動画のタイトルから検索
                 ->orWhere('programs.title', 'like', '%' . $query . '%');
         });
+    }
+    /**
+     * 検索条件
+     * サイトidの絞り込み
+     * 
+     * @param Builder $programs
+     * @param Request $request
+     * 
+     * @return Builder
+     */
+    private function searchSiteId(Builder $programs, Request $request) : Builder
+    {
+        return $request->filled('site_id')
+            ? $programs->where('creaters.site_id', $request->query('site_id'))
+            : $programs;
+    }
+    /**
+     * 検索条件
+     * 声idの絞り込み
+     * 
+     * @param Builder $programs
+     * @param Request $request
+     * 
+     * @return Builder
+     */
+    private function searchVoiceId(Builder $programs, Request $request) : Builder
+    {
+        return $request->filled('voice_id')
+            ? $programs->where('creaters.voice_id', $request->query('voice_id'))
+            : $programs;
     }
     /**
      * 検索条件
