@@ -2,6 +2,9 @@
 
 namespace App\Http\Middleware;
 
+use App\Services\Site\SiteReadService;
+use App\Services\Hard\HardReadService;
+use App\Services\Voice\VoiceReadService;
 use Illuminate\Http\Request;
 use Inertia\Middleware;
 
@@ -14,6 +17,16 @@ class HandleInertiaRequests extends Middleware
      * @var string
      */
     protected $rootView = 'app';
+
+    /**
+     * コンストラクタ
+     */
+    function __construct(
+        private SiteReadService $siteReadService,
+        private HardReadService $hardReadService,
+        private VoiceReadService $voiceReadService,
+    ) {
+    }
 
     /**
      * Determines the current asset version.
@@ -38,6 +51,9 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'const' => config('const'),
+            'search_sites' => $this->siteReadService->getSiteList(),
+            'search_voices' => $this->voiceReadService->getVoiceList(),
+            'search_hards'  => $this->hardReadService->getHardList(),
         ]);
     }
 }

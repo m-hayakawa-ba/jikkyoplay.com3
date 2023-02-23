@@ -5,17 +5,14 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Site extends Model
+class Voice extends Model
 {
     use HasFactory;
 
     /**
      * カラムの設定
      */
-    public $timestamps = false;
-    protected $fillable = [
-        'name',
-    ];
     protected $hidden = [
+        'sort_id',
     ];
 }
