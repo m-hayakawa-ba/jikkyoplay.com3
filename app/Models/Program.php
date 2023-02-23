@@ -17,6 +17,10 @@ class Program extends Model
     {
         return $this->belongsTo('App\Models\Creater');
     }
+    public function game(): object
+    {
+        return $this->belongsTo('App\Models\Game');
+    }
 
     /**
      * スコープ
@@ -36,6 +40,7 @@ class Program extends Model
             )
             ->join('creaters', 'programs.creater_id', '=', 'creaters.id')
             ->join('games', 'programs.game_id', '=', 'games.id')
+            ->join('makers', 'games.maker_id', '=', 'makers.id')
             ->where('flag_enabled', 1);
     }
     /**

@@ -38,11 +38,14 @@ class ProgramSearchService
         );
 
         //検索条件を追加
-        $programs = $this->searchCreater($programs, $request); //投稿者で絞り込み
-        $programs = $this->searchGame   ($programs, $request); //ゲームで絞り込み
-        $programs = $this->searchHard   ($programs, $request); //ハードで絞り込み
-        $programs = $this->searchMaker  ($programs, $request); //メーカーで絞り込み
-        $programs = $this->searchYear   ($programs, $request); //発売年で絞り込み
+        $programs = $this->SearchWord       ($programs, $request); //動画タイトル・ゲーム名で絞り込み
+        $programs = $this->searchCreaterName($programs, $request); //投稿者名で絞り込み
+        $programs = $this->searchCreaterId  ($programs, $request); //投稿者idで絞り込み
+        $programs = $this->searchGameId     ($programs, $request); //ゲームidで絞り込み
+        $programs = $this->searchHardId     ($programs, $request); //ハードidで絞り込み
+        $programs = $this->searchMakerName  ($programs, $request); //メーカー名で絞り込み
+        $programs = $this->searchMakerId    ($programs, $request); //メーカーidで絞り込み
+        $programs = $this->searchYear       ($programs, $request); //発売年で絞り込み
 
         //検索結果の個数を取得
         $collection_count = $programs->count();
@@ -74,16 +77,62 @@ class ProgramSearchService
 
     /**
      * 検索条件
-     * 投稿者の絞り込み
+     * 動画タイトルの絞り込み
      * 
      * @param Builder $programs
      * @param Request $request
      * 
      * @return Builder
      */
-    private function searchCreater(Builder $programs, Request $request) : Builder
+    private function SearchWord(Builder $programs, Request $request) : Builder
     {
-        return $request->has('creater_id')
+        //クエリがない場合は即return
+        if (!$request->filled('word')) {
+            return $programs;
+        }
+
+        //クエリを半角または全角のスペースで分割する
+        $query = $request->query('word');
+        $words = explode(" ", mb_convert_kana($query, 'as'));
+
+        //検索ワードで検索する
+        return $programs->where(function ($q) use ($query, $words) {
+            $q
+                //ゲームのタイトルから検索
+                ->whereHas('game.game_search_names', function ($q) use ($words) {
+                    $q->whereIn('search_name', $words);
+                })
+                //動画のタイトルから検索
+                ->orWhere('programs.title', 'like', '%' . $query . '%');
+        });
+    }
+    /**
+     * 検索条件
+     * 投稿者名の絞り込み
+     * 
+     * @param Builder $programs
+     * @param Request $request
+     * 
+     * @return Builder
+     */
+    private function searchCreaterName(Builder $programs, Request $request) : Builder
+    {
+        return $request->filled('creater_name')
+            ? $programs->where('creaters.name', 'like', '%' . $request->query('creater_name') . '%')
+            : $programs;
+    }
+    /**
+     * 検索条件
+     * 投稿者idの絞り込み
+     * 
+     * @param Builder $programs
+     * @param Request $request
+     * 
+     * @return Builder
+     */
+    private function searchCreaterId(Builder $programs, Request $request) : Builder
+    {
+        return $request->filled('creater_id')
             ? $programs->where('programs.creater_id', $request->query('creater_id'))
             : $programs;
     }
@@ -96,9 +145,9 @@ class ProgramSearchService
      * 
      * @return Builder
      */
-    private function searchGame(Builder $programs, Request $request) : Builder
+    private function searchGameId(Builder $programs, Request $request) : Builder
     {
-        return $request->has('game_id')
+        return $request->filled('game_id')
             ? $programs->where('programs.game_id', $request->query('game_id'))
             : $programs;
     }
@@ -111,10 +160,25 @@ class ProgramSearchService
      * 
      * @return Builder
      */
-    private function searchHard(Builder $programs, Request $request) : Builder
+    private function searchHardId(Builder $programs, Request $request) : Builder
     {
-        return $request->has('hard_id')
+        return $request->filled('hard_id')
             ? $programs->where('games.hard_id', $request->query('hard_id'))
+            : $programs;
+    }
+    /**
+     * 検索条件
+     * メーカー名の絞り込み
+     * 
+     * @param Builder $programs
+     * @param Request $request
+     * 
+     * @return Builder
+     */
+    private function searchMakerName(Builder $programs, Request $request) : Builder
+    {
+        return $request->filled('maker_name')
+            ? $programs->where('makers.name', 'like', '%' . $request->query('maker_name') . '%')
             : $programs;
     }
     /**
@@ -126,9 +190,9 @@ class ProgramSearchService
      * 
      * @return Builder
      */
-    private function searchMaker(Builder $programs, Request $request) : Builder
+    private function searchMakerId(Builder $programs, Request $request) : Builder
     {
-        return $request->has('maker_id')
+        return $request->filled('maker_id')
             ? $programs->where('games.maker_id', $request->query('maker_id'))
             : $programs;
     }
@@ -143,8 +207,8 @@ class ProgramSearchService
      */
     private function searchYear(Builder $programs, Request $request) : Builder
     {
-        return $request->has('releace_year')
-            ? $programs->where('games.releace_year', $request->query('releace_year'))
+        return $request->filled('year')
+            ? $programs->where('games.releace_year', $request->query('year'))
             : $programs;
     }
 }

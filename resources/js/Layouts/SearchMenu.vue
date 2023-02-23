@@ -16,7 +16,7 @@
                         class="search-input"
                         type="text"
                         placeholder="ゲーム名など"
-                        v-model="word"
+                        v-model="form.word"
                     />
                     <button type="submit" class="search-button">
                         検索する
@@ -30,7 +30,7 @@
                     <!-- 動画サイト -->
                     <div class="advanced-search-item">
                         <label for="site_id" class="search-label">動画サイト</label>
-                        <select name="site_id" id="site_id" class="search-select" v-model="site_id">
+                        <select name="site_id" id="site_id" class="search-select" v-model="form.site_id">
                             <option value=""></option>
                             <option
                                 v-for="site in search_sites"
@@ -45,7 +45,7 @@
                     <!-- 声 -->
                     <div class="advanced-search-item">
                         <label for="voice_id" class="search-label">声</label>
-                        <select name="voice_id" id="voice_id" class="search-select" v-model="voice_id">
+                        <select name="voice_id" id="voice_id" class="search-select" v-model="form.voice_id">
                             <option value=""></option>
                             <option
                                 v-for="voice in search_voices"
@@ -60,7 +60,7 @@
                     <!-- ハード -->
                     <div class="advanced-search-item">
                         <label for="hard_id" class="search-label">ハード</label>
-                        <select name="hard_id" id="hard_id" class="search-select" v-model="hard_id">
+                        <select name="hard_id" id="hard_id" class="search-select" v-model="form.hard_id">
                             <option value=""></option>
                             <option
                                 v-for="hard in search_hards"
@@ -75,7 +75,7 @@
                     <!-- 発売年 -->
                     <div class="advanced-search-item">
                         <label for="year" class="search-label">発売年</label>
-                        <select name="year" id="year" class="search-select" v-model="year">
+                        <select name="year" id="year" class="search-select" v-model="form.year">
                             <option value=""></option>
                             <option
                                 v-for="releace_year in releace_years"
@@ -94,7 +94,7 @@
                             class="search-input"
                             type="text"
                             id="creater_name"
-                            v-model="creater_name"
+                            v-model="form.creater_name"
                         />
                     </div>
 
@@ -105,7 +105,7 @@
                             class="search-input"
                             type="text"
                             id="maker_name"
-                            v-model="maker_name"
+                            v-model="form.maker_name"
                         />
                     </div>
 
@@ -136,21 +136,44 @@ export default {
         SvgIcon,
     },
 
+    //呼び出し元の書き換え
+    emits: [
+        'set_search_display_flag'
+    ],
+
     //コンポーネント内で使用する変数
     data() {
         return {
-            word: "",
-            site_id: "",
-            voice_id: "",
-            hard_id: "",
-            year: "",
-            maker_name: "",
-            creater_name: "",
+            form: this.$inertia.form({
+                word: "",
+                site_id: "",
+                voice_id: "",
+                hard_id: "",
+                year: "",
+                maker_name: "",
+                creater_name: "",
+            }),
             search_sites: usePage().props.value.search_sites,
             search_voices: usePage().props.value.search_voices,
             search_hards: usePage().props.value.search_hards,
             releace_years: [],
         };
+    },
+    
+    //コンポーネント内で使う関数
+    methods: {
+
+        //親コンポーネントの表示フラグを変更する
+        setDisplay(flag) {
+            this.$emit('set_search_display_flag', flag);
+        },
+
+        //モーダルの表示非表示の切り替え
+        submit() {
+            this.form.get('/program', {
+                onSuccess: () => this.setDisplay(false),
+            });
+        },
     },
 
     //発売年の配列を作成する
@@ -206,7 +229,7 @@ export default {
         padding: 6px 12px;
         border-radius: 20px;
         width: 320px;
-        background-color: #292a2a;
+        background-color: #191a1c;
         &:focus {
             box-shadow: 0 0 4px #0ff;
             outline: none;

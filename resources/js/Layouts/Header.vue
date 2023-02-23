@@ -41,6 +41,7 @@
         <!-- 検索ウインドウ -->
         <SearchMenu
             :display_flag="search_display_flag"
+            @set_search_display_flag="serSearchDisplayFlag"
         />
 
     </header>
@@ -75,7 +76,16 @@ export default {
         constants() {
             return this.$page.props.const;
         },
-    }
+    },
+
+    //コンポーネント内で使う関数
+    methods: {
+
+        //検索ウインドウの表示・非表示を切り替える
+        serSearchDisplayFlag(flag) {
+            this.search_display_flag = flag;
+        }
+    },
 }
 </script>
 

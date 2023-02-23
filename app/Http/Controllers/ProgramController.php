@@ -38,10 +38,10 @@ class ProgramController extends Controller
     public function index(Request $request)
     {
         //ソート順がなかった場合は設定する
-        if (!$request->has('sort')) {
+        if (!$request->filled('sort')) {
             $request->merge(['sort' => 'date']);
         }
-        if (!$request->has('order')) {
+        if (!$request->filled('order')) {
             $request->merge(['order' => 'desc']);
         }
 
@@ -54,7 +54,7 @@ class ProgramController extends Controller
         $programs = $array['programs'];
 
         //ページネーションのためのページ番号を取得
-        if (!$request->has('page')) {
+        if (!$request->filled('page')) {
             $request->merge(['page' => 1]);
         }
         $page_last    = $this->programSearchService->getMaxPageNumber(
@@ -63,7 +63,10 @@ class ProgramController extends Controller
         );
 
         //検索クエリを取得
-        $queries = $request->all();
+        //array_filterを使っているのは、フロントでnullが文字列の"null"になってしまうのを防ぐため
+        $queries = array_filter($request->all(), function ($value) {
+            return $value !== null;
+        });
 
         //viewへ遷移
         return Inertia::render('Program/Index', compact(

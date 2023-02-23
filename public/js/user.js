@@ -20662,6 +20662,13 @@ __webpack_require__.r(__webpack_exports__);
     constants: function constants() {
       return this.$page.props["const"];
     }
+  },
+  //コンポーネント内で使う関数
+  methods: {
+    //検索ウインドウの表示・非表示を切り替える
+    serSearchDisplayFlag: function serSearchDisplayFlag(flag) {
+      this.search_display_flag = flag;
+    }
   }
 });
 
@@ -20716,21 +20723,41 @@ __webpack_require__.r(__webpack_exports__);
   components: {
     SvgIcon: _js_Components_SvgIcon_vue__WEBPACK_IMPORTED_MODULE_1__["default"]
   },
+  //呼び出し元の書き換え
+  emits: ['set_search_display_flag'],
   //コンポーネント内で使用する変数
   data: function data() {
     return {
-      word: "",
-      site_id: "",
-      voice_id: "",
-      hard_id: "",
-      year: "",
-      maker_name: "",
-      creater_name: "",
+      form: this.$inertia.form({
+        word: "",
+        site_id: "",
+        voice_id: "",
+        hard_id: "",
+        year: "",
+        maker_name: "",
+        creater_name: ""
+      }),
       search_sites: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.search_sites,
       search_voices: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.search_voices,
       search_hards: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.search_hards,
       releace_years: []
     };
+  },
+  //コンポーネント内で使う関数
+  methods: {
+    //親コンポーネントの表示フラグを変更する
+    setDisplay: function setDisplay(flag) {
+      this.$emit('set_search_display_flag', flag);
+    },
+    //モーダルの表示非表示の切り替え
+    submit: function submit() {
+      var _this = this;
+      this.form.get('/program', {
+        onSuccess: function onSuccess() {
+          return _this.setDisplay(false);
+        }
+      });
+    }
   },
   //発売年の配列を作成する
   mounted: function mounted() {
@@ -22656,8 +22683,9 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
     _: 1 /* STABLE */
   })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ドロワーメニュー "), _hoisted_5]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 検索ウインドウ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SearchMenu, {
-    display_flag: $data.search_display_flag
-  }, null, 8 /* PROPS */, ["display_flag"])]);
+    display_flag: $data.search_display_flag,
+    onSet_search_display_flag: $options.serSearchDisplayFlag
+  }, null, 8 /* PROPS */, ["display_flag", "onSet_search_display_flag"])]);
 }
 
 /***/ }),
@@ -22804,16 +22832,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [$props.display_flag ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" フォーム "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
         "class": "search-form",
         onSubmit: _cache[7] || (_cache[7] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
-          return _ctx.submit && _ctx.submit.apply(_ctx, arguments);
+          return $options.submit && $options.submit.apply($options, arguments);
         }, ["prevent"]))
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 通常検索部分 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "search-input",
         type: "text",
         placeholder: "ゲーム名など",
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
-          return $data.word = $event;
+          return $data.form.word = $event;
         })
-      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.word]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 検索する "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.word]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 検索する "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
         "class": "search-icon",
         icon: "search"
       })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 詳細検索部分 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 動画サイト "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
@@ -22821,64 +22849,64 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         id: "site_id",
         "class": "search-select",
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
-          return $data.site_id = $event;
+          return $data.form.site_id = $event;
         })
       }, [_hoisted_7, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.search_sites, function (site) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           key: site.id,
           value: site.id
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(site.name), 9 /* TEXT, PROPS */, _hoisted_8);
-      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.site_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 声 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.site_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 声 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
         name: "voice_id",
         id: "voice_id",
         "class": "search-select",
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
-          return $data.voice_id = $event;
+          return $data.form.voice_id = $event;
         })
       }, [_hoisted_11, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.search_voices, function (voice) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           key: voice.id,
           value: voice.id
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(voice.type), 9 /* TEXT, PROPS */, _hoisted_12);
-      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.voice_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ハード "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.voice_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ハード "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [_hoisted_14, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
         name: "hard_id",
         id: "hard_id",
         "class": "search-select",
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-          return $data.hard_id = $event;
+          return $data.form.hard_id = $event;
         })
       }, [_hoisted_15, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.search_hards, function (hard) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           key: hard.id,
           value: hard.id
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(hard.name), 9 /* TEXT, PROPS */, _hoisted_16);
-      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.hard_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 発売年 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.hard_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 発売年 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
         name: "year",
         id: "year",
         "class": "search-select",
         "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
-          return $data.year = $event;
+          return $data.form.year = $event;
         })
       }, [_hoisted_19, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.releace_years, function (releace_year) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           key: releace_year,
           value: releace_year
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(releace_year) + "年 ", 9 /* TEXT, PROPS */, _hoisted_20);
-      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.year]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 実況者名 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.year]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 実況者名 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_21, [_hoisted_22, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "search-input",
         type: "text",
         id: "creater_name",
         "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
-          return $data.creater_name = $event;
+          return $data.form.creater_name = $event;
         })
-      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.creater_name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" メーカー "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.creater_name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" メーカー "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_23, [_hoisted_24, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "search-input",
         type: "text",
         id: "maker_name",
         "onUpdate:modelValue": _cache[6] || (_cache[6] = function ($event) {
-          return $data.maker_name = $event;
+          return $data.form.maker_name = $event;
         })
-      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.maker_name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 詳細検索する "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.form.maker_name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("button", _hoisted_25, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" 詳細検索する "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_SvgIcon, {
         "class": "search-icon",
         icon: "search"
       })])])], 32 /* HYDRATE_EVENTS */)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
@@ -24575,7 +24603,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".search-window[data-v-a44ce1aa] {\n  position: absolute;\n  padding: 40px 0;\n  width: 100%;\n  height: calc(100vh - 100%);\n  opacity: 0.95;\n  background-color: #292a2a;\n  color: #fff;\n  text-align: center;\n  overflow: scroll;\n}\n@media screen and (min-width: 640px) {\n.search-window[data-v-a44ce1aa] {\n    padding: 80px 0 0;\n    overflow: unset;\n}\n}\n.search-window-enter-from[data-v-a44ce1aa], .search-window-leave-to[data-v-a44ce1aa] {\n  opacity: 0;\n}\n.search-window-enter-active[data-v-a44ce1aa], .search-window-leave-active[data-v-a44ce1aa] {\n  transition: opacity 0.2s;\n}\n.search-window-enter-to[data-v-a44ce1aa], .search-window-leave[data-v-a44ce1aa] {\n  opacity: 0.95;\n}\n.search-label[data-v-a44ce1aa] {\n  display: block;\n  padding-left: 20px;\n  text-align: left;\n}\n.search-input[data-v-a44ce1aa],\n.search-select[data-v-a44ce1aa] {\n  display: block;\n  border: solid 2px #ffffff;\n  margin: 0 auto 10px;\n  padding: 6px 12px;\n  border-radius: 20px;\n  width: 320px;\n  background-color: #292a2a;\n}\n.search-input[data-v-a44ce1aa]:focus,\n.search-select[data-v-a44ce1aa]:focus {\n  box-shadow: 0 0 4px #0ff;\n  outline: none;\n}\n@media screen and (min-width: 640px) {\n.search-input[data-v-a44ce1aa],\n  .search-select[data-v-a44ce1aa] {\n    margin-bottom: 40px;\n    padding: 8px 12px;\n}\n}\n.search-button[data-v-a44ce1aa] {\n  display: block;\n  margin: 0 auto;\n  background-color: unset;\n  border: none;\n  font-size: 1.6rem;\n  border-radius: 50%;\n  transition: opacity 0.3s;\n}\n.search-button[data-v-a44ce1aa]:hover {\n  opacity: 0.8;\n}\n.search-icon[data-v-a44ce1aa] {\n  position: relative;\n  top: 6px;\n  margin-left: 2px;\n  height: 24px;\n  width: 24px;\n}\n.main-search-wrap[data-v-a44ce1aa] {\n  margin-bottom: 30px;\n}\n.main-search-wrap .search-input[data-v-a44ce1aa],\n.main-search-wrap .search-select[data-v-a44ce1aa] {\n  max-width: 80%;\n}\n.advanced-search-wrap[data-v-a44ce1aa] {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  margin: 0 auto;\n  width: 100%;\n  max-width: 90%;\n}\n.advanced-search-wrap .search-input[data-v-a44ce1aa],\n.advanced-search-wrap .search-select[data-v-a44ce1aa] {\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.advanced-search-wrap[data-v-a44ce1aa] {\n    margin-top: 100px;\n    width: 640px;\n    max-width: 100%;\n}\n}\n.advanced-search-item[data-v-a44ce1aa] {\n  width: 100%;\n  padding: 0 30px;\n}\n@media screen and (min-width: 640px) {\n.advanced-search-item[data-v-a44ce1aa] {\n    width: 50%;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".search-window[data-v-a44ce1aa] {\n  position: absolute;\n  padding: 40px 0;\n  width: 100%;\n  height: calc(100vh - 100%);\n  opacity: 0.95;\n  background-color: #292a2a;\n  color: #fff;\n  text-align: center;\n  overflow: scroll;\n}\n@media screen and (min-width: 640px) {\n.search-window[data-v-a44ce1aa] {\n    padding: 80px 0 0;\n    overflow: unset;\n}\n}\n.search-window-enter-from[data-v-a44ce1aa], .search-window-leave-to[data-v-a44ce1aa] {\n  opacity: 0;\n}\n.search-window-enter-active[data-v-a44ce1aa], .search-window-leave-active[data-v-a44ce1aa] {\n  transition: opacity 0.2s;\n}\n.search-window-enter-to[data-v-a44ce1aa], .search-window-leave[data-v-a44ce1aa] {\n  opacity: 0.95;\n}\n.search-label[data-v-a44ce1aa] {\n  display: block;\n  padding-left: 20px;\n  text-align: left;\n}\n.search-input[data-v-a44ce1aa],\n.search-select[data-v-a44ce1aa] {\n  display: block;\n  border: solid 2px #ffffff;\n  margin: 0 auto 10px;\n  padding: 6px 12px;\n  border-radius: 20px;\n  width: 320px;\n  background-color: #191a1c;\n}\n.search-input[data-v-a44ce1aa]:focus,\n.search-select[data-v-a44ce1aa]:focus {\n  box-shadow: 0 0 4px #0ff;\n  outline: none;\n}\n@media screen and (min-width: 640px) {\n.search-input[data-v-a44ce1aa],\n  .search-select[data-v-a44ce1aa] {\n    margin-bottom: 40px;\n    padding: 8px 12px;\n}\n}\n.search-button[data-v-a44ce1aa] {\n  display: block;\n  margin: 0 auto;\n  background-color: unset;\n  border: none;\n  font-size: 1.6rem;\n  border-radius: 50%;\n  transition: opacity 0.3s;\n}\n.search-button[data-v-a44ce1aa]:hover {\n  opacity: 0.8;\n}\n.search-icon[data-v-a44ce1aa] {\n  position: relative;\n  top: 6px;\n  margin-left: 2px;\n  height: 24px;\n  width: 24px;\n}\n.main-search-wrap[data-v-a44ce1aa] {\n  margin-bottom: 30px;\n}\n.main-search-wrap .search-input[data-v-a44ce1aa],\n.main-search-wrap .search-select[data-v-a44ce1aa] {\n  max-width: 80%;\n}\n.advanced-search-wrap[data-v-a44ce1aa] {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n  margin: 0 auto;\n  width: 100%;\n  max-width: 90%;\n}\n.advanced-search-wrap .search-input[data-v-a44ce1aa],\n.advanced-search-wrap .search-select[data-v-a44ce1aa] {\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.advanced-search-wrap[data-v-a44ce1aa] {\n    margin-top: 100px;\n    width: 640px;\n    max-width: 100%;\n}\n}\n.advanced-search-item[data-v-a44ce1aa] {\n  width: 100%;\n  padding: 0 30px;\n}\n@media screen and (min-width: 640px) {\n.advanced-search-item[data-v-a44ce1aa] {\n    width: 50%;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
