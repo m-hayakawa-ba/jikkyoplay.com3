@@ -19719,7 +19719,7 @@ __webpack_require__.r(__webpack_exports__);
           }
         });
       } else if (this.mode == 'next') {
-        var offset = window.pageYOffset + 64;
+        var offset = window.pageYOffset + 80;
         this.anker_array.some(function (e) {
           if (e.pos > offset) {
             _this.anker_name = e.name;
@@ -22837,7 +22837,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 通常検索部分 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
         "class": "search-input",
         type: "text",
-        placeholder: "ゲーム名など",
+        placeholder: "ゲーム名・動画タイトルなど",
         "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
           return $data.form.word = $event;
         })

@@ -15,7 +15,7 @@
                     <input
                         class="search-input"
                         type="text"
-                        placeholder="ゲーム名など"
+                        placeholder="ゲーム名・動画タイトルなど"
                         v-model="form.word"
                     />
                     <button type="submit" class="search-button">

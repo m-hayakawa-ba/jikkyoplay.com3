@@ -91,7 +91,7 @@ export default {
                     }
                 });
             } else if (this.mode == 'next') {
-                var offset = window.pageYOffset + 64;
+                var offset = window.pageYOffset + 80;
                 this.anker_array.some(e => {
                     if (e.pos > offset) {
                         this.anker_name    = e.name;
