@@ -43,7 +43,7 @@
                     </div>
 
                     <!-- 声 -->
-                    <div class="advanced-search-item">
+                    <!-- <div class="advanced-search-item">
                         <label for="voice_id" class="search-label">声</label>
                         <select name="voice_id" id="voice_id" class="search-select" v-model="form.voice_id">
                             <option value=""></option>
@@ -55,7 +55,7 @@
                                 {{ voice.type }}
                             </option>
                         </select>
-                    </div>
+                    </div> -->
 
                     <!-- ハード -->
                     <div class="advanced-search-item">
@@ -73,7 +73,7 @@
                     </div>
 
                     <!-- 発売年 -->
-                    <div class="advanced-search-item">
+                    <!-- <div class="advanced-search-item">
                         <label for="year" class="search-label">発売年</label>
                         <select name="year" id="year" class="search-select" v-model="form.year">
                             <option value=""></option>
@@ -85,7 +85,7 @@
                                 {{ releace_year }}年
                             </option>
                         </select>
-                    </div>
+                    </div> -->
 
                     <!-- 実況者名 -->
                     <div class="advanced-search-item">
@@ -192,7 +192,7 @@ export default {
 @import "@/sass/variables";
     .search-window {
         position: absolute;
-        padding: 40px 0;
+        padding: 60px 0 80px;
         width: 100%;
         height: calc(100vh - 100%);
         opacity: 0.95;
@@ -201,7 +201,7 @@ export default {
         text-align: center;
         overflow: scroll;
         @media screen and (min-width: $bp) {
-            padding: 80px 0 0;
+            padding: 80px 0 80px;
             overflow: unset;
         }
     }
@@ -259,9 +259,10 @@ export default {
         width: 24px;
     }
     .main-search-wrap {
-        margin-bottom: 30px;
+        margin-bottom: 40px;
         .search-input,
         .search-select {
+            height: 41px;
             max-width: 80%;
         }
     }
@@ -274,6 +275,7 @@ export default {
         max-width: 90%;
         .search-input,
         .search-select {
+            height: 40px;
             width: 100%;
         }
         @media screen and (min-width: $bp) {

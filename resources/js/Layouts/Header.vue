@@ -5,7 +5,7 @@
             <!-- サイトロゴ -->
             <h1 class="header-logo">
                 <Link href="/">
-                    <img src="/image/logo.png" :alt="constants.site_title">
+                    <img src="/image/logo.png?v=1" :alt="constants.site_title">
                 </Link>
             </h1>
 

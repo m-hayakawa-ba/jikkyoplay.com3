@@ -6,21 +6,32 @@
             v-if="display_flag"
             class="main-window"
         >
-            <Link class="menu-link" href="/">
+
+            <div class="logo-vertical">
+                <img src="/image/logo_vertical.png" alt="GameJDM縦ロゴ">
+            </div>
+
+            <div class="menu-link" @click="visitLink('/')">
                 トップページ
-            </Link>
-            <Link class="menu-link" href="/">
-                ニュース
-            </Link>
-            <Link class="menu-link" href="/">
-                ランキング
-            </Link>
-            <Link class="menu-link" href="/">
-                動画一覧
-            </Link>
-            <Link class="menu-link" href="/">
-                サイトについて
-            </Link>
+            </div>
+            <div class="menu-link" @click="visitLink('/news')">
+                ゲーム実況ニュース
+            </div>
+            <div class="menu-link" @click="visitLink('/ranking')">
+                ゲーム実況ランキング
+            </div>
+            <div class="menu-link" @click="visitLink('/program')">
+                ゲーム実況動画一覧
+            </div>
+            <div class="menu-link" @click="visitLink('/program')">
+                ゲーム実況レビュー
+            </div>
+            <div class="menu-link" @click="visitLink('/history')">
+                視聴履歴
+            </div>
+            <div class="menu-link" @click="visitLink('/about')">
+                このサイトについて
+            </div>
         </div>
     </transition>
 </template>
@@ -42,8 +53,22 @@ export default {
 
     //呼び出し元の書き換え
     emits: [
-        'set_search_display_flag'
+        'set_main_display_flag'
     ],
+    
+    //コンポーネント内で使う関数
+    methods: {
+
+        //別のページヘリダイレクトする
+        visitLink(url) {
+            this.$inertia.visit(url, {
+                onSuccess: () => {
+                    this.$emit('set_main_display_flag', false);
+                },
+            });
+        },
+
+    }
 }
 </script>
 
@@ -80,6 +105,15 @@ export default {
     .menu-link {
         display: block;
         color: #fff;
+        cursor: pointer;
+        transition: opacity 0.3s;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
+    .logo-vertical {
+        width: 200px;
+        margin: 0 auto 40px;
     }
 
 </style>
