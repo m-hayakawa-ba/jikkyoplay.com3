@@ -27,6 +27,11 @@ class CreaterReadService
     {
         return $this->createrModel
             ->SelectIndex()
+            ->addSelect(
+                'sites.id as site_id',
+                'sites.name as site_name',
+            )
+            ->join('sites', 'creaters.site_id', '=', 'sites.id')
             ->where('creaters.id', $creater_id)
             ->first();
     }

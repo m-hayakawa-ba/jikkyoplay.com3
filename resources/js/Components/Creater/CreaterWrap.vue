@@ -8,10 +8,7 @@
     />
 
     <!-- 番組情報 -->
-    <div
-        class="creater-item"
-        :href="'/'"
-    >
+    <InformationWrap>
 
         <!-- 投稿者の顔アイコン -->
         <div class="creater-image">
@@ -55,13 +52,13 @@
             </td></tr>
         </table>
 
-    </div>
+    </InformationWrap>
 
 </template>
 
 
 <script>
-import {Link} from "@inertiajs/inertia-vue3";
+import InformationWrap from "@/js/Components/Information/InformationWrap.vue";
 import SearchLink from "@/js/Components/SearchLink.vue";
 import CreaterViewCount from "@/js/Components/Creater/CreaterViewCount.vue";
 export default {
@@ -83,7 +80,7 @@ export default {
 
     //読み込んだコンポーネント
     components: {
-        Link,
+        InformationWrap,
         SearchLink,
         CreaterViewCount,
     },
@@ -124,18 +121,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-    .creater-item {
-        margin: 0 0 4px;
-        padding: 2px;
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        width: 100%;
-        background-color: #fff;
-        border: solid 1px #8b9699;
-        border-radius: 4px;
-        box-shadow: 1px 1px 2px #21003421;
-    }
     .creater-image {
         width:  104px;
         height: 104px;

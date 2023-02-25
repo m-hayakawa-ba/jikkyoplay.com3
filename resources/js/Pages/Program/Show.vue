@@ -49,55 +49,52 @@
             <SvgIcon icon="external_link" class="external-icon" />
         </a>
 
-        <!-- 動画情報と投稿者情報 -->
+        <!-- 動画の各種情報 -->
         <div class="information-wrap">
-            <div class="game-data-wrap">
-                <h3>ゲーム情報</h3>
-                <GameWrap 
-                    :game="game"
-                />
-                <ModalUpdateGame
-                />
-            </div>
-            <div class="creater-wrap">
-                <h3>実況者情報</h3>
-                <CreaterWrap
-                    :creater="creater"
-                />
-                <ModalUpdateCreater
-                />
-            </div>
-        </div>
 
-        <!-- ゲームレビュー -->
-        <div class="review-wrap">
-            <h3>動画レビュー</h3>
+            <div class="information-wrap-left">
+                <!-- 動画情報 -->
+                <div>
+                    <h3>動画情報</h3>
+                    <ProgramSimpleWrap
+                        :site_id="creater.site_id"
+                        :site_name="creater.site_name"
+                        :voice_id="program.voice_id"
+                        :voice_type="program.voice_type"
+                    />
+                </div>
 
-            <!-- 各々のレビュー -->
-            <div
-                v-for="review in reviews"
-                :key="review.id"
-                class="review-item"
-            >
-                <!-- レビュー本文 -->
-                <div
-                    v-html="review.detail"
-                    class="review-detail"
-                ></div>
+                <!-- ゲーム情報 -->
+                <div class="game-data-wrap">
+                    <h3>ゲーム情報</h3>
+                    <GameWrap  :game="game"/>
+                    <ModalUpdateGame/>
+                </div>
 
-                <!-- 投稿日とレビュワー名 -->
-                <div class="review-reviewer">
-                    {{ format(review.created_at) }}<br>
-                    reviewer:{{ review.reviewer }}
+                <!-- 実況者情報 -->
+                <div class="creater-wrap">
+                    <h3>実況者情報</h3>
+                    <CreaterWrap :creater="creater"/>
+                    <ModalUpdateCreater/>
                 </div>
             </div>
 
-            <!-- レビューを書くボタン -->
-            <ModalCreateReview
-                :program_id="program.id"
-                :creater_name="creater.name"
-                @push_review="pushReview"
-            />
+            <div class="information-wrap-right">
+                <!-- ゲームレビュー -->
+                <div class="review-wrap">
+                    <h3>動画レビュー</h3>
+                    <ReviewSimpleWrap
+                        v-for="review in reviews"
+                        :key="review.id"
+                        :review="review"
+                    />
+                    <ModalCreateReview
+                        :program_id="program.id"
+                        :creater_name="creater.name"
+                        @push_review="pushReview"
+                    />
+                </div>
+            </div>
 
         </div>
 
@@ -128,10 +125,13 @@ import CreaterWrap        from '@/js/Components/Creater/CreaterWrap.vue';
 import ModalUpdateCreater from '@/js/Components/Creater/ModalUpdateCreater.vue';
 import GameWrap           from '@/js/Components/Game/GameWrap.vue';
 import ModalUpdateGame    from '@/js/Components/Game/ModalUpdateGame.vue';
+import ProgramSimpleWrap  from '@/js/Components/Program/ProgramSimpleWrap.vue';
 import ProgramWrap        from '@/js/Components/Program/ProgramWrap.vue';
+import ReviewSimpleWrap   from '@/js/Components/Review/ReviewSimpleWrap.vue';
 import EmbedYoutube       from '@/js/Components/Program/EmbedYoutube.vue';
 import EmbedNicovideo     from '@/js/Components/Program/EmbedNicovideo.vue';
 import ModalCreateReview  from '@/js/Components/Review/ModalCreateReview.vue';
+import SearchLink         from "@/js/Components/SearchLink.vue";
 import SvgIcon            from "@/js/Components/SvgIcon.vue";
 export default {
 
@@ -139,12 +139,15 @@ export default {
     components: {
         CreaterWrap,
         GameWrap,
+        ProgramSimpleWrap,
         ProgramWrap,
+        ReviewSimpleWrap,
         EmbedYoutube,
         EmbedNicovideo,
         ModalCreateReview,
         ModalUpdateGame,
         ModalUpdateCreater,
+        SearchLink,
         SvgIcon,
     },
 
@@ -189,7 +192,7 @@ export default {
 
     //初回読み込み時に実行
     mounted() {
-        console.log(this.relation_programs);
+        console.log(this.creater);
     }
 
 }
@@ -248,6 +251,20 @@ export default {
         flex-wrap: wrap;
         justify-content: space-between;
     }
+    .information-wrap-left {
+        width: 100%;
+        @media screen and (min-width: $bp) {
+            padding: 0 10px;
+            width: 45%;
+        }
+    }
+    .information-wrap-right {
+        width: 100%;
+        @media screen and (min-width: $bp) {
+            padding: 0 10px;
+            width: 55%;
+        }
+    }
     h3 {
         font-size: $font-l;
         font-weight: bold;
@@ -259,32 +276,15 @@ export default {
         width: 100%;
         margin-bottom: 20px;
         @media screen and (min-width: $bp) {
-            width: 49%;
             margin-bottom: 30px;
         }
     }
     .review-wrap {
+        width: 100%;
         margin-bottom: 20px;
         @media screen and (min-width: $bp) {
             margin-bottom: 30px;
         }
-    }
-    .review-item {
-        margin: 0 0 4px;
-        padding: 4px 6px;
-        width: 100%;
-        background-color: #fff;
-        border: solid 1px #8b9699;
-        border-radius: 4px;
-        box-shadow: 1px 1px 2px rgb(33 0 52 / 13%);
-    }
-    .review-detail {
-        white-space: pre-line;
-    }
-    .review-reviewer {
-        font-size: $font-s;
-        text-align: right;
-        color: #666;
     }
     .relation-program-wrap {
         margin-bottom: 20px;

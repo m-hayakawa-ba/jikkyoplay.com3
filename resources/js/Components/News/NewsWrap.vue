@@ -1,10 +1,6 @@
 <template>
 
-    <a
-        class="news-item"
-        :href="news.url"
-        target="_blank"
-    >
+    <InformationWrap :href="news.url">
 
         <!-- ニュースのサムネイル -->
         <div class="news-image">
@@ -38,11 +34,12 @@
                 <span>{{ news.news_source.name }}</span>
             </div>
         </div>
-    </a>
+    </InformationWrap>
 </template>
 
 
 <script>
+import InformationWrap from "@/js/Components/Information/InformationWrap.vue";
 import moment from 'moment';
 export default {
 
@@ -50,6 +47,11 @@ export default {
     props: [
         "news", //ニュースの詳細情報の配列
     ],
+
+    //読み込んだコンポーネント
+    components: {
+        InformationWrap,
+    },
 
     //コンポーネント内で使用するメソッド
     methods: {
@@ -68,23 +70,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../../sass/variables";
-    .news-item {
-        margin: 0;
-        padding: 2px;
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        width: 100%;
-        background-color: #fff;
-        border: solid 1px #8b9699;
-        border-radius: 4px;
-        box-shadow: 1px 1px 2px #21003421;
-        cursor: pointer;
-        &:hover {
-            background-color: #d4f9ff;
-            border-radius: 8px;
-        }
-    }
     .news-image {
         width: 50%;
         padding: 2px;

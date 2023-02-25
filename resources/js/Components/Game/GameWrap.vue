@@ -1,7 +1,7 @@
 <template>
 
     <!-- ゲーム情報 -->
-    <div class="game-item">
+    <InformationWrap>
         <table>
             <tr>
                 <th>
@@ -48,12 +48,13 @@
                 </td>
             </tr>
         </table>
-    </div>
+    </InformationWrap>
 
 </template>
 
 
 <script>
+import InformationWrap from "@/js/Components/Information/InformationWrap.vue";
 import SearchLink from "@/js/Components/SearchLink.vue";
 export default {
 
@@ -64,6 +65,7 @@ export default {
 
     //読み込んだコンポーネント
     components: {
+        InformationWrap,
         SearchLink,
     },
 
@@ -77,15 +79,6 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-    .game-item {
-        margin: 0 0 4px;
-        padding: 2px 12px;
-        width: 100%;
-        background-color: #fff;
-        border: solid 1px #8b9699;
-        border-radius: 4px;
-        box-shadow: 1px 1px 2px #21003421;
-    }
     th {
         min-width: 72px;
         white-space: nowrap;

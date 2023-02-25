@@ -26,7 +26,19 @@ class ProgramReadService
     public function getProgram(int $program_id) : Program
     {
         return $this->programModel
-            ->where('id', $program_id)
+            ->select(
+                'programs.id as id',
+                'programs.creater_id as creater_id',
+                'programs.image_url as image_url',
+                'programs.title as title',
+                'programs.game_id',
+                'programs.voice_id',
+                'programs.view_count',
+                'programs.published_at as published_at',
+                'voices.type as voice_type',
+            )
+            ->join('voices', 'programs.voice_id', '=', 'voices.id')
+            ->where('programs.id', $program_id)
             ->first();
     }
 

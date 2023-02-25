@@ -12,9 +12,9 @@
             :view_count="review.view_count"
         />
 
-        <Link
-            class="review-item"
+        <InformationWrap
             :href="'/program/' + review.program_id"
+            class="review-item"
         >
 
             <!-- 番組のサムネイル -->
@@ -38,7 +38,7 @@
                 class="review-detail"
                 v-html="review.detail"
             ></div>
-        </Link>
+        </InformationWrap>
     </div>
 
     <!-- レビュー一覧へのリンク -->
@@ -55,6 +55,7 @@ import PageLink from '@/js/Components/PageLink.vue';
 import ProgramViewCount from "@/js/Components/Program/ProgramViewCount.vue";
 import ProgramThumbnail from "@/js/Components/Program/ProgramThumbnail.vue";
 import ProgramCaption from "@/js/Components/Program/ProgramCaption.vue";
+import InformationWrap from "@/js/Components/Information/InformationWrap.vue";
 export default {
 
     //コンポーネント内で使用する変数
@@ -71,6 +72,7 @@ export default {
         ProgramViewCount,
         ProgramThumbnail,
         ProgramCaption,
+        InformationWrap,
     },
 
     //初回読み込み時に実行
@@ -92,21 +94,6 @@ export default {
         }
     }
     .review-item {
-        margin: 2px 0;
-        padding: 4px;
-        display: flex;
-        flex-wrap: wrap;
-        align-items: center;
-        width: 100%;
-        cursor: pointer;
-        background-color: #fff;
-        border: solid 1px #8b9699;
-        border-radius: 4px;
-        box-shadow: 1px 1px 2px #21003421;
-        &:hover {
-            background-color: #d4f9ff;
-            border-radius: 8px;
-        }
         @media screen and (min-width: $bp) {
             height: 196px;
         }

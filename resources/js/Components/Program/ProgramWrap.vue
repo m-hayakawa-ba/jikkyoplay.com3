@@ -7,10 +7,8 @@
     />
 
     <!-- 番組情報 -->
-    <Link
-        class="program-item"
-        :href="'/program/' + program.id"
-    >
+    <InformationWrap :href="'/program/' + program.id">
+
         <!-- 番組のサムネイル -->
         <ProgramThumbnail
             :thumbnail_url="program.image_url"
@@ -26,13 +24,14 @@
             :published_at="program.published_at"
             style="width: 50%;"
         />
-    </Link>
+    </InformationWrap>
 
 </template>
 
 
 <script>
 import {Link} from "@inertiajs/inertia-vue3";
+import InformationWrap from "@/js/Components/Information/InformationWrap.vue";
 import ProgramViewCount from "@/js/Components/Program/ProgramViewCount.vue";
 import ProgramThumbnail from "@/js/Components/Program/ProgramThumbnail.vue";
 import ProgramCaption from "@/js/Components/Program/ProgramCaption.vue";
@@ -47,6 +46,7 @@ export default {
     //読み込んだコンポーネント
     components: {
         Link,
+        InformationWrap,
         ProgramViewCount,
         ProgramThumbnail,
         ProgramCaption,
@@ -63,21 +63,4 @@ export default {
 <style lang="scss" scoped>
 @import "@/sass/variables";
 
-    .program-item {
-        margin: 0;
-        padding: 2px;
-        display: flex;
-        flex-wrap: nowrap;
-        align-items: center;
-        width: 100%;
-        background-color: #fff;
-        border: solid 1px #8b9699;
-        border-radius: 4px;
-        box-shadow: 1px 1px 2px #21003421;
-        cursor: pointer;
-        &:hover {
-            background-color: #d4f9ff;
-            border-radius: 8px;
-        }
-    }
 </style>
