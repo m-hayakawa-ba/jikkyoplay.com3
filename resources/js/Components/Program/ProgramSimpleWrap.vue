@@ -52,5 +52,12 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-
+    th {
+        min-width: 102px;
+        white-space: nowrap;
+        font-weight: normal;
+    }
+    td {
+        padding: 4px 0;
+    }
 </style>

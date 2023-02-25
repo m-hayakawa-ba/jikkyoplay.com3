@@ -53,8 +53,15 @@
         <div class="information-wrap">
 
             <div class="information-wrap-left">
+
+                <!-- 実況者情報 -->
+                <div class="section-wrap">
+                    <h3>実況者情報</h3>
+                    <CreaterWrap :creater="creater"/>
+                </div>
+
                 <!-- 動画情報 -->
-                <div>
+                <div class="section-wrap">
                     <h3>動画情報</h3>
                     <ProgramSimpleWrap
                         :site_id="creater.site_id"
@@ -62,20 +69,14 @@
                         :voice_id="program.voice_id"
                         :voice_type="program.voice_type"
                     />
+                    <ModalUpdateProgram/>
                 </div>
 
                 <!-- ゲーム情報 -->
-                <div class="game-data-wrap">
+                <div class="section-wrap">
                     <h3>ゲーム情報</h3>
                     <GameWrap  :game="game"/>
                     <ModalUpdateGame/>
-                </div>
-
-                <!-- 実況者情報 -->
-                <div class="creater-wrap">
-                    <h3>実況者情報</h3>
-                    <CreaterWrap :creater="creater"/>
-                    <ModalUpdateCreater/>
                 </div>
             </div>
 
@@ -122,14 +123,14 @@
 import {usePage} from "@inertiajs/inertia-vue3";
 import moment from 'moment';
 import CreaterWrap        from '@/js/Components/Creater/CreaterWrap.vue';
-import ModalUpdateCreater from '@/js/Components/Creater/ModalUpdateCreater.vue';
 import GameWrap           from '@/js/Components/Game/GameWrap.vue';
 import ModalUpdateGame    from '@/js/Components/Game/ModalUpdateGame.vue';
 import ProgramSimpleWrap  from '@/js/Components/Program/ProgramSimpleWrap.vue';
 import ProgramWrap        from '@/js/Components/Program/ProgramWrap.vue';
-import ReviewSimpleWrap   from '@/js/Components/Review/ReviewSimpleWrap.vue';
+import ModalUpdateProgram from '@/js/Components/Program/ModalUpdateProgram.vue';
 import EmbedYoutube       from '@/js/Components/Program/EmbedYoutube.vue';
 import EmbedNicovideo     from '@/js/Components/Program/EmbedNicovideo.vue';
+import ReviewSimpleWrap   from '@/js/Components/Review/ReviewSimpleWrap.vue';
 import ModalCreateReview  from '@/js/Components/Review/ModalCreateReview.vue';
 import SearchLink         from "@/js/Components/SearchLink.vue";
 import SvgIcon            from "@/js/Components/SvgIcon.vue";
@@ -146,7 +147,7 @@ export default {
         EmbedNicovideo,
         ModalCreateReview,
         ModalUpdateGame,
-        ModalUpdateCreater,
+        ModalUpdateProgram,
         SearchLink,
         SvgIcon,
     },
@@ -271,13 +272,10 @@ export default {
         margin: 12px 0 4px;
         border-bottom: solid 1px #888;
     }
-    .game-data-wrap,
-    .creater-wrap {
+    .section-wrap {
+        position: relative;
         width: 100%;
         margin-bottom: 20px;
-        @media screen and (min-width: $bp) {
-            margin-bottom: 30px;
-        }
     }
     .review-wrap {
         width: 100%;

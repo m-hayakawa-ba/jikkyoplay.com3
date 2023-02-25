@@ -1,10 +1,12 @@
 <template>
 
     <!-- モーダル表示ボタン -->
-    <ButtonOpen
-        button_text="ゲーム情報を修正する"
-        @click="display_flag=true"
-    />
+    <div
+        class="edit-button"
+        @click="display_flag = true"
+    >
+        <SvgIcon icon="edit" class="icon" />
+    </div>
 
     <!-- 編集モーダル -->
     <ModalWrap
@@ -30,7 +32,7 @@
 
 <script>
 import ModalWrap from "@/js/Components/Modal/ModalWrap.vue";
-import ButtonOpen from "@/js/Components/Modal/ButtonOpen.vue";
+import SvgIcon from "@/js/Components/SvgIcon.vue";
 import ButtonSubmit from "@/js/Components/Modal/ButtonSubmit.vue";
 export default {
 
@@ -44,7 +46,7 @@ export default {
     //読み込んだコンポーネント
     components: {
         ModalWrap,
-        ButtonOpen,
+        SvgIcon,
         ButtonSubmit,
     },
 
@@ -63,5 +65,18 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-
+    .edit-button {
+        position: absolute;
+        bottom: 0;
+        right: 2px;
+        padding: 4px 8px;
+        width: 36px;
+        height: 36px;
+        text-align: center;
+        cursor: pointer;
+        transition: opacity 0.3s;
+        &:hover {
+            opacity: 0.8;
+        }
+    }
 </style>

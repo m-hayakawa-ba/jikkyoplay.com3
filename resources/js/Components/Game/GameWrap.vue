@@ -85,7 +85,6 @@ export default {
         font-weight: normal;
     }
     td {
-        padding: 1px 0;
+        padding: 4px 0;
     }
-
 </style>

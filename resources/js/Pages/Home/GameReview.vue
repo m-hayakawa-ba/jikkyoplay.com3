@@ -12,10 +12,7 @@
             :view_count="review.view_count"
         />
 
-        <InformationWrap
-            :href="'/program/' + review.program_id"
-            class="review-item"
-        >
+        <InformationWrap :href="'/program/' + review.program_id">
 
             <!-- 番組のサムネイル -->
             <ProgramThumbnail
@@ -93,19 +90,8 @@ export default {
             width: 49%;
         }
     }
-    .review-item {
-        @media screen and (min-width: $bp) {
-            height: 196px;
-        }
-    }
-    .program-view-count {
-        font-weight: bold;
-        color: #401409fc;
-        span {
-            font-size: $font-l;
-        }
-    }
     .review-detail {
+        height: 70px;
         padding: 4px 8px;
         display: -webkit-box;
         -webkit-box-orient: vertical;

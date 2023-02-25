@@ -70,7 +70,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/sass/variables";
     .information-item {
-        margin: 0;
+        margin-bottom: 8px;
         padding: 2px;
         display: flex;
         flex-wrap: wrap;
