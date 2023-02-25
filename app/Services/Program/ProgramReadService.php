@@ -31,6 +31,7 @@ class ProgramReadService
                 'programs.creater_id as creater_id',
                 'programs.image_url as image_url',
                 'programs.title as title',
+                'programs.movie_id as movie_id',
                 'programs.game_id',
                 'programs.voice_id',
                 'programs.view_count',
