@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Services\Creater\CreaterReadService;
 use App\Services\Game\GameReadService;
 use App\Services\Program\ProgramReadService;
+use App\Services\Program\ProgramUpdateService;
 use App\Services\Program\ProgramSearchService;
 use App\Services\Review\ReviewReadService;
 use Illuminate\Http\Request;
@@ -25,6 +26,7 @@ class ProgramController extends Controller
         private CreaterReadService   $createrReadService,
         private GameReadService      $gameReadService,
         private ProgramReadService   $programReadService,
+        private ProgramUpdateService $programUpdateService,
         private ProgramSearchService $programSearchService,
         private ReviewReadService    $reviewReadService,
     ){
@@ -110,5 +112,26 @@ class ProgramController extends Controller
             'reviews',
             'relation_programs',
         ));
+    }
+
+    /**
+     * 動画情報の修正
+     */
+    public function update(int $program_id, Request $request)
+    {
+        //動画の音声情報を更新する
+        $array = [
+            'voice_id' => $request->voice_id,
+            'flag_changed' => 1,
+        ];
+        $is_success = $this->programUpdateService->updateProgram($program_id, $array);
+
+        //失敗したら500を返す
+        if (!$is_success) {
+            return response()->json('情報の更新に失敗しました', 500);
+        }
+
+        //200を返して終了
+        return response()->json([], 200);
     }
 }

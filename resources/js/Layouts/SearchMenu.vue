@@ -33,7 +33,7 @@
                         <select name="site_id" id="site_id" class="search-select" v-model="form.site_id">
                             <option value=""></option>
                             <option
-                                v-for="site in search_sites"
+                                v-for="site in list_sites"
                                 :key="site.id"
                                 :value="site.id"
                             >
@@ -48,7 +48,7 @@
                         <select name="voice_id" id="voice_id" class="search-select" v-model="form.voice_id">
                             <option value=""></option>
                             <option
-                                v-for="voice in search_voices"
+                                v-for="voice in list_voices"
                                 :key="voice.id"
                                 :value="voice.id"
                             >
@@ -63,7 +63,7 @@
                         <select name="hard_id" id="hard_id" class="search-select" v-model="form.hard_id">
                             <option value=""></option>
                             <option
-                                v-for="hard in search_hards"
+                                v-for="hard in list_hards"
                                 :key="hard.id"
                                 :value="hard.id"
                             >
@@ -153,9 +153,9 @@ export default {
                 maker_name: "",
                 creater_name: "",
             }),
-            search_sites: usePage().props.value.search_sites,
-            search_voices: usePage().props.value.search_voices,
-            search_hards: usePage().props.value.search_hards,
+            list_sites: usePage().props.value.list_sites,
+            list_voices: usePage().props.value.list_voices,
+            list_hards: usePage().props.value.list_hards,
             releace_years: [],
         };
     },

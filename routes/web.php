@@ -19,6 +19,6 @@ Route::get('/ranking', [RankingController::class, 'index']);
 //動画ページ
 Route::get('/program', [ProgramController::class, 'index']);
 Route::get('/program/{program_id}', [ProgramController::class, 'show']);
-
-//レビューページ
+Route::post('/program/{program_id}', [ProgramController::class, 'update']);
+Route::post('/game/{program_id}', [GameController::class, 'update']);
 Route::post('/review', [ReviewController::class, 'store']);

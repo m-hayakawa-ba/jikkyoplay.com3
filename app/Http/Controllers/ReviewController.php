@@ -29,7 +29,7 @@ class ReviewController extends Controller
 
         //失敗したら500を返す
         if (is_null($review)) {
-            return response()->json(['レビューの作成に失敗しました'], 500);
+            return response()->json('レビューの作成に失敗しました', 500);
         }
 
         //200を返して終了

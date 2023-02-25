@@ -20266,30 +20266,58 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-/* harmony import */ var _js_Components_Modal_ModalWrap_vue__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @/js/Components/Modal/ModalWrap.vue */ "./resources/js/Components/Modal/ModalWrap.vue");
-/* harmony import */ var _js_Components_SvgIcon_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/Components/SvgIcon.vue */ "./resources/js/Components/SvgIcon.vue");
-/* harmony import */ var _js_Components_Modal_ButtonSubmit_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/Components/Modal/ButtonSubmit.vue */ "./resources/js/Components/Modal/ButtonSubmit.vue");
+/* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
+/* harmony import */ var _js_Components_Modal_ModalWrap_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/Components/Modal/ModalWrap.vue */ "./resources/js/Components/Modal/ModalWrap.vue");
+/* harmony import */ var _js_Components_SvgIcon_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/Components/SvgIcon.vue */ "./resources/js/Components/SvgIcon.vue");
+/* harmony import */ var _js_Components_Modal_ButtonSubmit_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @/js/Components/Modal/ButtonSubmit.vue */ "./resources/js/Components/Modal/ButtonSubmit.vue");
+
 
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  //呼び出し元から渡された引数
+  props: ["program_id", "default_voice_id"],
+  //呼び出し元の書き換え
+  emits: ['change_voice_id'],
   //コンポーネント内で使用する変数
   data: function data() {
     return {
-      display_flag: false
+      display_flag: false,
+      voice_id: this.default_voice_id,
+      list_voices: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.list_voices,
+      errors: []
     };
   },
   //読み込んだコンポーネント
   components: {
-    ModalWrap: _js_Components_Modal_ModalWrap_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
-    SvgIcon: _js_Components_SvgIcon_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    ButtonSubmit: _js_Components_Modal_ButtonSubmit_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+    ModalWrap: _js_Components_Modal_ModalWrap_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
+    SvgIcon: _js_Components_SvgIcon_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
+    ButtonSubmit: _js_Components_Modal_ButtonSubmit_vue__WEBPACK_IMPORTED_MODULE_3__["default"]
   },
   //コンポーネント内で使う関数
   methods: {
     //モーダルの表示非表示の切り替え
     setDisplay: function setDisplay(flag) {
       this.display_flag = flag;
+    },
+    //フォームの送信
+    submit: function submit() {
+      var _this = this;
+      //エラーメッセージを消す
+      this.errors = [];
+
+      //データ送信
+      axios.post('/program/' + this.program_id, {
+        voice_id: this.voice_id
+      }).then(function () {
+        //親要素の配列にレビューを追加
+        _this.$emit("change_voice_id", _this.voice_id);
+
+        //ウインドウを消して終了
+        _this.display_flag = false;
+      })["catch"](function (error) {
+        _this.errors.push(error.response.data);
+      });
     }
   }
 });
@@ -20594,7 +20622,7 @@ __webpack_require__.r(__webpack_exports__);
         //ウインドウを消して終了
         _this2.display_flag = false;
       })["catch"](function (error) {
-        _this2.errors.push(error.response.data.message);
+        _this2.errors.push(error.response.data);
       });
     }
   }
@@ -20913,9 +20941,9 @@ __webpack_require__.r(__webpack_exports__);
         maker_name: "",
         creater_name: ""
       }),
-      search_sites: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.search_sites,
-      search_voices: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.search_voices,
-      search_hards: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.search_hards,
+      list_sites: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.list_sites,
+      list_voices: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.list_voices,
+      list_hards: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.list_hards,
       releace_years: []
     };
   },
@@ -21456,7 +21484,8 @@ __webpack_require__.r(__webpack_exports__);
       creater: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.creater,
       game: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.game,
       reviews: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.reviews,
-      relation_programs: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.relation_programs
+      relation_programs: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.relation_programs,
+      list_voices: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.list_voices
     };
   },
   //コンポーネント内で使用するメソッド
@@ -21468,6 +21497,13 @@ __webpack_require__.r(__webpack_exports__);
     //画像がなかった場合の表示
     noImage: function noImage(element) {
       element.target.src = '/image/noimage_trans.png';
+    },
+    //音声情報を変更する
+    changeVoiceId: function changeVoiceId(voice_id) {
+      this.program.voice_id = voice_id;
+      this.program.voice_type = this.list_voices.find(function (el) {
+        return el.id == voice_id;
+      }).type;
     },
     //レビューを追加する
     pushReview: function pushReview(review) {
@@ -22346,10 +22382,21 @@ var _withScopeId = function _withScopeId(n) {
 };
 var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "review-description"
+    "class": "program-description"
   }, " 動画の音声情報が間違っていた場合、修正することができます。 ", -1 /* HOISTED */);
 });
-
+var _hoisted_2 = {
+  "class": "program-form-item"
+};
+var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "voice_id"
+  }, "実況者の音声情報", -1 /* HOISTED */);
+});
+var _hoisted_4 = ["value"];
+var _hoisted_5 = {
+  "class": "error-message"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_SvgIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SvgIcon");
   var _component_ButtonSubmit = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonSubmit");
@@ -22368,12 +22415,25 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" モーダルの内容 "), _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" フォーム "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-        "class": "review-form",
-        onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
-          return _ctx.submit && _ctx.submit.apply(_ctx, arguments);
+        "class": "program-form",
+        onSubmit: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+          return $options.submit && $options.submit.apply($options, arguments);
         }, ["prevent"]))
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 送信ボタン "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonSubmit, {
-        button_text: "送信する"
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 実況者の声 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+        id: "voice_id",
+        required: "",
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          return $data.voice_id = $event;
+        })
+      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.list_voices, function (voice) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
+          key: voice.id,
+          value: voice.id
+        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(voice.type), 9 /* TEXT, PROPS */, _hoisted_4);
+      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.voice_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" エラーメッセージ "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.errors, function (error) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(error), 1 /* TEXT */)]);
+      }), 256 /* UNKEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 送信ボタン "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonSubmit, {
+        button_text: "修正する"
       })], 32 /* HYDRATE_EVENTS */)];
     }),
 
@@ -23251,19 +23311,19 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
           return $data.form.site_id = $event;
         })
-      }, [_hoisted_7, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.search_sites, function (site) {
+      }, [_hoisted_7, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.list_sites, function (site) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           key: site.id,
           value: site.id
         }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(site.name), 9 /* TEXT, PROPS */, _hoisted_8);
-      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.site_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 声 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"advanced-search-item\">\r\n                        <label for=\"voice_id\" class=\"search-label\">声</label>\r\n                        <select name=\"voice_id\" id=\"voice_id\" class=\"search-select\" v-model=\"form.voice_id\">\r\n                            <option value=\"\"></option>\r\n                            <option\r\n                                v-for=\"voice in search_voices\"\r\n                                :key=\"voice.id\"\r\n                                :value=\"voice.id\"\r\n                            >\r\n                                {{ voice.type }}\r\n                            </option>\r\n                        </select>\r\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ハード "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
+      }), 128 /* KEYED_FRAGMENT */))], 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.site_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 声 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" <div class=\"advanced-search-item\">\r\n                        <label for=\"voice_id\" class=\"search-label\">声</label>\r\n                        <select name=\"voice_id\" id=\"voice_id\" class=\"search-select\" v-model=\"form.voice_id\">\r\n                            <option value=\"\"></option>\r\n                            <option\r\n                                v-for=\"voice in list_voices\"\r\n                                :key=\"voice.id\"\r\n                                :value=\"voice.id\"\r\n                            >\r\n                                {{ voice.type }}\r\n                            </option>\r\n                        </select>\r\n                    </div> "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ハード "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
         name: "hard_id",
         id: "hard_id",
         "class": "search-select",
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return $data.form.hard_id = $event;
         })
-      }, [_hoisted_11, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.search_hards, function (hard) {
+      }, [_hoisted_11, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.list_hards, function (hard) {
         return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
           key: hard.id,
           value: hard.id
@@ -23927,7 +23987,11 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     site_name: $data.creater.site_name,
     voice_id: $data.program.voice_id,
     voice_type: $data.program.voice_type
-  }, null, 8 /* PROPS */, ["site_id", "site_name", "voice_id", "voice_type"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ModalUpdateProgram)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲーム情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_GameWrap, {
+  }, null, 8 /* PROPS */, ["site_id", "site_name", "voice_id", "voice_type"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ModalUpdateProgram, {
+    program_id: $data.program.id,
+    default_voice_id: $data.program.voice_id,
+    onChange_voice_id: $options.changeVoiceId
+  }, null, 8 /* PROPS */, ["program_id", "default_voice_id", "onChange_voice_id"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲーム情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_GameWrap, {
     game: $data.game
   }, null, 8 /* PROPS */, ["game"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ModalUpdateGame)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲームレビュー "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.reviews, function (review) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ReviewSimpleWrap, {
@@ -24699,7 +24763,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".edit-button[data-v-592b3b64] {\n  position: absolute;\n  bottom: 0;\n  right: 2px;\n  padding: 4px 8px;\n  width: 36px;\n  height: 36px;\n  text-align: center;\n  cursor: pointer;\n  transition: opacity 0.3s;\n}\n.edit-button[data-v-592b3b64]:hover {\n  opacity: 0.8;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".edit-button[data-v-592b3b64] {\n  position: absolute;\n  bottom: 0;\n  right: 2px;\n  padding: 4px 8px;\n  width: 36px;\n  height: 36px;\n  text-align: center;\n  cursor: pointer;\n  transition: opacity 0.3s;\n}\n.edit-button[data-v-592b3b64]:hover {\n  opacity: 0.8;\n}\n.program-description[data-v-592b3b64] {\n  margin-bottom: 12px;\n}\n.program-description span[data-v-592b3b64] {\n  font-weight: bold;\n  padding: 0 2px;\n}\n.program-form .program-form-item[data-v-592b3b64] {\n  margin-bottom: 8px;\n}\n.program-form label[data-v-592b3b64] {\n  display: block;\n}\n.program-form select[data-v-592b3b64] {\n  margin: 4px 6px 0;\n  height: 30px;\n  background-color: #ded9e5;\n  outline: none;\n  border: unset;\n  border-radius: 4px;\n  padding: 4px 10px;\n  width: calc(100% - 12px);\n}\n@media screen and (min-width: 640px) {\n.program-form select[data-v-592b3b64] {\n    margin: 4px 16px 0;\n    width: calc(100% - 32px);\n}\n}\n.program-form .error-message[data-v-592b3b64] {\n  color: #e00;\n  text-align: center;\n  font-weight: bold;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -24891,7 +24955,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".review-description[data-v-618f61f5] {\n  margin-bottom: 12px;\n}\n.review-description span[data-v-618f61f5] {\n  font-weight: bold;\n  padding: 0 2px;\n}\n.review-form .review-form-item[data-v-618f61f5] {\n  margin-bottom: 8px;\n}\n.review-form label[data-v-618f61f5] {\n  display: block;\n}\n.review-form input[data-v-618f61f5], .review-form textarea[data-v-618f61f5] {\n  margin: 4px 0 0 16px;\n  background-color: #ded9e5;\n  outline: none;\n  border: unset;\n  border-radius: 4px;\n  padding: 4px 10px;\n  width: calc(100% - 16px);\n}\n.review-form textarea[data-v-618f61f5] {\n  resize: none;\n}\n.review-form .review-length[data-v-618f61f5] {\n  text-align: right;\n  font-size: 1.2rem;\n}\n.review-form .error-message[data-v-618f61f5] {\n  color: #e00;\n  text-align: center;\n  font-weight: bold;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".review-description[data-v-618f61f5] {\n  margin-bottom: 12px;\n}\n.review-description span[data-v-618f61f5] {\n  font-weight: bold;\n  padding: 0 2px;\n}\n.review-form .review-form-item[data-v-618f61f5] {\n  margin-bottom: 8px;\n}\n.review-form label[data-v-618f61f5] {\n  display: block;\n}\n.review-form input[data-v-618f61f5], .review-form textarea[data-v-618f61f5] {\n  margin: 4px 6px 0;\n  background-color: #ded9e5;\n  outline: none;\n  border: unset;\n  border-radius: 4px;\n  padding: 4px 10px;\n  width: calc(100% - 12px);\n}\n@media screen and (min-width: 640px) {\n.review-form input[data-v-618f61f5], .review-form textarea[data-v-618f61f5] {\n    margin: 4px 16px 0;\n    width: calc(100% - 32px);\n}\n}\n.review-form input[data-v-618f61f5] {\n  height: 30px;\n}\n.review-form textarea[data-v-618f61f5] {\n  resize: none;\n}\n.review-form .review-length[data-v-618f61f5] {\n  text-align: right;\n  font-size: 1.2rem;\n}\n.review-form .error-message[data-v-618f61f5] {\n  color: #e00;\n  text-align: center;\n  font-weight: bold;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

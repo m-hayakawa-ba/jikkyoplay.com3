@@ -143,11 +143,12 @@ export default {
             }
 
             //データ送信
-            axios.post('/review', {
-                program_id: this.program_id,
-                reviewer:   this.reviewer,
-                detail:     this.detail,
-            })
+            axios
+                .post('/review', {
+                    program_id: this.program_id,
+                    reviewer:   this.reviewer,
+                    detail:     this.detail,
+                })
                 .then((response) => {
 
                     //親要素の配列にレビューを追加
@@ -161,7 +162,7 @@ export default {
                     this.display_flag = false;
                 })
                 .catch((error) => {
-                    this.errors.push(error.response.data.message);
+                    this.errors.push(error.response.data);
                 });
         }
     },
@@ -186,13 +187,20 @@ export default {
             display: block;
         }
         input, textarea {
-            margin: 4px 0 0 16px;
+            margin: 4px 6px 0;
             background-color: #ded9e5;
             outline: none;
             border: unset;
             border-radius: 4px;
             padding: 4px 10px;
-            width: calc(100% - 16px);
+            width: calc(100% - 12px);
+            @media screen and (min-width: $bp) {
+                margin: 4px 16px 0;
+                width: calc(100% - 32px);
+            }
+        }
+        input {
+            height: 30px;
         }
         textarea {
             resize: none;

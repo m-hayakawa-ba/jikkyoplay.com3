@@ -51,9 +51,9 @@ class HandleInertiaRequests extends Middleware
     {
         return array_merge(parent::share($request), [
             'const' => config('const'),
-            'search_sites' => $this->siteReadService->getSiteList(),
-            'search_voices' => $this->voiceReadService->getVoiceList(),
-            'search_hards'  => $this->hardReadService->getHardList(),
+            'list_sites' => $this->siteReadService->getSiteList(),
+            'list_voices' => $this->voiceReadService->getVoiceList(),
+            'list_hards'  => $this->hardReadService->getHardList(),
         ]);
     }
 }

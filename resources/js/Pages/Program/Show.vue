@@ -69,7 +69,11 @@
                         :voice_id="program.voice_id"
                         :voice_type="program.voice_type"
                     />
-                    <ModalUpdateProgram/>
+                    <ModalUpdateProgram
+                        :program_id="program.id"
+                        :default_voice_id="program.voice_id"
+                        @change_voice_id="changeVoiceId"
+                    />
                 </div>
 
                 <!-- ゲーム情報 -->
@@ -169,6 +173,7 @@ export default {
             game:               usePage().props.value.game,
             reviews:            usePage().props.value.reviews,
             relation_programs:  usePage().props.value.relation_programs,
+            list_voices:        usePage().props.value.list_voices,
         };
     },
 
@@ -183,6 +188,12 @@ export default {
         //画像がなかった場合の表示
         noImage(element){
             element.target.src = '/image/noimage_trans.png'
+        },
+
+        //音声情報を変更する
+        changeVoiceId(voice_id) {
+            this.program.voice_id = voice_id;
+            this.program.voice_type = this.list_voices.find(el => el.id == voice_id).type;
         },
 
         //レビューを追加する
