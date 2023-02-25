@@ -192,7 +192,7 @@ export default {
 @import "@/sass/variables";
     .search-window {
         position: absolute;
-        padding: 60px 0 80px;
+        padding: 40px 0 80px;
         width: 100%;
         height: calc(100vh - 100%);
         opacity: 0.95;
@@ -245,7 +245,6 @@ export default {
         background-color: unset;
         border: none;
         font-size: $font-l;
-        border-radius: 50%;
         transition: opacity 0.3s;
         &:hover {
             opacity: 0.8;
@@ -275,12 +274,13 @@ export default {
         max-width: 90%;
         .search-input,
         .search-select {
-            height: 40px;
+            height: 38px;
             width: 100%;
         }
         @media screen and (min-width: $bp) {
             margin-top: 100px;
             width: 640px;
+            height: 40px;
             max-width: 100%;
         }
     }

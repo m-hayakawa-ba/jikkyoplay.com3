@@ -21,6 +21,10 @@ class Program extends Model
     {
         return $this->belongsTo('App\Models\Game');
     }
+    public function fix_program_informations(): object
+    {
+        return $this->hasmany('App\Models\FixProgramInformation');
+    }
 
     /**
      * スコープ
@@ -32,15 +36,18 @@ class Program extends Model
                 'programs.id as id',
                 'programs.image_url as image_url',
                 'programs.title as title',
+                'programs.voice_id',
                 'programs.view_count',
                 'programs.published_at as published_at',
                 'creaters.site_id as site_id',
                 'creaters.user_icon_url as user_icon_url',
                 'creaters.name as creater_name',
+                'voices.type as voice_type',
             )
             ->join('creaters', 'programs.creater_id', '=', 'creaters.id')
             ->join('games', 'programs.game_id', '=', 'games.id')
             ->join('makers', 'games.maker_id', '=', 'makers.id')
+            ->join('voices', 'programs.voice_id', '=', 'voices.id')
             ->where('flag_enabled', 1);
     }
     /**

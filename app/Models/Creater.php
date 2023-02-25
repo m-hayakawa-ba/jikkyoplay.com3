@@ -11,6 +11,14 @@ class Creater extends Model
     use HasFactory;
 
     /**
+     * リレーションの定義
+     */
+    public function programs(): object
+    {
+        return $this->hasMany('App\Models\Program');
+    }
+
+    /**
      * スコープ
      * 一覧画面で必要なselectやjoinをまとめて指定
      */
@@ -22,10 +30,7 @@ class Creater extends Model
                 'creaters.name as name',
                 'creaters.site_id',
                 'creaters.user_id',
-                'creaters.voice_id',
                 'creaters.user_icon_url',
-                'voices.type as voice_type',
-            )
-            ->join('voices', 'creaters.voice_id', '=', 'voices.id');
+            );
     }
 }

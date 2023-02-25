@@ -183,7 +183,7 @@ export default {
     }
     .search-icon-enter-active, .search-icon-leave-active,
     .main-icon-enter-active, .main-icon-leave-active {
-        transition: opacity 0.2s;
+        transition: opacity 0.4s;
     }
     .search-icon-enter-to, .search-icon-leave,
     .main-icon-enter-to, .main-icon-leave {

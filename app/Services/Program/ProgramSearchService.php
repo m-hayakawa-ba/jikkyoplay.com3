@@ -135,7 +135,7 @@ class ProgramSearchService
     private function searchVoiceId(Builder $programs, Request $request) : Builder
     {
         return $request->filled('voice_id')
-            ? $programs->where('creaters.voice_id', $request->query('voice_id'))
+            ? $programs->where('programs.voice_id', $request->query('voice_id'))
             : $programs;
     }
     /**

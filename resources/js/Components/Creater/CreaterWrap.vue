@@ -31,12 +31,12 @@
             </th></tr>
             
             <!-- 音声 -->
-            <tr><td>
+            <!-- <tr><td>
                 <SearchLink 
                     :name="creater.voice_type"
                     :query="'voice_id=' + creater.voice_id"
                 />
-            </td></tr>
+            </td></tr> -->
             
             <!-- その他の動画 -->
             <tr><td>
