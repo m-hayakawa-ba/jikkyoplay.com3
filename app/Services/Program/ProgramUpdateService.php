@@ -18,25 +18,6 @@ class ProgramUpdateService
     }
 
     /**
-     * 動画情報の更新
-     * 
-     * @param int   $program_id 更新する動画id
-     * @param array $params     更新するカラムと値の配列
-     * 
-     * @param bool 更新に成功したらtrue
-     */
-    public function updateProgram(int $program_id, array $params) : bool
-    {
-        //情報を更新する
-        $count = $this->programModel
-            ->where('id', $program_id)
-            ->update($params);
-        
-        //成否を返す
-        return $count > 0;
-    }
-
-    /**
      * 動画の音声情報を更新する
      * 
      * @param int $program_id    更新する動画id
@@ -94,6 +75,51 @@ class ProgramUpdateService
             return false;
         }
 
+        
+        //成否を返す
+        return $count > 0;
+    }
+
+    /**
+     * 動画のゲーム情報を更新する
+     * 
+     * @param int $program_id    更新する動画id
+     * @param int $game_id       更新後の音声id
+     * @param string $ip_address 変更したユーザーのIPアドレス
+     * 
+     * @return bool 更新に成功したらtrue
+     */
+    public function updateGameId(int $program_id, int $game_id, string $ip_address) : bool
+    {
+
+        //トランザクション処理の開始
+        DB::beginTransaction();
+        try {
+
+            //動画情報を取得
+            $program = $this->programModel->find($program_id);
+
+            //変更履歴を記憶
+            $this->fixProgramInformationCreateService->createGameUpdate(
+                $program_id,
+                $program->game_id,
+                $game_id,
+                $ip_address,
+            );
+
+            //ゲーム情報を更新する
+            $count = $this->programModel
+                ->where('id', $program_id)
+                ->update(['game_id' => $game_id]);
+
+            //トランザクション処理の終了
+            DB::commit();
+
+        }  catch (\Throwable $e) {
+
+            DB::rollback();
+            return false;
+        }
         
         //成否を返す
         return $count > 0;

@@ -74,6 +74,13 @@
                         :key="review.id"
                         :review="review"
                     />
+                    <div
+                        v-if="reviews.length == 0"
+                        class="review-announce"    
+                    >
+                        この動画へのレビューはまだありません。<br />
+                        レビューを書いて <span>{{ creater.name }}</span> さんを応援しよう！
+                    </div>
                     <ModalCreateReview
                         :program_id="program.id"
                         :creater_name="creater.name"
@@ -241,6 +248,12 @@ export default {
         margin-bottom: 20px;
         @media screen and (min-width: $bp) {
             margin-bottom: 30px;
+        }
+    }
+    .review-announce {
+        margin-bottom: 20px;
+        span {
+            font-weight: bold;
         }
     }
     .relation-program-wrap {

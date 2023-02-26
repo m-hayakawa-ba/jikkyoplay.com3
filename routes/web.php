@@ -21,8 +21,8 @@ Route::get('/ranking', [RankingController::class, 'index']);
 Route::get('/program', [ProgramController::class, 'index']);
 Route::get('/program/{program_id}', [ProgramController::class, 'show']);
 Route::post('/program/voice/{program_id}', [ProgramController::class, 'updateVoice']);
+Route::post('/program/game/{program_id}', [ProgramController::class, 'updateGame']);
 
 
 Route::post('/game/search', [GameController::class, 'search']);
-Route::post('/game/update/{program_id}', [GameController::class, 'update']);
 Route::post('/review', [ReviewController::class, 'store']);

@@ -136,4 +136,25 @@ class ProgramController extends Controller
         //200を返して終了
         return response()->json([], 200);
     }
+
+    /**
+     * 動画のゲーム情報の修正
+     */
+    public function updateGame(int $program_id, Request $request)
+    {
+        //該当するゲーム情報を更新する
+        $is_updated = $this->programUpdateService->updateGameId(
+            $program_id,
+            $request->game_id,
+            ip_address: $request->ip(),
+        );
+
+        //失敗したら500を返す
+        if (!$is_updated) {
+            return response()->json('情報の更新に失敗しました', 500);
+        }
+
+        //200を返して終了
+        return response()->json([], 200);
+    }
 }

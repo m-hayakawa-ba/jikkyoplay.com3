@@ -173,7 +173,7 @@ export default {
 
             //データ送信
             axios
-                .post('/game/update/' + this.program_id, {
+                .post('/program/game/' + this.program_id, {
                     game_id: this.game_id,
                 })
                 .then(() => {

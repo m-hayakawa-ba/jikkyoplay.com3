@@ -15,7 +15,7 @@
                     <input
                         class="search-input"
                         type="text"
-                        placeholder="ゲーム名・動画タイトルなど"
+                        placeholder="ゲーム名・実況者名・動画タイトルなど"
                         v-model="form.word"
                     />
                     <button type="submit" class="search-button">
@@ -43,8 +43,8 @@
                     </div>
 
                     <!-- 声 -->
-                    <!-- <div class="advanced-search-item">
-                        <label for="voice_id" class="search-label">声</label>
+                    <div class="advanced-search-item">
+                        <label for="voice_id" class="search-label">音声</label>
                         <select name="voice_id" id="voice_id" class="search-select" v-model="form.voice_id">
                             <option value=""></option>
                             <option
@@ -55,7 +55,7 @@
                                 {{ voice.type }}
                             </option>
                         </select>
-                    </div> -->
+                    </div>
 
                     <!-- ハード -->
                     <div class="advanced-search-item">
@@ -88,7 +88,7 @@
                     </div> -->
 
                     <!-- 実況者名 -->
-                    <div class="advanced-search-item">
+                    <!-- <div class="advanced-search-item">
                         <label for="creater_name" class="search-label">実況者名</label>
                         <input
                             class="search-input"
@@ -96,7 +96,7 @@
                             id="creater_name"
                             v-model="form.creater_name"
                         />
-                    </div>
+                    </div> -->
 
                     <!-- メーカー -->
                     <div class="advanced-search-item">

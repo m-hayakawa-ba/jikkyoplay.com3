@@ -37,7 +37,7 @@ class ProgramSearchService
         );
 
         //検索条件を追加
-        $programs = $this->SearchWord       ($programs, $request); //動画タイトル・ゲーム名で絞り込み
+        $programs = $this->SearchWord       ($programs, $request); //動画タイトル・実況者名・ゲーム名で絞り込み
         $programs = $this->searchSiteId     ($programs, $request); //サイトidで絞り込み
         $programs = $this->searchVoiceId    ($programs, $request); //声idで絞り込み
         $programs = $this->searchCreaterName($programs, $request); //投稿者名で絞り込み
@@ -104,7 +104,11 @@ class ProgramSearchService
                     $q->whereIn('search_name', $words);
                 })
                 //動画のタイトルから検索
-                ->orWhere('programs.title', 'like', '%' . $query . '%');
+                ->orWhere('programs.title', 'like', '%' . $query . '%')
+                //実況者名から検索
+                ->orWhereHas('creater', function ($q) use ($query) {
+                    $q->where('name', $query);
+                });
         });
     }
     /**

@@ -33,24 +33,4 @@ class GameController extends Controller
         //取得できたときはリストを返す
         return response()->json($games->toArray(), 200);
     }
-
-    /**
-     * ゲーム情報の修正
-     */
-    public function update (int $program_id, Request $request)
-    {
-        //該当するゲーム情報を更新する
-        $is_updated = $this->programUpdateService->updateProgram(
-            $program_id,
-            ['game_id' => $request->game_id],
-        );
-
-        //更新に失敗した場合
-        if (!$is_updated) {
-            return response()->json('情報の更新に失敗しました', 500);
-        }
-
-        //200を返して終了
-        return response()->json([], 200);
-    }
 }
