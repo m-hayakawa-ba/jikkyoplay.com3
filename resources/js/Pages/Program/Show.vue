@@ -80,7 +80,10 @@
                 <div class="section-wrap">
                     <h3>ゲーム情報</h3>
                     <GameWrap  :game="game"/>
-                    <ModalUpdateGame/>
+                    <ModalUpdateGame
+                        :program_id="program.id"
+                        @change_game_id="changeGameId"
+                    />
                 </div>
             </div>
 
@@ -194,6 +197,15 @@ export default {
         changeVoiceId(voice_id) {
             this.program.voice_id = voice_id;
             this.program.voice_type = this.list_voices.find(el => el.id == voice_id).type;
+        },
+
+        //ゲーム情報を変更する
+        changeGameId(game_id, game_name, hard_name, maker_name, releace_year) {
+            this.game.id            = game_id;
+            this.game.name          = game_name;
+            this.game.hard_name     = hard_name;
+            this.game.maker_name    = maker_name;
+            this.game.releace_year  = releace_year;
         },
 
         //レビューを追加する

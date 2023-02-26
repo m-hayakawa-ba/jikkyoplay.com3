@@ -19889,12 +19889,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
+  //呼び出し元から渡された引数
+  props: ["program_id"],
+  //呼び出し元の書き換え
+  emits: ['change_game_id'],
   //コンポーネント内で使用する変数
   data: function data() {
     return {
-      display_flag: false
+      display_flag: false,
+      //モーダルの表示フラグ
+      game_search_name: "",
+      //検索フォームで使用する検索ワード
+      game_search_name_errors: [],
+      //検索フォームで使用するエラーメッセージ
+      games: [],
+      //選択フォームで使用するゲームの配列
+      game_id: "",
+      //選択フォームで使用するゲームid
+      game_id_errors: [] //選択フォームで使用するエラーメッセージ
     };
   },
+
   //読み込んだコンポーネント
   components: {
     ModalWrap: _js_Components_Modal_ModalWrap_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
@@ -19906,6 +19921,59 @@ __webpack_require__.r(__webpack_exports__);
     //モーダルの表示非表示の切り替え
     setDisplay: function setDisplay(flag) {
       this.display_flag = flag;
+    },
+    //フォームの送信
+    submitGameSearchName: function submitGameSearchName() {
+      var _this = this;
+      //エラーメッセージを消す
+      this.game_search_name_errors = [];
+      this.game_id_errors = [];
+
+      //ゲームリストをリセット
+      this.games = [];
+      this.game_id = "";
+
+      //データ送信
+      axios.post('/game/search', {
+        game_search_name: this.game_search_name
+      }).then(function (response) {
+        //ゲームリストの配列に設定
+        _this.games = response.data;
+      })["catch"](function (error) {
+        _this.game_search_name_errors.push(error.response.data);
+      });
+    },
+    //フォームの送信
+    submitGameId: function submitGameId() {
+      var _this2 = this;
+      //エラーメッセージを消す
+      this.game_search_name_errors = [];
+      this.game_id_errors = [];
+
+      //何も選択されていない場合
+      if (this.game_id == "") {
+        this.game_id_errors.push("リストからゲームを選んでください");
+        return;
+      }
+
+      //データ送信
+      axios.post('/game/update/' + this.program_id, {
+        game_id: this.game_id
+      }).then(function () {
+        //親要素の配列にレビューを追加
+        var game = _this2.games.find(function (el) {
+          return el.id == _this2.game_id;
+        });
+        _this2.$emit("change_game_id", game.id, game.name, game.hard_name, game.maker_name, game.releace_year);
+
+        //ウインドウを消して終了
+        _this2.display_flag = false;
+      })["catch"](function (error) {
+        _this2.game_id_errors.push(error.response.data);
+      });
+    },
+    mounted: function mounted() {
+      // console.log(this.program_id);
     }
   }
 });
@@ -21505,6 +21573,14 @@ __webpack_require__.r(__webpack_exports__);
         return el.id == voice_id;
       }).type;
     },
+    //ゲーム情報を変更する
+    changeGameId: function changeGameId(game_id, game_name, hard_name, maker_name, releace_year) {
+      this.game.id = game_id;
+      this.game.name = game_name;
+      this.game.hard_name = hard_name;
+      this.game.maker_name = maker_name;
+      this.game.releace_year = releace_year;
+    },
     //レビューを追加する
     pushReview: function pushReview(review) {
       this.reviews.push(review);
@@ -21845,10 +21921,37 @@ var _withScopeId = function _withScopeId(n) {
 };
 var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
-    "class": "review-description"
+    "class": "game-description"
   }, " 動画のゲーム情報が間違っていた場合、修正することができます。 ", -1 /* HOISTED */);
 });
-
+var _hoisted_2 = {
+  "class": "game-form-item"
+};
+var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+    "for": "game_search_name"
+  }, "ゲーム名", -1 /* HOISTED */);
+});
+var _hoisted_4 = {
+  "class": "error-message"
+};
+var _hoisted_5 = {
+  "class": "game-form-item"
+};
+var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", null, "正しいゲームを選んでください", -1 /* HOISTED */);
+});
+var _hoisted_7 = ["id", "value"];
+var _hoisted_8 = ["for"];
+var _hoisted_9 = {
+  "class": "game-list-hard"
+};
+var _hoisted_10 = {
+  "class": "game-list-name"
+};
+var _hoisted_11 = {
+  "class": "error-message"
+};
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_SvgIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SvgIcon");
   var _component_ButtonSubmit = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ButtonSubmit");
@@ -21866,16 +21969,48 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onSet_display: $options.setDisplay
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" モーダルの内容 "), _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" フォーム "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-        "class": "review-form",
-        onSubmit: _cache[1] || (_cache[1] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
-          return _ctx.submit && _ctx.submit.apply(_ctx, arguments);
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" モーダルの内容 "), _hoisted_1, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" フォーム・ゲームの検索 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
+        "class": "game-form",
+        onSubmit: _cache[2] || (_cache[2] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+          return $options.submitGameSearchName && $options.submitGameSearchName.apply($options, arguments);
         }, ["prevent"]))
-      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 送信ボタン "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonSubmit, {
-        button_text: "送信する"
-      })], 32 /* HYDRATE_EVENTS */)];
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [_hoisted_3, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+        type: "text",
+        id: "game_search_name",
+        required: "",
+        "onUpdate:modelValue": _cache[1] || (_cache[1] = function ($event) {
+          return $data.game_search_name = $event;
+        })
+      }, null, 512 /* NEED_PATCH */), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelText, $data.game_search_name]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" エラーメッセージ "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.game_search_name_errors, function (error) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(error), 1 /* TEXT */)]);
+      }), 256 /* UNKEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 送信ボタン "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonSubmit, {
+        button_text: "検索する"
+      })], 32 /* HYDRATE_EVENTS */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" フォーム・ゲームの選択 "), $data.games.length > 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("form", {
+        key: 0,
+        "class": "game-form",
+        onSubmit: _cache[4] || (_cache[4] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+          return $options.submitGameId && $options.submitGameId.apply($options, arguments);
+        }, ["prevent"]))
+      }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.games, function (game) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", {
+          key: game.id
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("input", {
+          id: 'game_id-' + game.id,
+          type: "radio",
+          "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+            return $data.game_id = $event;
+          }),
+          value: game.id
+        }, null, 8 /* PROPS */, _hoisted_7), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelRadio, $data.game_id]]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+          "for": 'game_id-' + game.id,
+          "class": "game-list"
+        }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(game.hard_name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(game.name), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_8)]);
+      }), 128 /* KEYED_FRAGMENT */)), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" エラーメッセージ "), ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.game_id_errors, function (error) {
+        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("ul", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("li", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(error), 1 /* TEXT */)]);
+      }), 256 /* UNKEYED_FRAGMENT */))]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 送信ボタン "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ButtonSubmit, {
+        button_text: "このゲームで決定"
+      })], 32 /* HYDRATE_EVENTS */)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
-
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["display_flag", "onSet_display"])], 64 /* STABLE_FRAGMENT */);
 }
@@ -23993,7 +24128,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     onChange_voice_id: $options.changeVoiceId
   }, null, 8 /* PROPS */, ["program_id", "default_voice_id", "onChange_voice_id"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲーム情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_GameWrap, {
     game: $data.game
-  }, null, 8 /* PROPS */, ["game"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ModalUpdateGame)])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲームレビュー "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.reviews, function (review) {
+  }, null, 8 /* PROPS */, ["game"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ModalUpdateGame, {
+    program_id: $data.program.id,
+    onChange_game_id: $options.changeGameId
+  }, null, 8 /* PROPS */, ["program_id", "onChange_game_id"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲームレビュー "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_17, [_hoisted_18, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.reviews, function (review) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ReviewSimpleWrap, {
       key: review.id,
       review: review
@@ -24475,7 +24613,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".edit-button[data-v-6e6055f6] {\n  position: absolute;\n  bottom: 0;\n  right: 2px;\n  padding: 4px 8px;\n  width: 36px;\n  height: 36px;\n  text-align: center;\n  cursor: pointer;\n  transition: opacity 0.3s;\n}\n.edit-button[data-v-6e6055f6]:hover {\n  opacity: 0.8;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".edit-button[data-v-6e6055f6] {\n  position: absolute;\n  bottom: 0;\n  right: 2px;\n  padding: 4px 8px;\n  width: 36px;\n  height: 36px;\n  text-align: center;\n  cursor: pointer;\n  transition: opacity 0.3s;\n}\n.edit-button[data-v-6e6055f6]:hover {\n  opacity: 0.8;\n}\n.game-description[data-v-6e6055f6] {\n  margin-bottom: 12px;\n}\n.game-description span[data-v-6e6055f6] {\n  font-weight: bold;\n  padding: 0 2px;\n}\n.game-form[data-v-6e6055f6] {\n  margin-top: 20px;\n}\n.game-form .game-form-item[data-v-6e6055f6] {\n  margin-bottom: 8px;\n}\n.game-form label[data-v-6e6055f6] {\n  display: block;\n}\n.game-form input[data-v-6e6055f6], .game-form select[data-v-6e6055f6] {\n  margin: 4px 6px 0;\n  background-color: #ded9e5;\n  outline: none;\n  border: unset;\n  border-radius: 4px;\n  padding: 4px 10px;\n  width: calc(100% - 12px);\n}\n@media screen and (min-width: 640px) {\n.game-form input[data-v-6e6055f6], .game-form select[data-v-6e6055f6] {\n    margin: 4px 16px 0;\n    width: calc(100% - 32px);\n}\n}\n.game-form input[data-v-6e6055f6] {\n  height: 30px;\n}\n.game-form input[type=radio][data-v-6e6055f6] {\n  display: none;\n}\n.game-form input[type=radio]:checked + label[data-v-6e6055f6] {\n  background-color: #5e67bd;\n  border-color: #5e67bd;\n  color: #fff;\n  transition: background-color 0.3s, border-color 0.3s, color 0.3s;\n}\n.game-form .game-list[data-v-6e6055f6] {\n  margin: 4px auto;\n  padding: 2px 4px;\n  border: solid 1px #444;\n  border-radius: 4px;\n  width: calc(100% - 8px);\n  max-width: 480px;\n}\n.game-form .game-list-hard[data-v-6e6055f6] {\n  font-size: 1.2rem;\n}\n.game-form .game-list-name[data-v-6e6055f6] {\n  font-size: 1.4rem;\n}\n.game-form .error-message[data-v-6e6055f6] {\n  color: #e00;\n  text-align: center;\n  font-weight: bold;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

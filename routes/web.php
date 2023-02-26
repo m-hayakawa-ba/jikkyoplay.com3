@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\GameController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProgramController;
@@ -20,5 +21,6 @@ Route::get('/ranking', [RankingController::class, 'index']);
 Route::get('/program', [ProgramController::class, 'index']);
 Route::get('/program/{program_id}', [ProgramController::class, 'show']);
 Route::post('/program/{program_id}', [ProgramController::class, 'update']);
-Route::post('/game/{program_id}', [GameController::class, 'update']);
+Route::post('/game/search', [GameController::class, 'search']);
+Route::post('/game/update/{program_id}', [GameController::class, 'update']);
 Route::post('/review', [ReviewController::class, 'store']);

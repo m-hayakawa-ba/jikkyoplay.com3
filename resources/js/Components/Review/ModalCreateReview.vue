@@ -19,6 +19,7 @@
 
         <!-- フォーム -->
         <form class="review-form" @submit.prevent="submit">
+            
             <div class="review-form-item">
                 <label for="reviewer">レビューを書く人の名前</label>
                 <input
