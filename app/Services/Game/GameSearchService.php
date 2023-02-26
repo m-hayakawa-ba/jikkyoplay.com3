@@ -64,7 +64,7 @@ class GameSearchService
             ->join('hards', 'games.hard_id', '=', 'hards.id')
             ->where('games.name', '!=', $search_word)
             ->whereHas('game_search_names', function ($q) use ($search_word) {
-                $q->where('search_name', mb_convert_kana($search_word, 'a'));
+                $q->where('search_name', 'like', '%' . mb_convert_kana($search_word . '%', 'a'));
             })
             ->inRandomOrder()
             ->limit($count - $match_games->count())
