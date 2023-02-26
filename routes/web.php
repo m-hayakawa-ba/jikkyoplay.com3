@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AboutController;
 use App\Http\Controllers\GameController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
@@ -22,7 +23,8 @@ Route::get('/program', [ProgramController::class, 'index']);
 Route::get('/program/{program_id}', [ProgramController::class, 'show']);
 Route::post('/program/voice/{program_id}', [ProgramController::class, 'updateVoice']);
 Route::post('/program/game/{program_id}', [ProgramController::class, 'updateGame']);
-
-
 Route::post('/game/search', [GameController::class, 'search']);
 Route::post('/review', [ReviewController::class, 'store']);
+
+//このサイトについて
+Route::get('/about', [AboutController::class, 'index']);

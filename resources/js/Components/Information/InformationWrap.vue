@@ -53,7 +53,7 @@ export default {
             }
 
             //外部リンクのときはaタグにする
-            else if (this.href.indexOf('http://') > 0 || this.href.indexOf('https://') > 0) {
+            else if (this.href.indexOf('http://') >= 0 || this.href.indexOf('https://') >= 0) {
                 return 'a';
             }
 

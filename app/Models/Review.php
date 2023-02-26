@@ -18,6 +18,7 @@ class Review extends Model
         'detail',
         'ip_address',
         'cookie_string',
+        'displayed_at',
     ];
     protected $hidden = [
         'ip_address',

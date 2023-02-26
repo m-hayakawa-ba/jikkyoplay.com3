@@ -11,13 +11,13 @@
 
         <!-- ニュース記事 -->
         <section>
-
-            <!-- 個別のニュース記事 -->
-            <NewsWrap
+            <div
                 v-for="news in newses"
-                :news="news"
+                :key="news.id"
                 class="news-wrap"
-            />
+            >
+                <NewsWrap :news="news"/>
+            </div>
         </section>
 
         <!-- 来月と前月へのリンク -->
