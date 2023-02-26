@@ -24,6 +24,7 @@
 
             <!-- 実況者の声 -->
             <div class="program-form-item">
+
                 <label for="voice_id">実況者の音声情報</label>
                 <select
                     id="voice_id"
@@ -36,6 +37,13 @@
                         :value="voice.id"
                     >{{ voice.type }}</option>
                 </select>
+
+                <input
+                    type="checkbox"
+                    id="all_flag"
+                    v-model="all_flag"
+                />
+                <label for="all_flag" class="all_check">この実況者の動画をすべて修正する</label>
             </div>
 
             <!-- エラーメッセージ -->
@@ -63,6 +71,7 @@ export default {
     //呼び出し元から渡された引数
     props: [
         "program_id",
+        "creater_id",
         "default_voice_id",
     ],
 
@@ -76,6 +85,7 @@ export default {
         return {
             display_flag: false,
             voice_id: this.default_voice_id,
+            all_flag: false,
             list_voices: usePage().props.value.list_voices,
             errors: [],
         };
@@ -104,8 +114,10 @@ export default {
 
             //データ送信
             axios
-                .post('/program/' + this.program_id, {
+                .post('/program/voice/' + this.program_id, {
+                    creater_id: this.creater_id,
                     voice_id: this.voice_id,
+                    all_flag: this.all_flag,
                 })
                 .then(() => {
 
@@ -153,6 +165,17 @@ export default {
         }
         label {
             display: block;
+        }
+        .all_check {
+            display: inline;
+            position: relative;
+            bottom: 5px;
+            margin-left: 4px;
+        }
+        input {
+            margin-top: 20px;
+            width: 20px;
+            height: 20px;
         }
         select {
             margin: 4px 6px 0;

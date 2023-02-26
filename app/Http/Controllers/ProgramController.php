@@ -115,16 +115,18 @@ class ProgramController extends Controller
     }
 
     /**
-     * 動画情報の修正
+     * 動画の音声情報の修正
      */
-    public function update(int $program_id, Request $request)
+    public function updateVoice(int $program_id, Request $request)
     {
         //動画の音声情報を更新する
-        $array = [
-            'voice_id' => $request->voice_id,
-            'flag_changed' => 1,
-        ];
-        $is_success = $this->programUpdateService->updateProgram($program_id, $array);
+        $is_success = $this->programUpdateService->updateVoiceId(
+            program_id: $program_id,
+            creater_id: $request->creater_id,
+            voice_id:   $request->voice_id,
+            all_flag:   $request->all_flag,
+            ip_address: $request->ip(),
+        );
 
         //失敗したら500を返す
         if (!$is_success) {

@@ -21,7 +21,7 @@ class Program extends Model
     {
         return $this->belongsTo('App\Models\Game');
     }
-    public function fix_program_informations(): object
+    public function fix_program_information(): object
     {
         return $this->hasmany('App\Models\FixProgramInformation');
     }

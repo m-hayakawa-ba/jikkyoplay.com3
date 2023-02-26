@@ -4,19 +4,10 @@
     <div class="inner">
 
         <!-- 埋め込み動画 -->
-        <div class="program-background">
-
-            <!-- youtube -->
-            <EmbedYoutube
-                v-if="creater.site_id == constants.site.youtube"
-                :movie_id="program.movie_id"
-            />
-            <!-- ニコニコ動画 -->
-            <EmbedNicovideo
-                v-if="creater.site_id == constants.site.nicovideo"
-                :movie_id="program.movie_id"
-            />
-        </div>
+        <EmbedMovie
+            :site_id="creater.site_id"
+            :movie_id="program.movie_id"
+        />
 
         <!-- 再生数と投稿日時 -->
         <div>
@@ -30,24 +21,10 @@
         </h2>
 
         <!-- 元サイトへの外部リンク -->
-        <a
-            v-if="creater.site_id == constants.site.youtube"
-            :href="'https://www.youtube.com/watch?v=' + program.movie_id"
-            target="_blank"
-            class="link-youtube"
-        >
-            <span>YouTube で見る</span>
-            <SvgIcon icon="external_link" class="external-icon" />
-        </a>
-        <a
-            v-if="creater.site_id == constants.site.nicovideo"
-            :href="'https://www.nicovideo.jp/watch/' + program.movie_id"
-            target="_blank"
-            class="link-nicovideo"
-        >
-            <span>ニコニコ動画 で見る</span>
-            <SvgIcon icon="external_link" class="external-icon" />
-        </a>
+        <MovieSiteLink
+            :site_id="creater.site_id"
+            :movie_id="program.movie_id"
+        />
 
         <!-- 動画の各種情報 -->
         <div class="information-wrap">
@@ -71,6 +48,7 @@
                     />
                     <ModalUpdateProgram
                         :program_id="program.id"
+                        :creater_id="creater.id"
                         :default_voice_id="program.voice_id"
                         @change_voice_id="changeVoiceId"
                     />
@@ -135,12 +113,10 @@ import ModalUpdateGame    from '@/js/Components/Game/ModalUpdateGame.vue';
 import ProgramSimpleWrap  from '@/js/Components/Program/ProgramSimpleWrap.vue';
 import ProgramWrap        from '@/js/Components/Program/ProgramWrap.vue';
 import ModalUpdateProgram from '@/js/Components/Program/ModalUpdateProgram.vue';
-import EmbedYoutube       from '@/js/Components/Program/EmbedYoutube.vue';
-import EmbedNicovideo     from '@/js/Components/Program/EmbedNicovideo.vue';
 import ReviewSimpleWrap   from '@/js/Components/Review/ReviewSimpleWrap.vue';
 import ModalCreateReview  from '@/js/Components/Review/ModalCreateReview.vue';
-import SearchLink         from "@/js/Components/SearchLink.vue";
-import SvgIcon            from "@/js/Components/SvgIcon.vue";
+import EmbedMovie         from "@/js/Pages/Program/Show__EmbedMovie.vue";
+import MovieSiteLink      from "@/js/Pages/Program/Show__MovieSiteLink.vue";
 export default {
 
     //読み込んだコンポーネント
@@ -150,13 +126,11 @@ export default {
         ProgramSimpleWrap,
         ProgramWrap,
         ReviewSimpleWrap,
-        EmbedYoutube,
-        EmbedNicovideo,
         ModalCreateReview,
         ModalUpdateGame,
         ModalUpdateProgram,
-        SearchLink,
-        SvgIcon,
+        EmbedMovie,
+        MovieSiteLink,
     },
 
     //返り値が固定の関数
@@ -216,7 +190,7 @@ export default {
 
     //初回読み込み時に実行
     mounted() {
-        console.log(this.creater);
+        // console.log(this.creater);
     }
 
 }
@@ -225,49 +199,11 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-    .program-background {
-        margin: 20px 0 8px;
-        background-color: #000;
-        border-radius: 4px;
-        overflow: hidden;
-        @media screen and (min-width: $bp) {
-            padding: 0 72px;
-        }
-    }
     .program-title {
         font-size: $font-l;
         @media screen and (min-width: $bp) {
             font-size: $font-xl;
         }
-    }
-    .link-youtube,
-    .link-nicovideo {
-        display: block;
-        margin: 30px auto 30px;
-        width: 208px;
-        text-align: center;
-        font-size: 1.6rem;
-        padding: 8px 0px;
-        border-radius: 10px;
-    }
-    .link-youtube {
-        color: #fff;
-        background-color: #f00;
-        border: solid 2px #f00;
-    }
-    .link-nicovideo {
-        color: #fff;
-        background-color: #424be4;
-        border: solid 2px #424be4;
-    }
-    .external-icon {
-        position: relative;
-        bottom: 3px;
-        display: inline;
-        width: 24px;
-        height: 24px;
-        margin-left: 4px;
-        vertical-align: top;
     }
 
     .information-wrap {
