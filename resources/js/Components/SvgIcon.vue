@@ -22,6 +22,7 @@ export default {
 <style lang="scss" scoped>
     .svg-wrap {
         display: inline;
+        width: 100%;
         height: 100%;
     }
 </style>

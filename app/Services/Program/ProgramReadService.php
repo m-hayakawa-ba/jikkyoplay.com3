@@ -36,8 +36,12 @@ class ProgramReadService
                 'programs.voice_id',
                 'programs.view_count',
                 'programs.published_at as published_at',
+                'creaters.site_id as site_id',
+                'creaters.user_icon_url as user_icon_url',
+                'creaters.name as creater_name',
                 'voices.type as voice_type',
             )
+            ->join('creaters', 'programs.creater_id', '=', 'creaters.id')
             ->join('voices', 'programs.voice_id', '=', 'voices.id')
             ->where('programs.id', $program_id)
             ->first();

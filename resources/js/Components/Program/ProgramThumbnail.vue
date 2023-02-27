@@ -1,25 +1,26 @@
 <template>
     <div class="thumbnail-wrap">
+        <div class="thumbnail">
+            <!-- 画像本体 -->
+            <img
+                :src="thumbnail_url"
+                class="thumbnail-img"
+            />
 
-        <!-- 画像本体 -->
-        <img
-            :src="thumbnail_url"
-            class="thumbnail-img"
-        />
+            <!-- YouTubeのアイコン -->
+            <img
+                v-if="site_id == constants.site.youtube"
+                src="/image/logo_youtube.webp"
+                class="thumbnail-icon"
+            >
 
-        <!-- YouTubeのアイコン -->
-        <img
-            v-if="site_id == constants.site.youtube"
-            src="/image/logo_youtube.webp"
-            class="thumbnail-icon"
-        >
-
-        <!-- ニコニコ動画のアイコン -->
-        <img
-            v-if="site_id == constants.site.nicovideo"
-            src="/image/logo_nicovideo.webp"
-            class="thumbnail-icon"
-        >
+            <!-- ニコニコ動画のアイコン -->
+            <img
+                v-if="site_id == constants.site.nicovideo"
+                src="/image/logo_nicovideo.webp"
+                class="thumbnail-icon"
+            >
+        </div>
     </div>
 </template>
 
@@ -57,11 +58,20 @@ export default {
         width: 100%;
         padding: 2px;
     }
-    .thumbnail-img {
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
+    .thumbnail {
+        position: relative;
         width: 100%;
+        height: 0;
+        padding-top: calc(100% * 9 / 16);
+        overflow: hidden;
         border-radius: 2px;
+    }
+    .thumbnail-img {
+        position: absolute;
+        top: 50%;
+        left: 0;
+        transform: translateY(-50%);
+        width: 100%;
         box-shadow: 1px 1px 4px rgb(32 6 6 / 12%);
     }
     .thumbnail-icon {

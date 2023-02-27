@@ -80,12 +80,12 @@ export default {
             width: 100%;
             height: 0;
             padding-top: calc(100% * 9 / 16);
+            border-radius: 2px;
             overflow: hidden;
             img {
                 position: absolute;
                 top: 50%;
                 width: 100%;
-                border-radius: 2px;
                 box-shadow: 1px 1px 4px rgb(32 6 6 / 12%);
                 transform: translateY(-50%);
             }

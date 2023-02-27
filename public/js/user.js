@@ -21059,13 +21059,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 /* harmony import */ var _js_Components_SvgIcon_vue__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @/js/Components/SvgIcon.vue */ "./resources/js/Components/SvgIcon.vue");
+/* harmony import */ var _js_Components_Program_ProgramWrap_vue__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @/js/Components/Program/ProgramWrap.vue */ "./resources/js/Components/Program/ProgramWrap.vue");
+
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //読み込んだコンポーネント
   components: {
     SvgIcon: _js_Components_SvgIcon_vue__WEBPACK_IMPORTED_MODULE_1__["default"],
-    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link
+    Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link,
+    ProgramWrap: _js_Components_Program_ProgramWrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"]
+  },
+  //コンポーネント内で使用する変数
+  data: function data() {
+    return {
+      program: (0,_inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.usePage)().props.value.program
+    };
   }
 });
 
@@ -22795,22 +22804,25 @@ var _withScopeId = function _withScopeId(n) {
 var _hoisted_1 = {
   "class": "thumbnail-wrap"
 };
-var _hoisted_2 = ["src"];
-var _hoisted_3 = {
+var _hoisted_2 = {
+  "class": "thumbnail"
+};
+var _hoisted_3 = ["src"];
+var _hoisted_4 = {
   key: 0,
   src: "/image/logo_youtube.webp",
   "class": "thumbnail-icon"
 };
-var _hoisted_4 = {
+var _hoisted_5 = {
   key: 1,
   src: "/image/logo_nicovideo.webp",
   "class": "thumbnail-icon"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 画像本体 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 画像本体 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
     src: $props.thumbnail_url,
     "class": "thumbnail-img"
-  }, null, 8 /* PROPS */, _hoisted_2), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" YouTubeのアイコン "), $props.site_id == $options.constants.site.youtube ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_3)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ニコニコ動画のアイコン "), $props.site_id == $options.constants.site.nicovideo ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_4)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)]);
+  }, null, 8 /* PROPS */, _hoisted_3), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" YouTubeのアイコン "), $props.site_id == $options.constants.site.youtube ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_4)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ニコニコ動画のアイコン "), $props.site_id == $options.constants.site.nicovideo ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("img", _hoisted_5)) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)])]);
 }
 
 /***/ }),
@@ -23650,18 +23662,32 @@ var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_6 = {
   "class": "caption"
 };
-var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", {
-    "class": "section-2"
-  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "　プレイヤーが実況や音読をしたり、雑談を交えながらゲームをプレイするというスタイルの動画は、2007年ころからニコニコ動画に投稿され始め、現在では日本だけでなく世界中で楽しまれています。"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "　このサイトは、ゲームファンや実況動画ファン、そして実況者自身が、より多くのゲームを楽しむために利用することを目的としています。"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "　また、ゲームメーカーやゲーム業界にとっても、このような実況プレイ動画がより多くの人々に紹介され、ゲームの普及やファン層の拡大につながることを期待しています。")], -1 /* HOISTED */);
-});
+var _hoisted_7 = {
+  "class": "section-2"
+};
 var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, " 当サイトは、YouTube Data API・ニコニコ動画 スナップショット検索API v2 を利用して動画情報を収集しています。 できるだけ最新に近い情報を反映するように更新していますが、非公開にしたい動画やチャンネルなどがありましたらtwitterのDMでご連絡ください。 また、当サイトはリンクフリーです。ご自由にリンクを張っていただいて大丈夫です。 ", -1 /* HOISTED */);
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "flex-left"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "　プレイヤーが実況や音読をしたり、雑談を交えながらゲームをプレイするというスタイルの動画は、2007年ころからニコニコ動画に投稿され始め、現在では日本だけでなく世界中で楽しまれています。"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "　このサイトは、ゲームファンや実況動画ファンが、より多くのゲームを楽しむために利用することを目的としています。"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "　また、ゲームメーカーやゲーム業界にとっても、このような実況プレイ動画がより多くの人々に紹介され、ゲームの普及やファン層の拡大につながることを期待しています。")], -1 /* HOISTED */);
+});
+var _hoisted_9 = {
+  "class": "flex-right"
+};
+var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", {
+    "class": "caption"
+  }, " シリーズ物の実況プレイ動画の中で、現在確認されている最古のゲーム実況動画 ", -1 /* HOISTED */);
+});
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", {
+    "class": "section-3"
+  }, [/*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "当サイトは、YouTube Data API・ニコニコ動画 スナップショット検索API v2 を利用して動画情報を収集しています。"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "できるだけ最新に近い情報を反映するように更新していますが、非公開にしたい動画やチャンネルなどがありましたらtwitterのDMでご連絡ください。"), /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("p", null, "また、当サイトはリンクフリーです。ご自由にリンクを張っていただいて大丈夫です。")], -1 /* HOISTED */);
 });
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_SvgIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SvgIcon");
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
+  var _component_ProgramWrap = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ProgramWrap");
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" サイト本体部分 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [_hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_3, [_hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
     href: "/ranking",
     "class": "flex-right"
@@ -23672,7 +23698,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       })])];
     }),
     _: 1 /* STABLE */
-  })]), _hoisted_7]), _hoisted_8], 64 /* STABLE_FRAGMENT */);
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("section", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProgramWrap, {
+    rank: "",
+    program: $data.program
+  }, null, 8 /* PROPS */, ["program"]), _hoisted_10])]), _hoisted_11])], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
 }
 
 /***/ }),
@@ -25033,7 +25062,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".news-image[data-v-4ae2a0de] {\n  width: 50%;\n  padding: 2px;\n}\n.news-image div[data-v-4ae2a0de] {\n  position: relative;\n  width: 100%;\n  height: 0;\n  padding-top: 56.25%;\n  overflow: hidden;\n}\n.news-image div img[data-v-4ae2a0de] {\n  position: absolute;\n  top: 50%;\n  width: 100%;\n  border-radius: 2px;\n  box-shadow: 1px 1px 4px rgba(32, 6, 6, 0.12);\n  transform: translateY(-50%);\n}\n.news-caption[data-v-4ae2a0de] {\n  width: 50%;\n  padding: 4px;\n}\n.news-text[data-v-4ae2a0de] {\n  font-weight: bold;\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 3;\n  overflow: hidden;\n  line-height: 2rem;\n  word-break: break-all;\n}\n.news-published-at[data-v-4ae2a0de] {\n  text-align: right;\n  font-size: 1.2rem;\n}\n@media screen and (min-width: 640px) {\n.news-published-at[data-v-4ae2a0de] {\n    margin-top: 8px;\n}\n}\n.news-source[data-v-4ae2a0de] {\n  text-align: right;\n  font-size: 1.2rem;\n  line-height: 1rem;\n}\n.news-source img[data-v-4ae2a0de] {\n  display: inline;\n  width: 16px;\n  aspect-ratio: 1/1;\n  -o-object-fit: cover;\n     object-fit: cover;\n  vertical-align: middle;\n}\n.news-source span[data-v-4ae2a0de] {\n  margin-left: 4px;\n  vertical-align: middle;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".news-image[data-v-4ae2a0de] {\n  width: 50%;\n  padding: 2px;\n}\n.news-image div[data-v-4ae2a0de] {\n  position: relative;\n  width: 100%;\n  height: 0;\n  padding-top: 56.25%;\n  border-radius: 2px;\n  overflow: hidden;\n}\n.news-image div img[data-v-4ae2a0de] {\n  position: absolute;\n  top: 50%;\n  width: 100%;\n  box-shadow: 1px 1px 4px rgba(32, 6, 6, 0.12);\n  transform: translateY(-50%);\n}\n.news-caption[data-v-4ae2a0de] {\n  width: 50%;\n  padding: 4px;\n}\n.news-text[data-v-4ae2a0de] {\n  font-weight: bold;\n  display: -webkit-box;\n  -webkit-box-orient: vertical;\n  -webkit-line-clamp: 3;\n  overflow: hidden;\n  line-height: 2rem;\n  word-break: break-all;\n}\n.news-published-at[data-v-4ae2a0de] {\n  text-align: right;\n  font-size: 1.2rem;\n}\n@media screen and (min-width: 640px) {\n.news-published-at[data-v-4ae2a0de] {\n    margin-top: 8px;\n}\n}\n.news-source[data-v-4ae2a0de] {\n  text-align: right;\n  font-size: 1.2rem;\n  line-height: 1rem;\n}\n.news-source img[data-v-4ae2a0de] {\n  display: inline;\n  width: 16px;\n  aspect-ratio: 1/1;\n  -o-object-fit: cover;\n     object-fit: cover;\n  vertical-align: middle;\n}\n.news-source span[data-v-4ae2a0de] {\n  margin-left: 4px;\n  vertical-align: middle;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -25225,7 +25254,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".thumbnail-wrap[data-v-9275e644] {\n  position: relative;\n  width: 100%;\n  padding: 2px;\n}\n.thumbnail-img[data-v-9275e644] {\n  aspect-ratio: 16/9;\n  -o-object-fit: cover;\n     object-fit: cover;\n  width: 100%;\n  border-radius: 2px;\n  box-shadow: 1px 1px 4px rgba(32, 6, 6, 0.12);\n}\n.thumbnail-icon[data-v-9275e644] {\n  position: absolute;\n  width: 22%;\n  right: 3%;\n  bottom: 3%;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".thumbnail-wrap[data-v-9275e644] {\n  position: relative;\n  width: 100%;\n  padding: 2px;\n}\n.thumbnail[data-v-9275e644] {\n  position: relative;\n  width: 100%;\n  height: 0;\n  padding-top: 56.25%;\n  overflow: hidden;\n  border-radius: 2px;\n}\n.thumbnail-img[data-v-9275e644] {\n  position: absolute;\n  top: 50%;\n  left: 0;\n  transform: translateY(-50%);\n  width: 100%;\n  box-shadow: 1px 1px 4px rgba(32, 6, 6, 0.12);\n}\n.thumbnail-icon[data-v-9275e644] {\n  position: absolute;\n  width: 22%;\n  right: 3%;\n  bottom: 3%;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -25441,7 +25470,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".svg-wrap[data-v-02c3ac02] {\n  display: inline;\n  height: 100%;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".svg-wrap[data-v-02c3ac02] {\n  display: inline;\n  width: 100%;\n  height: 100%;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -25561,7 +25590,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "p[data-v-54fd0497] {\n  margin: 6px 0;\n}\n.h2-title[data-v-54fd0497] {\n  font-size: 1.8rem;\n  margin: 20px 0 0;\n}\n.section-1[data-v-54fd0497], .section-2[data-v-54fd0497] {\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  margin-top: 40px;\n  line-height: 1.4em;\n}\n.section-1 .flex-left[data-v-54fd0497], .section-1 .flex-right[data-v-54fd0497] {\n  display: block;\n  width: 100%;\n  padding: 4px 10px;\n}\n@media screen and (min-width: 640px) {\n.section-1 .flex-left[data-v-54fd0497], .section-1 .flex-right[data-v-54fd0497] {\n    width: 50%;\n    padding: 0 20px;\n}\n}\n.section-1 .image[data-v-54fd0497] {\n  border-radius: 4px;\n  overflow: hidden;\n  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2509803922);\n}\n.section-1 .caption[data-v-54fd0497] {\n  position: relative;\n  font-size: 1.2rem;\n  height: 18px;\n  text-align: right;\n}\n.section-1 .caption svg[data-v-54fd0497] {\n  position: relative;\n  top: 4px;\n  width: 18px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "p[data-v-54fd0497] {\n  margin: 10px 0;\n}\n@media screen and (min-width: 640px) {\np[data-v-54fd0497] {\n    margin: 6px 0;\n}\n}\n.h2-title[data-v-54fd0497] {\n  font-size: 1.8rem;\n  margin: 20px 0 0;\n}\n.section-1[data-v-54fd0497], .section-2[data-v-54fd0497], .section-3[data-v-54fd0497] {\n  display: flex;\n  flex-wrap: wrap;\n  margin-top: 10px;\n  align-items: center;\n  line-height: 1.4em;\n}\n@media screen and (min-width: 640px) {\n.section-1[data-v-54fd0497], .section-2[data-v-54fd0497], .section-3[data-v-54fd0497] {\n    margin-top: 30px;\n}\n}\n.section-1 .flex-left[data-v-54fd0497], .section-1 .flex-right[data-v-54fd0497], .section-2 .flex-left[data-v-54fd0497], .section-2 .flex-right[data-v-54fd0497], .section-3 .flex-left[data-v-54fd0497], .section-3 .flex-right[data-v-54fd0497] {\n  display: block;\n  width: 100%;\n  padding: 4px 0;\n}\n@media screen and (min-width: 640px) {\n.section-1 .flex-left[data-v-54fd0497], .section-1 .flex-right[data-v-54fd0497], .section-2 .flex-left[data-v-54fd0497], .section-2 .flex-right[data-v-54fd0497], .section-3 .flex-left[data-v-54fd0497], .section-3 .flex-right[data-v-54fd0497] {\n    width: 50%;\n    padding: 0 20px;\n}\n}\n.section-1 .image[data-v-54fd0497], .section-2 .image[data-v-54fd0497], .section-3 .image[data-v-54fd0497] {\n  border-radius: 4px;\n  overflow: hidden;\n  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2509803922);\n}\n.section-1 .caption[data-v-54fd0497], .section-2 .caption[data-v-54fd0497], .section-3 .caption[data-v-54fd0497] {\n  position: relative;\n  font-size: 1.2rem;\n}\n.section-1 .caption svg[data-v-54fd0497], .section-2 .caption svg[data-v-54fd0497], .section-3 .caption svg[data-v-54fd0497] {\n  position: relative;\n  top: 4px;\n  width: 18px;\n}\n.section-1 .caption[data-v-54fd0497] {\n  height: 18px;\n  text-align: right;\n}\n.section-2 .caption[data-v-54fd0497] {\n  line-height: 1.4;\n  bottom: 2px;\n  text-align: justify;\n}\n@media screen and (min-width: 640px) {\n.section-2[data-v-54fd0497] {\n    flex-flow: row-reverse;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
