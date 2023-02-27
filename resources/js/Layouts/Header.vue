@@ -3,14 +3,16 @@
         <div class="header-wrap">
 
             <!-- サイトロゴ -->
-            <h1 class="header-logo">
-                <Link href="/">
-                    <img src="/image/logo.png?v=1" :alt="constants.site_title">
-                </Link>
-            </h1>
+            <div class="header-logo-wrap">
+                <h1 class="header-logo">
+                    <Link href="/">
+                        <img src="/image/logo.png?v=1" :alt="constants.site_title">
+                    </Link>
+                </h1>
+            </div>
 
             <!-- 検索マーク -->
-            <div class="header-button">
+            <div class="header-button-search">
                 <transition name="search-icon">
                     <div
                         v-if="!search_display_flag"
@@ -32,7 +34,7 @@
             </div>
 
             <!-- ドロワーマーク -->
-            <div class="header-button">
+            <div class="header-button-main">
                 <transition name="main-icon">
                     <div
                         v-if="!main_display_flag"
@@ -140,24 +142,25 @@ export default {
         z-index: 10;
         border-bottom: solid 1px #ddd;
         box-shadow: 0px 0px 4px #00000020;
-        uset-select: none;
     }
     .header-wrap {
-        display: grid;
+        display: flex;
         align-items: center;
-        grid-template-columns: auto 40px 40px;
         max-width: $pc-width;
         margin: 0 auto;
         padding: 8px 12px;
     }
 
+    .header-logo-wrap {
+        width: calc(100% - 40px * 2);
+    }
     .header-logo {
         width: 168px;
     }
-    .header-button {
+
+    .header-button-search, .header-button-main {
         position: relative;
-        width: 100%;
-        height: 100%;
+        width: 40px;
         margin: 0 0 0 auto;
         color: #333;
         cursor: pointer;

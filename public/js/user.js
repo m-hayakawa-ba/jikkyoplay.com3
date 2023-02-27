@@ -23248,31 +23248,34 @@ var _hoisted_1 = {
   "class": "header-wrap"
 };
 var _hoisted_2 = {
+  "class": "header-logo-wrap"
+};
+var _hoisted_3 = {
   "class": "header-logo"
 };
-var _hoisted_3 = ["alt"];
-var _hoisted_4 = {
-  "class": "header-button"
-};
+var _hoisted_4 = ["alt"];
 var _hoisted_5 = {
-  "class": "header-button"
+  "class": "header-button-search"
+};
+var _hoisted_6 = {
+  "class": "header-button-main"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
   var _component_SvgIcon = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SvgIcon");
   var _component_SearchMenu = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("SearchMenu");
   var _component_MainMenu = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("MainMenu");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("header", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" サイトロゴ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("header", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" サイトロゴ "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h1", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
     href: "/"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("img", {
         src: "/image/logo.png?v=1",
         alt: $options.constants.site_title
-      }, null, 8 /* PROPS */, _hoisted_3)];
+      }, null, 8 /* PROPS */, _hoisted_4)];
     }),
     _: 1 /* STABLE */
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 検索マーク "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+  })])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 検索マーク "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
     name: "search-icon"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -23302,7 +23305,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       })])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true)];
     }),
     _: 1 /* STABLE */
-  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ドロワーマーク "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
+  })]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ドロワーマーク "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(vue__WEBPACK_IMPORTED_MODULE_0__.Transition, {
     name: "main-icon"
   }, {
     "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
@@ -25486,7 +25489,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, "header[data-v-111fc991] {\n  position: sticky;\n  top: 0;\n  width: 100%;\n  height: -moz-min-content;\n  height: min-content;\n  background-color: rgba(255, 255, 255, 0.8784313725);\n  z-index: 10;\n  border-bottom: solid 1px #ddd;\n  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1254901961);\n  uset-select: none;\n}\n.header-wrap[data-v-111fc991] {\n  display: grid;\n  align-items: center;\n  grid-template-columns: auto 40px 40px;\n  max-width: 960px;\n  margin: 0 auto;\n  padding: 8px 12px;\n}\n.header-logo[data-v-111fc991] {\n  width: 168px;\n}\n.header-button[data-v-111fc991] {\n  position: relative;\n  width: 100%;\n  height: 100%;\n  margin: 0 0 0 auto;\n  color: #333;\n  cursor: pointer;\n}\n@media screen and (min-width: 640px) {\n.header-button[data-v-111fc991] {\n    transition: opacity 0.3s;\n}\n.header-button[data-v-111fc991]:hover {\n    opacity: 0.8;\n}\n}\n.header-button .header-icon[data-v-111fc991] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  width: 28px;\n  height: 28px;\n}\n.search-icon-enter-from[data-v-111fc991], .search-icon-leave-to[data-v-111fc991],\n.main-icon-enter-from[data-v-111fc991], .main-icon-leave-to[data-v-111fc991] {\n  opacity: 0;\n}\n.search-icon-enter-active[data-v-111fc991], .search-icon-leave-active[data-v-111fc991],\n.main-icon-enter-active[data-v-111fc991], .main-icon-leave-active[data-v-111fc991] {\n  transition: opacity 0.4s;\n}\n.search-icon-enter-to[data-v-111fc991], .search-icon-leave[data-v-111fc991],\n.main-icon-enter-to[data-v-111fc991], .main-icon-leave[data-v-111fc991] {\n  opacity: 1;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, "header[data-v-111fc991] {\n  position: sticky;\n  top: 0;\n  width: 100%;\n  height: -moz-min-content;\n  height: min-content;\n  background-color: rgba(255, 255, 255, 0.8784313725);\n  z-index: 10;\n  border-bottom: solid 1px #ddd;\n  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.1254901961);\n}\n.header-wrap[data-v-111fc991] {\n  display: flex;\n  align-items: center;\n  max-width: 960px;\n  margin: 0 auto;\n  padding: 8px 12px;\n}\n.header-logo-wrap[data-v-111fc991] {\n  width: calc(100% - 80px);\n}\n.header-logo[data-v-111fc991] {\n  width: 168px;\n}\n.header-button-search[data-v-111fc991], .header-button-main[data-v-111fc991] {\n  position: relative;\n  width: 40px;\n  margin: 0 0 0 auto;\n  color: #333;\n  cursor: pointer;\n}\n@media screen and (min-width: 640px) {\n.header-button-search[data-v-111fc991], .header-button-main[data-v-111fc991] {\n    transition: opacity 0.3s;\n}\n.header-button-search[data-v-111fc991]:hover, .header-button-main[data-v-111fc991]:hover {\n    opacity: 0.8;\n}\n}\n.header-button-search .header-icon[data-v-111fc991], .header-button-main .header-icon[data-v-111fc991] {\n  position: absolute;\n  top: 50%;\n  left: 50%;\n  transform: translate(-50%, -50%);\n  width: 28px;\n  height: 28px;\n}\n.search-icon-enter-from[data-v-111fc991], .search-icon-leave-to[data-v-111fc991],\n.main-icon-enter-from[data-v-111fc991], .main-icon-leave-to[data-v-111fc991] {\n  opacity: 0;\n}\n.search-icon-enter-active[data-v-111fc991], .search-icon-leave-active[data-v-111fc991],\n.main-icon-enter-active[data-v-111fc991], .main-icon-leave-active[data-v-111fc991] {\n  transition: opacity 0.4s;\n}\n.search-icon-enter-to[data-v-111fc991], .search-icon-leave[data-v-111fc991],\n.main-icon-enter-to[data-v-111fc991], .main-icon-leave[data-v-111fc991] {\n  opacity: 1;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
