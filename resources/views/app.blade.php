@@ -3,8 +3,8 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-        <link href="{{ mix('/css/user.css') }}?v=9" rel="stylesheet" />
-        <script src="{{ mix('/js/user.js') }}?v=9" defer></script>
+        <link href="{{ mix('/css/user.css') }}?v=10" rel="stylesheet" />
+        <script src="{{ mix('/js/user.js') }}?v=10" defer></script>
         @inertiaHead
     </head>
     <body>
