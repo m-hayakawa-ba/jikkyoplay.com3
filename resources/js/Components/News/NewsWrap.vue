@@ -4,15 +4,17 @@
 
         <!-- ニュースのサムネイル -->
         <div class="news-image">
-            <img
-                v-if="news.image_url"
-                :src="news.image_url"
-                @error="noImage"
-            />
-            <img
-                v-else
-                src="/image/noimage.png"
-            />
+            <div>
+                <img
+                    v-if="news.image_url"
+                    :src="news.image_url"
+                    @error="noImage"
+                />
+                <img
+                    v-else
+                    src="/image/noimage.png"
+                />
+            </div>
         </div>
 
         <!-- ニュースの概略 -->
@@ -73,12 +75,20 @@ export default {
     .news-image {
         width: 50%;
         padding: 2px;
-        img {
-            aspect-ratio: 16 / 9;
-            object-fit: cover;
+        div {
+            position: relative;
             width: 100%;
-            border-radius: 2px;
-            box-shadow: 1px 1px 4px rgb(32 6 6 / 12%);
+            height: 0;
+            padding-top: calc(100% * 9 / 16);
+            overflow: hidden;
+            img {
+                position: absolute;
+                top: 50%;
+                width: 100%;
+                border-radius: 2px;
+                box-shadow: 1px 1px 4px rgb(32 6 6 / 12%);
+                transform: translateY(-50%);
+            }
         }
     }
     .news-caption {
