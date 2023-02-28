@@ -3,16 +3,47 @@
 namespace App\Http\Controllers;
 
 use App\Services\Review\ReviewCreateService;
+use App\Services\Review\ReviewReadService;
 use Illuminate\Http\Request;
+use Inertia\Inertia;
 
 class ReviewController extends Controller
 {
+    /**
+     * 定数定義
+     */
+    private $get_review_count = 20;     //1ページあたりのレビュー数
+
     /**
      * コンストラクタ
      */
     public function __construct(
         private ReviewCreateService $reviewCreateService,
+        private ReviewReadService $reviewReadService,
     ){
+    }
+
+    /**
+     * レビュー一覧
+     */
+    public function index(Request $request)
+    {
+        //レビュー一覧を取得
+        $page = $request->query('page', 1);
+        $reviews = $this->reviewReadService->getReviews(
+            $page,
+            $this->get_review_count,
+        );
+
+        //最大ページ数を取得
+        $page_last = $this->reviewReadService->getMaxPageNumber($this->get_review_count);
+
+        //viewへ遷移
+        return Inertia::render('Review/Index', compact(
+            'page',
+            'page_last',
+            'reviews',
+        ));
     }
 
     /**

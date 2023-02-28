@@ -59,7 +59,7 @@ class HomeController extends Controller
         );
 
         //おすすめレビューを取得
-        $reviews = $this->reviewReadService->getReviews(
+        $reviews = $this->reviewReadService->getReviewsAtHome(
             $this->max_review_count
         );
 

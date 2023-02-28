@@ -45,7 +45,7 @@
         </section>
 
         <!-- ページネーション -->
-        <PageList
+        <Pagination
             :page_current="Number(queries.page)"
             :page_last="Number(page_last)"
             base_url="/program"
@@ -60,7 +60,7 @@
 import {usePage} from "@inertiajs/inertia-vue3";
 import H2Title from "@/js/Components/H2Title.vue";
 import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
-import PageList from '@/js/Components/PageList.vue';
+import Pagination from '@/js/Components/Pagination.vue';
 export default {
 
     //読み込んだコンポーネント

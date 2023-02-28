@@ -26,5 +26,8 @@ Route::post('/program/game/{program_id}', [ProgramController::class, 'updateGame
 Route::post('/game/search', [GameController::class, 'search']);
 Route::post('/review', [ReviewController::class, 'store']);
 
+//レビュー一覧
+Route::get('/review', [ReviewController::class, 'index']);
+
 //このサイトについて
 Route::get('/about', [AboutController::class, 'index']);

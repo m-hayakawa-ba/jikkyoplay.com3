@@ -23,30 +23,55 @@ class ReviewReadService
      * 
      * @return Collection
      */
-    public function getReviews(int $count) : Collection
+    public function getReviewsAtHome(int $count) : Collection
     {
         return $this->reviewModel
-            ->select(
-                'reviews.id as id',
-                'reviews.program_id',
-                'reviews.reviewer',
-                'reviews.detail',
-                'reviews.displayed_at',
-                'programs.title',
-                'programs.image_url',
-                'programs.view_count',
-                'programs.published_at',
-                'creaters.name as creater_name',
-                'creaters.site_id',
-                'creaters.user_icon_url',
-            )
-            ->join('programs', 'reviews.program_id', '=', 'programs.id')
-            ->join('creaters', 'programs.creater_id', '=', 'creaters.id')
-            ->where('reviews.flag_enabled', 1)
-            ->where('programs.flag_enabled', 1)
-            ->orderBy('displayed_at', 'desc')
+            ->SelectIndex()
+            ->orderBy('reviews.created_at', 'desc')
             ->limit($count)
             ->get();
+    }
+
+    /**
+     * 一覧画面表示用のレビューを取得
+     * 
+     * @param int $page ページ番号
+     * @param int $count ページあたりの表示件数
+     * 
+     * @return Collection
+     */
+    public function getReviews(int $page, int $count) : Collection
+    {
+        //必要なselectとwhereなどを設定
+        $reviews = $this->reviewModel
+            ->SelectIndex()
+            ->orderBy('reviews.created_at', 'desc');
+
+        //取得個数を設定してデータを取得する
+        $reviews = $reviews->limit($count)
+            ->offset(($page - 1) * $count)
+            ->get();
+        
+        //結果を返して終了
+        return $reviews;
+    }
+
+    /**
+     * ページネーションの最大ページ番号を返却する
+     * 
+     * @param int $per_page 1ページあたりの要素数
+     * 
+     * @return int 最大ページ番号
+     */
+    public function getMaxPageNumber(int $per_page) : int
+    {
+        //最大レビュー数を取得
+        $max_item = $this->reviewModel
+            ->SelectIndex()
+            ->count();
+
+        //最大ページ数を返す
+        return ceil($max_item / $per_page);
     }
 
     /**
@@ -61,7 +86,7 @@ class ReviewReadService
         return $this->reviewModel
             ->where('program_id', $program_id)
             ->where('flag_enabled', 1)
-            ->orderBy('displayed_at', 'desc')
+            ->orderBy('reviews.created_at', 'desc')
             ->get();
     }
 }
