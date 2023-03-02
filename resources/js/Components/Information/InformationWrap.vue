@@ -80,6 +80,7 @@ export default {
         border: solid 1px #8b9699;
         border-radius: 4px;
         box-shadow: 1px 1px 2px #21003421;
+        overflow: hidden;
     }
     .information-link {
         &:hover {

@@ -7,8 +7,9 @@
     </div>
 </template>
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+export default defineComponent({
 
     //呼び出し元から渡された引数
     props: [
@@ -19,15 +20,17 @@ export default {
     methods: {
 
         //アンカーリンクの場所にスムーススクロールする
-        goAnker: function() {
-            document.getElementById(this.anker).scrollIntoView({
-                behavior: "smooth",
-                block: "start",
-                inline: "end"
-            });
+        goAnker() {
+            if (this.anker) {
+                document.getElementById(this.anker)?.scrollIntoView({
+                    behavior: "smooth",
+                    block: "start",
+                    inline: "end"
+                });
+            }
         }
-    }
-}
+    },
+})
 </script>
 
 

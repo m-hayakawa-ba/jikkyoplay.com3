@@ -20,8 +20,8 @@ createInertiaApp({
         page.layout = page.layout || Layout;
         return page;
     },
-    setup({ el, App, props, plugin }) {
-        createApp({ render: () => h(App, props) })
+    setup({ el, app, props, plugin }) {
+        createApp({ render: () => h(app, props) })
             .use(plugin)
             .mount(el);
     },

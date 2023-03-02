@@ -13,12 +13,13 @@ const mix = require('laravel-mix');
 const path = require('path');
 mix.webpackConfig({
     resolve: {
+        extensions: ['.js', '.ts'],
         alias: {
             "@": path.resolve("./resources"),
         },
     },
 });
 
-mix .js('resources/js/user.js', 'public/js')
+mix .ts('resources/js/user.ts', 'public/js')
     .vue()
     .sass('resources/sass/user.scss', 'public/css');

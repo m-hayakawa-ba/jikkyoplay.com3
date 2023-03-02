@@ -8,7 +8,7 @@
     </Link>
 </template>
 
-<script>
+<script lang="ts">
 import {Link} from "@inertiajs/inertia-vue3";
 import SvgIcon from "@/js/Components/SvgIcon.vue";
 export default {
