@@ -36,6 +36,12 @@ a {
         opacity: 0.8;
     }   
 }
+//floatのリセット
+.clearfix::after {
+    content: "";
+    display: block;
+    clear: both;
+}
 
 // フッターが画面下に張り付くように記述
 #app {

@@ -38,7 +38,6 @@ export default {
             return moment(date).format('YYYY年M月D日')
         },
     }
-
 }
 </script>
 

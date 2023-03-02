@@ -26,9 +26,24 @@
 
         <!-- レビュー本文 -->
         <div
+            v-if="review_all_flag"
+            class="review-detail-all"
+            v-html="review.detail"
+        ></div>
+        <div
+            v-else
             class="review-detail"
             v-html="review.detail"
         ></div>
+
+        <!-- 投稿日とレビュワー名 -->
+        <div
+            v-if="review_all_flag"
+            class="review-reviewer"
+        >
+            {{ format(review.created_at) }}<br>
+            reviewer:{{ review.reviewer }}
+        </div>
     </InformationWrap>
 </template>
 
@@ -38,11 +53,13 @@ import ProgramViewCount from "@/js/Components/Program/ProgramViewCount.vue";
 import ProgramThumbnail from "@/js/Components/Program/ProgramThumbnail.vue";
 import ProgramCaption from "@/js/Components/Program/ProgramCaption.vue";
 import InformationWrap from "@/js/Components/Information/InformationWrap.vue";
+import moment          from 'moment';
 export default {
 
     //呼び出し元から渡された引数
     props: [
         "review",
+        "review_all_flag",
     ],
 
     //読み込んだコンポーネント
@@ -53,6 +70,14 @@ export default {
         InformationWrap,
     },
 
+    //コンポーネント内で使用するメソッド
+    methods: {
+
+        //日時の表示
+        format(date) {
+            return moment(date).format('YYYY年M月D日')
+        },
+    },
 }
 </script>
 
@@ -66,5 +91,14 @@ export default {
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 3;
         overflow: hidden;
+    }
+    .review-detail-all {
+        padding: 12px 8px;
+    }
+    .review-reviewer {
+        width: 100%;
+        font-size: $font-s;
+        text-align: right;
+        color: #666;
     }
 </style>

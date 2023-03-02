@@ -11,11 +11,29 @@
 
         <!-- レビュー一覧 -->
         <section>
-            <div
-                v-for="review in reviews"
-                class="review-wrap"
-            >
-                <ReviewWrap :review="review" />
+            <div class="review-item">
+                <template
+                    v-for="(review, index) in reviews"
+                    :key="index"
+                >
+                    <ReviewWrap
+                        v-if="index % 2 == 0"
+                        :review="review"
+                        :review_all_flag="true"
+                    />
+                </template>
+            </div>
+            <div class="review-item">
+                <template
+                    v-for="(review, index) in reviews"
+                    :key="index"
+                >
+                    <ReviewWrap
+                        v-if="index % 2 == 1"
+                        :review="review"
+                        :review_all_flag="true"
+                    />
+                </template>
             </div>
         </section>
 
@@ -64,14 +82,12 @@ export default {
         margin-top: 4px;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: space-between;
         @media screen and (min-width: $bp) {
             padding-left: 8px;
         }
     }
-    .review-wrap {
-        position: relative;
-        margin: 8px 0 0;
+    .review-item {
         width: 100%;
         @media screen and (min-width: $bp) {
             width: 49%;
