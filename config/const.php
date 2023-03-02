@@ -7,6 +7,9 @@ return [
         'official_twitter' => 'https://twitter.com/jikkyoplay',
     ],
 
+    //クッキーの継続時間（1年）
+    'cookie_time' => 525600,
+
     //動画サイトの種類
     'site' => [
         'youtube' => 1,

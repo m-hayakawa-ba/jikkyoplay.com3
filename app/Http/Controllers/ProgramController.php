@@ -8,6 +8,7 @@ use App\Services\Program\ProgramReadService;
 use App\Services\Program\ProgramUpdateService;
 use App\Services\Program\ProgramSearchService;
 use App\Services\Review\ReviewReadService;
+use App\Services\History\HistoryCreateService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -29,6 +30,7 @@ class ProgramController extends Controller
         private ProgramUpdateService $programUpdateService,
         private ProgramSearchService $programSearchService,
         private ReviewReadService    $reviewReadService,
+        private HistoryCreateService $historyCreateService,
     ){
     }
 
@@ -103,6 +105,9 @@ class ProgramController extends Controller
             creater_id: $program->creater_id,
             count: $this->relation_program_count,
         );
+
+        //視聴した動画をcookieに保存
+        $this->historyCreateService->setHistory($program_id);
 
         //viewへ遷移
         return Inertia::render('Program/Show', compact(

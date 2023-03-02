@@ -11,7 +11,7 @@
 
         <!-- レビュー一覧 -->
         <section>
-            <div class="review-item">
+            <div class="pc-only review-item">
                 <template
                     v-for="(review, index) in reviews"
                     :key="index"
@@ -23,13 +23,24 @@
                     />
                 </template>
             </div>
-            <div class="review-item">
+            <div class="pc-only review-item">
                 <template
                     v-for="(review, index) in reviews"
                     :key="index"
                 >
                     <ReviewWrap
                         v-if="index % 2 == 1"
+                        :review="review"
+                        :review_all_flag="true"
+                    />
+                </template>
+            </div>
+            <div class="sp-only review-item">
+                <template
+                    v-for="(review, index) in reviews"
+                    :key="index"
+                >
+                    <ReviewWrap
                         :review="review"
                         :review_all_flag="true"
                     />

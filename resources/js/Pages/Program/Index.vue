@@ -28,10 +28,8 @@
             </select>
         </div>
 
-
+        <!-- 動画一覧 -->
         <section>
-
-            <!-- 動画一覧 -->
             <div
                 v-for="program in programs"
                 :key="program.id"

@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AboutController;
 use App\Http\Controllers\GameController;
+use App\Http\Controllers\HistoryController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProgramController;
@@ -28,6 +29,9 @@ Route::post('/review', [ReviewController::class, 'store']);
 
 //レビュー一覧
 Route::get('/review', [ReviewController::class, 'index']);
+
+//視聴履歴
+Route::get('/history', [HistoryController::class, 'index']);
 
 //このサイトについて
 Route::get('/about', [AboutController::class, 'index']);
