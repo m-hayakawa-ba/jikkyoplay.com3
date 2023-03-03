@@ -19,8 +19,9 @@
 </template>
 
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+export default defineComponent({
 
     //返り値が固定の関数
     computed: {
@@ -36,7 +37,7 @@ export default {
             return now.getFullYear();
         },
     },
-}
+});
 </script>
 
 

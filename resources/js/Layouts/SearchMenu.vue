@@ -192,9 +192,10 @@ export default {
 @import "@/sass/variables";
     .search-window {
         position: absolute;
-        padding: 40px 0 80px;
+        top: 0;
+        padding: 96px 0 80px;
         width: 100%;
-        height: calc(100vh - 100%);
+        height: 100vh;
         opacity: 0.95;
         background-color: #292a2a;
         color: #fff;

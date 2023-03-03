@@ -16,7 +16,7 @@
                 <transition name="search-icon">
                     <div
                         v-if="!search_display_flag"
-                        class="header-icon"
+                        class="header-icon header-icon-open"
                         @click="setSearchDisplayFlag(true)"
                     >
                         <SvgIcon icon="search" />
@@ -25,7 +25,7 @@
                 <transition name="search-icon">
                     <div
                         v-if="search_display_flag"
-                        class="header-icon"
+                        class="header-icon header-icon-close"
                         @click="setSearchDisplayFlag(false)"
                     >
                         <SvgIcon icon="cross" />
@@ -38,7 +38,7 @@
                 <transition name="main-icon">
                     <div
                         v-if="!main_display_flag"
-                        class="header-icon"
+                        class="header-icon header-icon-open"
                         @click="setMainDisplayFlag(true)"
                     >
                         <SvgIcon icon="hamburger" />
@@ -47,14 +47,13 @@
                 <transition name="main-icon">
                     <div
                         v-if="main_display_flag"
-                        class="header-icon"
+                        class="header-icon header-icon-close"
                         @click="setMainDisplayFlag(false)"
                     >
                         <SvgIcon icon="cross" />
                     </div>
                 </transition>
             </div>
-
         </div>
 
         <!-- 検索ウインドウ -->
@@ -73,12 +72,13 @@
 </template>
 
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import SvgIcon from "@/js/Components/SvgIcon.vue";
 import SearchMenu from "@/js/Layouts/SearchMenu.vue";
 import MainMenu from "@/js/Layouts/MainMenu.vue";
-export default {
+export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
@@ -109,7 +109,7 @@ export default {
     methods: {
 
         //検索ウインドウの表示・非表示を切り替える
-        setSearchDisplayFlag(flag) {
+        setSearchDisplayFlag(flag: boolean) {
             //同時に2つのウインドウをtrueにはしない
             if (flag) {
                 this.main_display_flag = false;
@@ -118,7 +118,7 @@ export default {
         },
 
         //メインウインドウの表示・非表示を切り替える
-        setMainDisplayFlag(flag) {
+        setMainDisplayFlag(flag: boolean) {
             //同時に2つのウインドウをtrueにはしない
             if (flag) {
                 this.search_display_flag = false;
@@ -126,7 +126,7 @@ export default {
             this.main_display_flag = flag;
         },
     },
-}
+});
 </script>
 
 
@@ -144,11 +144,10 @@ export default {
         box-shadow: 0px 0px 4px #00000020;
     }
     .header-wrap {
-        display: flex;
-        align-items: center;
+        position: relative;
         max-width: $pc-width;
         margin: 0 auto;
-        padding: 8px 12px;
+        padding: 12px 12px 8px;
     }
 
     .header-logo-wrap {
@@ -159,17 +158,12 @@ export default {
     }
 
     .header-button-search, .header-button-main {
-        position: relative;
+        position: absolute;
+        top: 10px;
         width: 40px;
-        margin: 0 0 0 auto;
+        height: 40px;
         color: #333;
         cursor: pointer;
-        @media screen and (min-width: $bp) {
-            transition: opacity 0.3s;
-            &:hover {
-                opacity: 0.8;
-            }
-        }
         .header-icon {
             position: absolute;
             top: 50%;
@@ -178,6 +172,24 @@ export default {
             width: 28px;
             height: 28px;
         }
+        .header-icon-open {
+            @media screen and (min-width: $bp) {
+                transition: opacity 0.3s;
+                &:hover {
+                    opacity: 0.8;
+                }
+            }
+        }
+        .header-icon-close {
+            color: #fff;
+            z-index: 2;
+        }
+    }
+    .header-button-search {
+        right: 50px;
+    }
+    .header-button-main {
+        right: 10px;
     }
     
     .search-icon-enter-from, .search-icon-leave-to,
@@ -186,7 +198,7 @@ export default {
     }
     .search-icon-enter-active, .search-icon-leave-active,
     .main-icon-enter-active, .main-icon-leave-active {
-        transition: opacity 0.4s;
+        transition: opacity 0.3s;
     }
     .search-icon-enter-to, .search-icon-leave,
     .main-icon-enter-to, .main-icon-leave {

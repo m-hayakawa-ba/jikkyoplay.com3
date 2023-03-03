@@ -65,7 +65,7 @@ export default {
     components: {
         H2Title,
         ProgramWrap,
-        PageList,
+        Pagination,
     },
 
     //コンポーネント内で使用する変数
@@ -124,7 +124,7 @@ export default {
 
     //初回読み込み時に実行
     mounted() {
-
+        
         //渡されたクエリからソート順セレクトボックスの初期値を設定
         this.sort = this.queries.sort + '_' + this.queries.order;
     }
