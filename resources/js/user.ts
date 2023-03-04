@@ -6,7 +6,7 @@ import { InertiaProgress } from '@inertiajs/progress'
 import Layout from "./Layouts/Layout.vue";
 
 InertiaProgress.init({
-    delay: 1000,
+    delay: 500,
     color: '#29d',
     includeCSS: true,
     showSpinner: false,
