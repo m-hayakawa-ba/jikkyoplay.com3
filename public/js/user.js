@@ -20862,9 +20862,8 @@ var vue_1 = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bund
 var inertia_vue3_1 = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 var progress_1 = __webpack_require__(/*! @inertiajs/progress */ "./node_modules/@inertiajs/progress/dist/index.js");
 var Layout_vue_1 = __importDefault(__webpack_require__(/*! ./Layouts/Layout.vue */ "./resources/js/Layouts/Layout.vue"));
-progress_1.InertiaProgress.init();
 progress_1.InertiaProgress.init({
-  delay: 100,
+  delay: 1000,
   color: '#29d',
   includeCSS: true,
   showSpinner: false
