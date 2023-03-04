@@ -7,6 +7,13 @@
             © {{ constants.site_title }}製作委員会
         </div>
 
+        <!-- このサイトについて -->
+        <Link
+            class="footer-about"
+            href="/about">
+            このサイトについて
+        </Link>
+    
         <!-- 公式twitterへのリンク -->
         <a
             class="footer-twitter"
@@ -20,15 +27,22 @@
 
 
 <script lang="ts">
-import { defineComponent } from "vue";
-export default defineComponent({
+import { Link } from "@inertiajs/inertia-vue3";
+import { getConstant } from '../Interfaces/Constant';
+
+export default {
+
+    //読み込んだコンポーネント
+    components: {
+        Link,
+    },
 
     //返り値が固定の関数
     computed: {
 
         //laravel側から定数を取得する
-        constants() {
-            return this.$page.props.const;
+        constants(): any{
+            return getConstant();
         },
 
         //現在の年
@@ -37,7 +51,7 @@ export default defineComponent({
             return now.getFullYear();
         },
     },
-});
+};
 </script>
 
 
@@ -45,21 +59,28 @@ export default defineComponent({
 @import "../../sass/variables";
 
     .footer {
-        padding: 12px 0;
+        padding: 20px 0;
         background-color: $black;
         text-align: center;
         font-size: $font-m;
-        color: #fff;
     }
 
     .footer-copyright {
         line-height: 2.0rem;
+        color: #fff;
+    }
+
+    .footer-about {
+        display: block;
+        margin: 12px auto 0;
+        color: #fff;
     }
 
     .footer-twitter {
         display: block;
-        margin: 8px auto 0;
+        margin: 12px auto 0;
         width: 32px;
+        color: #fff;
     }
 
 </style>

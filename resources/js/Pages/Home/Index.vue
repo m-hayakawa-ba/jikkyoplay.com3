@@ -12,8 +12,12 @@
             title_jp="ゲーム実況ニュース"
             title_en="GAME NEWS"
         />
+        <PageLink
+            href="/news"
+            link_name="すべてのニュース"
+        />
         <section>
-            <GameNews />
+            <IndexNews />
         </section>
         <hr>
         
@@ -23,8 +27,12 @@
             title_jp="今週の実況動画ランキング"
             title_en="GAME RANKING"
         />
+        <PageLink
+            href="/ranking"
+            link_name="すべてのランキング"
+        />
         <section>
-            <GameRanking />
+            <IndexRanking />
         </section>
         <hr>
         
@@ -34,8 +42,12 @@
             title_jp="新着実況プレイ動画"
             title_en="GAME MOVIE"
         />
+        <PageLink
+            href="/program"
+            link_name="すべての動画を見る"
+        />
         <section>
-            <GameProgram />
+            <IndexProgram />
         </section>
         <hr>
         
@@ -45,8 +57,12 @@
             title_jp="おすすめ動画レビュー"
             title_en="GAME REVIEW"
         />
+        <PageLink
+            href="/review"
+            link_name="すべてのレビューを見る"
+        />
         <section>
-            <GameReview />
+            <IndexReview />
         </section>
         <hr>
 
@@ -58,28 +74,32 @@
 
     <!-- アンカーリンク -->
     <AnkerLink
-        v-if="anker"
+        v-if="anker.length > 0"
         :anker="anker"
         mode="prev"
     />
     <AnkerLink
-        v-if="anker"
+        v-if="anker.length > 0"
         :anker="anker"
         mode="next"
     />
 
 </template>
 
-<script>
+<script lang="ts">
+import { AnkerData } from "../../Interfaces/AnkerData";
+import { defineComponent } from "vue";
 import SearchItem from "./SearchItem.vue";
 import SearchWord from "./SearchWord.vue";
 import H2Title   from "@/js/Components/H2Title.vue";
 import AnkerLink from "@/js/Components/AnkerLink.vue";
-import GameNews from "./GameNews.vue";
-import GameRanking from "./GameRanking.vue";
-import GameProgram from "./GameProgram.vue";
-import GameReview from "./GameReview.vue";
-export default {
+import PageLink from '@/js/Components/PageLink.vue';
+import IndexNews from "./Index__News.vue";
+import IndexRanking from "./Index__Ranking.vue";
+import IndexProgram from "./Index__Program.vue";
+import IndexReview from "./Index__Review.vue";
+
+export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
@@ -87,16 +107,19 @@ export default {
         SearchWord,
         H2Title,
         AnkerLink,
-        GameNews,
-        GameRanking,
-        GameProgram,
-        GameReview,
+        PageLink,
+        IndexNews,
+        IndexRanking,
+        IndexProgram,
+        IndexReview,
     },
 
     //コンポーネント内で使用する変数
-    data() {
+    data(): {
+        anker: AnkerData[]
+    } {
         return {
-            anker: null,
+            anker: [],
         };
     },
 
@@ -111,10 +134,8 @@ export default {
             {name: '新着動画',   id: "game-program", pos: 0},
             {name: 'レビュー',   id: "game-review",  pos: 0},
         ];
-
-        // console.log(this.anker);
     }
-};
+});
 </script>
 
 

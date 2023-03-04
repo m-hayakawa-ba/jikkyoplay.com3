@@ -1,43 +1,40 @@
 <template>
 
-    <!-- ニュース記事 -->
+    <!-- ランキング一覧 -->
     <div
-        v-for="news in newses"
-        class="news-wrap"
+        v-for="(ranking, index) in rankings"
+        class="ranking-wrap"
     >
-        <NewsWrap :news="news" />
+        <ProgramWrap
+            :rank="index + 1"
+            :program="ranking"
+        />   
     </div>
-
-    <!-- ニュース一覧へのリンク -->
-    <PageLink
-        href="/news"
-        link_name="その他のニュース"
-    />
 </template>
 
 
 <script>
 import {usePage} from "@inertiajs/inertia-vue3";
+import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
 import PageLink from '@/js/Components/PageLink.vue';
-import NewsWrap from '@/js/Components/News/NewsWrap.vue';
 export default {
 
     //コンポーネント内で使用する変数
     data() {
         return {
-            newses: usePage().props.value.newses,
+            rankings: usePage().props.value.rankings,
         };
     },
 
     //読み込んだコンポーネント
     components: {
+        ProgramWrap,
         PageLink,
-        NewsWrap,
     },
 
     //初回読み込み時に実行
     mounted() {
-        // console.log(this.newses);
+        // console.log();
     }
 }
 </script>
@@ -45,7 +42,7 @@ export default {
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-    .news-wrap {
+    .ranking-wrap {
         position: relative;
         margin: 8px 0 0;
         width: 100%;

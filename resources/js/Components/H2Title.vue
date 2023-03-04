@@ -6,7 +6,7 @@
     </h2>
 </template>
 
-<script>
+<script lang="ts">
 export default {
 
     //呼び出し元から渡された引数
@@ -37,6 +37,7 @@ export default {
         white-space: nowrap;
         transform: skewX(-45deg);
         color: #ffdff4;
+        user-select: none;
     }
     .h2-title-ja {
         position: absolute;

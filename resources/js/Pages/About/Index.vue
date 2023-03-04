@@ -2,8 +2,12 @@
 
     <!-- サイト本体部分 -->
     <div class="inner">
-
-        <h2 class="h2-title">このサイトについて</h2>
+        
+        <!-- 視聴履歴 -->
+        <H2Title
+            title_jp="このサイトについて"
+            title_en="ABOUT THIS SITE"
+        />
 
         <section class="section-1">
             <div class="flex-left">
@@ -49,12 +53,14 @@
 
 <script>
 import {Link, usePage} from "@inertiajs/inertia-vue3";
+import H2Title from "@/js/Components/H2Title.vue";
 import SvgIcon from "@/js/Components/SvgIcon.vue";
 import ProgramWrap from "@/js/Components/Program/ProgramWrap.vue";
 export default {
 
     //読み込んだコンポーネント
     components: {
+        H2Title,
         SvgIcon,
         Link,
         ProgramWrap,

@@ -202,7 +202,7 @@ export default {
         text-align: center;
         overflow: scroll;
         @media screen and (min-width: $bp) {
-            padding: 80px 0 80px;
+            padding: 120px 0 0;
             overflow: unset;
         }
     }

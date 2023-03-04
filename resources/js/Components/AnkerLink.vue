@@ -38,15 +38,18 @@
 </template>
 
 
-<script>
+<script lang="ts">
+import { AnkerData } from "../Interfaces/AnkerData";
+import { defineComponent } from "vue";
 import SmoothLink from "@/js/Components/SmoothLink.vue";
-export default {
+
+export default defineComponent({
 
     //呼び出し元から渡された引数
-    props: [
-        "anker",  //画面位置の配列
-        "mode",   //"prev" のとき、上へ移動するリンク、"next"のとき、下へ移動するリンク
-    ],
+    props: {
+        anker: {type: Object as () => AnkerData[]},
+        mode:  {type: String},
+    },
 
     //読み込んだコンポーネント
     components: {
@@ -54,7 +57,12 @@ export default {
     },
 
     //コンポーネント内で使用する変数
-    data() {
+    data(): {
+        anker_array: AnkerData[]
+        anker_name: string
+        anker_id: string
+        anker_display: boolean
+    } {
         return {
             anker_array: [],
             anker_name: '',
@@ -70,7 +78,7 @@ export default {
         getAnkerPosition: function () {
             var pos_y = window.pageYOffset;
             this.anker_array.forEach(e => {
-                e.pos = pos_y + document.getElementById(e.id).getBoundingClientRect().top
+                e.pos = pos_y + document.getElementById(e.id)!.getBoundingClientRect().top
             });
         },
 
@@ -108,7 +116,7 @@ export default {
     mounted() {
 
         //propsを変更可能な変数にセット
-        this.anker_array = this.anker;
+        this.anker_array = this.anker!;
 
         //アンカーリンクの初期値セット
         this.getAnkerPosition();
@@ -120,7 +128,7 @@ export default {
         //画面のサイズが変わったら、各項目のスクロール位置を再セット
         window.addEventListener('resize', this.getAnkerPosition, { passive: true });
     }
-}
+});
 </script>
 
 

@@ -73,6 +73,7 @@
 
 
 <script lang="ts">
+import { getConstant } from '../Interfaces/Constant';
 import { defineComponent } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
 import SvgIcon from "@/js/Components/SvgIcon.vue";
@@ -100,8 +101,8 @@ export default defineComponent({
     computed: {
 
         //laravel側から定数を取得する
-        constants() {
-            return this.$page.props.const;
+        constants(): any{
+            return getConstant();
         },
     },
 
@@ -110,6 +111,7 @@ export default defineComponent({
 
         //検索ウインドウの表示・非表示を切り替える
         setSearchDisplayFlag(flag: boolean) {
+
             //同時に2つのウインドウをtrueにはしない
             if (flag) {
                 this.main_display_flag = false;
@@ -119,6 +121,7 @@ export default defineComponent({
 
         //メインウインドウの表示・非表示を切り替える
         setMainDisplayFlag(flag: boolean) {
+            
             //同時に2つのウインドウをtrueにはしない
             if (flag) {
                 this.search_display_flag = false;

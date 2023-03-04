@@ -7,12 +7,6 @@
     >
         <ReviewWrap :review="review" />
     </div>
-
-    <!-- レビュー一覧へのリンク -->
-    <PageLink
-        href="/review"
-        link_name="すべてのレビューを見る"
-    />
 </template>
 
 

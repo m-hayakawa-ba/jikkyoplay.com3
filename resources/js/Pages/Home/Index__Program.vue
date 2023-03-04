@@ -1,23 +1,25 @@
 <template>
 
-    <!-- ランキング一覧 -->
+    <!-- 新着動画一覧 -->
     <div
-        v-for="(ranking, index) in rankings"
-        class="ranking-wrap"
+        v-for="program in youtube_programs"
+        class="program-wrap"
     >
         <ProgramWrap
-            :rank="index + 1"
-            :program="ranking"
+            :rank="null"
+            :program="program"
         />   
     </div>
-
-    <!-- ランキング一覧へのリンク -->
-    <PageLink
-        href="/ranking"
-        link_name="すべてのランキング"
-    />
+    <div
+        v-for="program in nicovideo_programs"
+        class="program-wrap"
+    >
+        <ProgramWrap
+            :rank="null"
+            :program="program"
+        />   
+    </div>
 </template>
-
 
 <script>
 import {usePage} from "@inertiajs/inertia-vue3";
@@ -28,7 +30,8 @@ export default {
     //コンポーネント内で使用する変数
     data() {
         return {
-            rankings: usePage().props.value.rankings,
+            youtube_programs: usePage().props.value.youtube_programs,
+            nicovideo_programs: usePage().props.value.nicovideo_programs,
         };
     },
 
@@ -40,15 +43,16 @@ export default {
 
     //初回読み込み時に実行
     mounted() {
-        // console.log();
+        // console.log(this.nicovideo_programs);
     }
+
 }
 </script>
 
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-    .ranking-wrap {
+    .program-wrap {
         position: relative;
         margin: 8px 0 0;
         width: 100%;
