@@ -8,6 +8,7 @@ use App\Services\Program\ProgramReadService;
 use App\Services\Program\ProgramUpdateService;
 use App\Services\Program\ProgramSearchService;
 use App\Services\Review\ReviewReadService;
+use App\Services\SearchWord\SearchWordCreateService;
 use App\Services\History\HistoryCreateService;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
@@ -17,20 +18,22 @@ class ProgramController extends Controller
     /**
      * 定数定義
      */
-    private $get_program_count = 20;     //1ページあたりの動画数
-    private $relation_program_count = 4; //表示させる関連動画の個数
+    private $get_program_count = 20;          //1ページあたりの動画数
+    private $relation_program_count = 4;      //表示させる関連動画の個数
+    private $period_search_word = '-1 week';  //表示させる検索ワードの集計期間
 
     /**
      * コンストラクタ
      */
     public function __construct(
-        private CreaterReadService   $createrReadService,
-        private GameReadService      $gameReadService,
-        private ProgramReadService   $programReadService,
-        private ProgramUpdateService $programUpdateService,
-        private ProgramSearchService $programSearchService,
-        private ReviewReadService    $reviewReadService,
-        private HistoryCreateService $historyCreateService,
+        private CreaterReadService      $createrReadService,
+        private GameReadService         $gameReadService,
+        private ProgramReadService      $programReadService,
+        private ProgramUpdateService    $programUpdateService,
+        private ProgramSearchService    $programSearchService,
+        private ReviewReadService       $reviewReadService,
+        private SearchWordCreateService $searchWordCreateService,
+        private HistoryCreateService    $historyCreateService,
     ){
     }
 
@@ -56,6 +59,15 @@ class ProgramController extends Controller
         );
         $count = $array['count'];
         $programs = $array['programs'];
+
+        //検索履歴を保存
+        if ($request->has('word') && $request->has('point')) {
+            $this->searchWordCreateService->createSearchWord(
+                $request->word,
+                $request->point,
+                $this->period_search_word,
+            );
+        }
 
         //ページネーションのためのページ番号を取得
         if (!$request->filled('page')) {

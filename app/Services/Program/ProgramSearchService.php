@@ -44,6 +44,7 @@ class ProgramSearchService
         $programs = $this->searchCreaterId  ($programs, $request); //投稿者idで絞り込み
         $programs = $this->searchGameId     ($programs, $request); //ゲームidで絞り込み
         $programs = $this->searchHardId     ($programs, $request); //ハードidで絞り込み
+        $programs = $this->searchRetro      ($programs, $request); //レトロゲーかどうかで絞り込み
         $programs = $this->searchMakerName  ($programs, $request); //メーカー名で絞り込み
         $programs = $this->searchMakerId    ($programs, $request); //メーカーidで絞り込み
         $programs = $this->searchYear       ($programs, $request); //発売年で絞り込み
@@ -199,6 +200,21 @@ class ProgramSearchService
     {
         return $request->filled('hard_id')
             ? $programs->where('games.hard_id', $request->query('hard_id'))
+            : $programs;
+    }
+    /**
+     * 検索条件
+     * レトロゲーかどうか絞り込み
+     * 
+     * @param Builder $programs
+     * @param Request $request
+     * 
+     * @return Builder
+     */
+    private function searchRetro(Builder $programs, Request $request) : Builder
+    {
+        return $request->query('retro', 0) == 1
+            ? $programs->WhereRetro()
             : $programs;
     }
     /**

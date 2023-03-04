@@ -109,6 +109,12 @@
                         />
                     </div>
 
+                    <!-- ポイント -->
+                    <input
+                        type="hidden"
+                        v-model="form.point"
+                    >
+
                     <button type="submit" class="search-button">
                         詳細検索する
                         <SvgIcon class="search-icon" icon="search" />
@@ -152,6 +158,7 @@ export default {
                 year: "",
                 maker_name: "",
                 creater_name: "",
+                point: 4,
             }),
             list_sites: usePage().props.value.list_sites,
             list_voices: usePage().props.value.list_voices,

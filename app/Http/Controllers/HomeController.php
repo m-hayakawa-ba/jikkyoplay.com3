@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Services\News\NewsReadService;
 use App\Services\Program\ProgramReadService;
+use App\Services\RecommendQuery\RecommendQueryReadService;
 use App\Services\Review\ReviewReadService;
 use App\Services\SearchWord\SearchWordReadService;
 use Inertia\Inertia;
@@ -27,6 +28,7 @@ class HomeController extends Controller
     public function __construct(
         private NewsReadService $newsReadService,
         private ProgramReadService $programReadService,
+        private RecommendQueryReadService $recommendQueryReadService,
         private ReviewReadService $reviewReadService,
         private SearchWordReadService $searchWordReadService,
     ){
@@ -37,6 +39,9 @@ class HomeController extends Controller
      */
     public function index()
     {
+        //おすすめリンクを取得
+        $recommend_queries = $this->recommendQueryReadService->getRecommendQueries();
+
         //最新ニュースを取得
         $newses = $this->newsReadService->getNewsAtHome(
             $this->max_news_count
@@ -71,6 +76,7 @@ class HomeController extends Controller
 
         //viewへ遷移
         return Inertia::render('Home/Index', compact(
+            'recommend_queries',
             'newses',
             'rankings',
             'youtube_programs',

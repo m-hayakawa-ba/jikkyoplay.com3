@@ -116,19 +116,7 @@ class ProgramReadService
         return $this->programModel
             ->SelectIndex()
             ->where('published_at', '>=', date("Y-m-d H:i:s", strtotime($period)))
-            ->whereIn('games.hard_id', [
-                config('const.hard.famicom'),
-                config('const.hard.disk_system'),
-                config('const.hard.super_famicon'),
-                config('const.hard.mega_drive'),
-                config('const.hard.pc_engine'),
-                config('const.hard.game_boy'),
-                config('const.hard.game_boy_color'),
-                config('const.hard.virtual_boy'),
-                config('const.hard.game_boy_advance'),
-                config('const.hard.wonder_swan'),
-                config('const.hard.game_gear'),
-            ])
+            ->WhereRetro()
             ->orderBy('view_count', 'DESC')
             ->limit($count)
             ->get();

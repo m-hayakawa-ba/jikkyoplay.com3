@@ -1,46 +1,37 @@
 <template>
     <div class="search-item-wrap">
-        <Link class="search-item">
-            新着動画
-        </Link>
-        <Link class="search-item">
-            人気の動画
-        </Link>
-        <Link class="search-item">
-            女性実況
-        </Link>
-        <Link class="search-item">
-            RPG
-        </Link>
-        <Link class="search-item">
-            レトロゲーム
-        </Link>
-        <Link class="search-item">
-            その他の動画
-        </Link>
-        <Link class="search-item">
-            その他の動画
-        </Link>
-        <Link class="search-item">
-            その他の動画
-        </Link>
-        <Link class="search-item">
-            詳細検索
+        <Link
+            v-for="recommend_query in recommend_queries"
+            :key="recommend_query.id"
+            :href="recommend_query.path"
+            class="search-item"
+        >
+            {{ recommend_query.name }}
         </Link>
     </div>
 </template>
 
 
-<script>
+<script lang="ts">
+import { RecommendQuery } from '../../Interfaces/RecommendQuery'
+import { usePage } from "@inertiajs/inertia-vue3";
 import { Link } from "@inertiajs/inertia-vue3";
-export default {
+import { defineComponent } from "vue";
+
+export default defineComponent({
+
+    //コンポーネント内で使用する変数
+    data(): {
+        recommend_queries: RecommendQuery[]
+    } { return {
+        recommend_queries: usePage().props.value.recommend_queries as RecommendQuery[],
+    }},
 
     //読み込んだコンポーネント
     components: {
         Link,
     },
-
-}
+});
 </script>
 
 

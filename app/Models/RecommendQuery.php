@@ -4,21 +4,25 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
-class SearchWord extends Model
+class RecommendQuery extends Model
 {
     use HasFactory;
+    use SoftDeletes;
 
     /**
      * カラムの設定
      */
+    public $timestamps = false;
     protected $fillable = [
-        'word',
-        'point',
-        'ip_address',
+        'name',
+        'path',
+        'sort_id',
     ];
     protected $hidden = [
-        'created_at',
-        'updated_at',
+        'sort_id',
+        'deleted_at',
     ];
+
 }
