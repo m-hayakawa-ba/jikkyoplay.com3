@@ -59,6 +59,10 @@ export default {
         padding: 6px 8px;
         width: calc(100% + 16px);
         background-color: #18100c;
+        @media screen and (min-width: $bp) {
+            left: 0px;
+            width: 100%;
+        }
         h2 {
             color: #fff;
             font-size: $font-l;

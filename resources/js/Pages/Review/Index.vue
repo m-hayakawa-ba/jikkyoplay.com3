@@ -11,31 +11,7 @@
 
         <!-- レビュー一覧 -->
         <section>
-            <div class="pc-only review-item">
-                <template
-                    v-for="(review, index) in reviews"
-                    :key="index"
-                >
-                    <ReviewWrap
-                        v-if="index % 2 == 0"
-                        :review="review"
-                        :review_all_flag="true"
-                    />
-                </template>
-            </div>
-            <div class="pc-only review-item">
-                <template
-                    v-for="(review, index) in reviews"
-                    :key="index"
-                >
-                    <ReviewWrap
-                        v-if="index % 2 == 1"
-                        :review="review"
-                        :review_all_flag="true"
-                    />
-                </template>
-            </div>
-            <div class="sp-only review-item">
+            <div class="review-item">
                 <template
                     v-for="(review, index) in reviews"
                     :key="index"
@@ -60,12 +36,14 @@
 </template>
 
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import {usePage} from "@inertiajs/inertia-vue3";
 import H2Title from "@/js/Components/H2Title.vue";
 import ReviewWrap from '@/js/Components/Review/ReviewWrap.vue';
 import Pagination from '@/js/Components/Pagination.vue';
-export default {
+
+export default defineComponent({
 
     //コンポーネント内で使用する変数
     data() {
@@ -83,7 +61,7 @@ export default {
         Pagination,
     },
 
-}
+});
 </script>
 
 
@@ -99,9 +77,12 @@ export default {
         }
     }
     .review-item {
+        position: relative;
+        margin-bottom: 12px;
         width: 100%;
         @media screen and (min-width: $bp) {
-            width: 49%;
+            margin: 0 0 24px;
+            width: 100%;
         }
     }
 </style>

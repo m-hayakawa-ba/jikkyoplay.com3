@@ -12,7 +12,7 @@ class ReviewController extends Controller
     /**
      * 定数定義
      */
-    private $get_review_count = 20;     //1ページあたりのレビュー数
+    private $get_review_count = 10;     //1ページあたりのレビュー数
 
     /**
      * コンストラクタ

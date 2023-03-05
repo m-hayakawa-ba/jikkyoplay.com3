@@ -1,17 +1,16 @@
 <template>
 
     <!-- レビュー一覧 -->
-    <div
-        v-for="review in reviews"
-        class="review-wrap"
-    >
-        <ProgramWrap :program="review" />
-        
-        <!-- レビュー本文 -->
-        <div
-            class="review-detail"
-            v-html="review.detail"
-        ></div>
+    <div class="review-item">
+        <template
+            v-for="(review, index) in reviews"
+            :key="index"
+        >
+            <ReviewWrap
+                :review="review"
+                :review_all_flag="true"
+            />
+        </template>
     </div>
 </template>
 
@@ -57,21 +56,13 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-    .review-wrap {
+    .review-item {
         position: relative;
-        margin: 8px 0 0;
+        margin-bottom: 12px;
         width: 100%;
         @media screen and (min-width: $bp) {
-            margin: 0 0.166% 24px;
-            width: 33%;
+            margin: 0 0 24px;
+            width: 100%;
         }
-    }
-    .review-detail {
-        height: 70px;
-        padding: 4px 8px;
-        display: -webkit-box;
-        -webkit-box-orient: vertical;
-        -webkit-line-clamp: 3;
-        overflow: hidden;
     }
 </style>

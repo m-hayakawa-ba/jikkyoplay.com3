@@ -18,7 +18,7 @@ class HomeController extends Controller
     private $max_ranking_count  = 3;          //表示させるランキング
     private $period_ranking     = '-1 year';  //表示させるランキングの集計期間
     private $max_program_count  = 3;          //サイトごとの表示させる新着動画
-    private $max_review_count   = 3;          //表示させるレビュー数
+    private $max_review_count   = 2;          //表示させるレビュー数
     private $max_search_word    = 20;         //表示させる検索ワードの数
     private $period_search_word = '-1 week';  //表示させる検索ワードの集計期間
 

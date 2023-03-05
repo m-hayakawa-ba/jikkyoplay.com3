@@ -1,54 +1,54 @@
 <template>
 
-    <!-- 再生回数表示 -->
-    <ProgramViewCount
-        :rank="null"
-        :view_count="review.view_count"
-    />
-
-    <InformationWrap :href="'/program/' + review.program_id">
-
-        <!-- 番組のサムネイル -->
-        <ProgramThumbnail
-            :thumbnail_url="review.image_url"
-            :site_id="review.site_id"
-            style="width: 45%;"
-        />
-
-        <!-- 番組の説明文 -->
-        <ProgramCaption
-            :title="review.title"
-            :creater_name="review.creater_name"
-            :creater_icon_url="review.user_icon_url"
-            :published_at="review.published_at"
-            style="width: 55%;"
-        />
-
-        <!-- レビュー本文 -->
-        <div
-            v-if="review_all_flag"
-            class="review-detail-all"
-            v-html="review.detail"
-        ></div>
-        <div
-            v-else
-            class="review-detail"
-            v-html="review.detail"
-        ></div>
-
-        <!-- 投稿日とレビュワー名 -->
-        <div
-            class="review-reviewer"
-        >
-            {{ format(review.created_at) }}<br>
-            reviewer:{{ review.reviewer }}
+    <!-- 番組情報 -->
+    <Link 
+        :href="'/program/' + review.id"
+        class="review-wrap"
+    >
+        <!-- 番組タイトル -->
+        <div class="review-title">
+            {{ review.title }}
         </div>
-    </InformationWrap>
+
+        <!-- 全体のflex -->
+        <div class="review-flex">
+
+            <!-- 番組サムネイル -->
+            <div class="review-thumbnail">
+                <ProgramThumbnail :program="review"/>
+            </div>
+
+            <!-- レビュー本文とレビュワー名 -->
+            <div class="review-text">
+
+                <!-- レビュー本文 -->
+                <div
+                    v-if="review_all_flag"
+                    class="review-detail-all"
+                    v-html="review.detail"
+                ></div>
+                <div
+                    v-else
+                    class="review-detail"
+                    v-html="review.detail"
+                ></div>
+
+                <!-- 投稿日とレビュワー名 -->
+                <div
+                    class="review-reviewer"
+                >
+                    {{ format(review.created_at) }}<br>
+                    reviewer:{{ review.reviewer }}
+                </div>
+            </div>
+        </div>
+    </Link>
 </template>
 
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import {Link} from "@inertiajs/inertia-vue3";
 import ProgramViewCount from "@/js/Components/Program/ProgramViewCount.vue";
 import ProgramThumbnail from "@/js/Components/Program/ProgramThumbnail.vue";
 import ProgramCaption from "@/js/Components/Program/ProgramCaption.vue";
@@ -65,6 +65,7 @@ export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
+        Link,
         ProgramViewCount,
         ProgramThumbnail,
         ProgramCaption,
@@ -85,6 +86,36 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
+    .review-wrap {
+        display: block;
+        margin-bottom: 20px;
+        width: 100%;
+        overflow: hidden;
+    }
+    .review-title {
+        font-weight: bold;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        font-size: $font-m;
+        margin: 4px 0;
+    }
+    .review-flex {
+        display: flex;
+        flex-wrap: wrap;
+        .review-thumbnail {
+            width: 100%;
+            @media screen and (min-width: $bp) {
+                width: 33%;
+            }
+        }
+        .review-text {
+            width: 100%;
+            @media screen and (min-width: $bp) {
+                width: 67%;
+            }
+        }
+    }
     .review-detail {
         height: 70px;
         padding: 4px 8px;
@@ -94,7 +125,14 @@ export default defineComponent({
         overflow: hidden;
     }
     .review-detail-all {
-        padding: 12px 8px;
+        margin: 4px 0 0 0;
+        overflow: hidden;
+        display: -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 7;
+        @media screen and (min-width: $bp) {
+            margin: 12px 0 0 8px;
+        }
     }
     .review-reviewer {
         width: 100%;

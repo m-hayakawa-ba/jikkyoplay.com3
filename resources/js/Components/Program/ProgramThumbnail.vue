@@ -1,45 +1,88 @@
 <template>
-    <div class="thumbnail-wrap">
-        <div class="thumbnail">
-            <!-- 画像本体 -->
-            <img
-                :src="thumbnail_url"
-                class="thumbnail-img"
-            />
+    <div class="program-thumbnail">
 
-            <!-- YouTubeのアイコン -->
-            <img
-                v-if="site_id == constants.site.youtube"
-                src="/image/logo_youtube.webp"
-                class="thumbnail-icon"
-            >
+        <!-- 画像本体 -->
+        <img
+            :src="program.image_url"
+            class="thumbnail-img"
+        />
 
-            <!-- ニコニコ動画のアイコン -->
-            <img
-                v-if="site_id == constants.site.nicovideo"
-                src="/image/logo_nicovideo.webp"
-                class="thumbnail-icon"
-            >
+        <!-- 動画サイトのアイコン -->
+        <img
+            v-if="program.site_id == constants.site.youtube"
+            src="/image/logo_youtube.webp"
+            class="thumbnail-icon"
+        >
+        <img
+            v-if="program.site_id == constants.site.nicovideo"
+            src="/image/logo_nicovideo.webp"
+            class="thumbnail-icon"
+        >
+
+        <!-- 動画の説明部分 -->
+        <div class="program-caption">
+
+            <!-- 投稿者アイコン -->
+            <div class="caption-creater-icon">
+                <img
+                    v-if="did_load_creater_thumbnail"
+                    :src="program.user_icon_url"
+                    :alt="program.creater_name"
+                    @error="loadingErrorCreaterThumbnail"
+                />
+                <img
+                    v-else
+                    src="/image/noimage_trans.png"
+                />
+            </div>
+
+            <!-- 投稿者名と投稿日 -->
+            <div class="caption-detail">
+                {{ program.creater_name }}<br>
+                {{ format(program.published_at) }} 投稿（{{ program.view_count.toLocaleString() }}回再生）
+            </div>
         </div>
     </div>
 </template>
 
 
-<script>
-export default {
+<script lang="ts">
+
+import { defineComponent } from "vue";
+import moment from 'moment';
+
+import { getConstant } from '../../Interfaces/Constant';
+
+export default defineComponent({
 
     //呼び出し元から渡された引数
     props: [
-        "thumbnail_url",
-        "site_id",
+        "program",
     ],
+
+    //コンポーネント内で使用する変数
+    data() {
+        return {
+            did_load_creater_thumbnail: true,
+        };
+    },
 
     //返り値が固定の関数
     computed: {
 
         //laravel側から定数を取得する
-        constants() {
-            return this.$page.props.const;
+        constants(): any{
+            return getConstant();
+        },
+    },
+
+    //コンポーネント内で使用するメソッド
+    methods: {
+        format(date: string) {
+            return moment(date).format('YYYY年M月D日')
+        },
+        loadingErrorCreaterThumbnail() {
+            this.did_load_creater_thumbnail = false;
         },
     },
 
@@ -47,37 +90,57 @@ export default {
     mounted() {
         // console.log(this.site_id);
     }
-}
+});
 </script>
 
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-    .thumbnail-wrap {
-        position: relative;
-        width: 100%;
-        padding: 2px;
-    }
-    .thumbnail {
+    .program-thumbnail {
         position: relative;
         width: 100%;
         height: 0;
         padding-top: calc(100% * 9 / 16);
         overflow: hidden;
-        border-radius: 2px;
+        border-radius: 4px;
+        .thumbnail-img {
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            transform: translateY(-50%);
+        }
+        .thumbnail-icon {
+            position: absolute;
+            width: 15%;
+            top: 3px;
+            right: 5px;
+            @media screen and (min-width: $bp) {
+                width: 12%;
+            }
+        }
     }
-    .thumbnail-img {
+    .program-caption {
         position: absolute;
-        top: 50%;
-        left: 0;
-        transform: translateY(-50%);
+        bottom: 0;
+        display: flex;
+        align-items: center;
+        padding: 4px;
         width: 100%;
-        box-shadow: 1px 1px 4px rgb(32 6 6 / 12%);
-    }
-    .thumbnail-icon {
-        position: absolute;
-        width: 22%;
-        right: 3%;
-        bottom: 3%;
+        color: #fff;
+        background-color: #000000b0;
+        .caption-creater-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+        .caption-detail {
+            margin-left: 8px;
+            font-size: $font-s;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 </style>
