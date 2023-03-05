@@ -38,7 +38,6 @@
 
         <!-- 投稿日とレビュワー名 -->
         <div
-            v-if="review_all_flag"
             class="review-reviewer"
         >
             {{ format(review.created_at) }}<br>
@@ -48,13 +47,15 @@
 </template>
 
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
 import ProgramViewCount from "@/js/Components/Program/ProgramViewCount.vue";
 import ProgramThumbnail from "@/js/Components/Program/ProgramThumbnail.vue";
 import ProgramCaption from "@/js/Components/Program/ProgramCaption.vue";
 import InformationWrap from "@/js/Components/Information/InformationWrap.vue";
 import moment          from 'moment';
-export default {
+
+export default defineComponent({
 
     //呼び出し元から渡された引数
     props: [
@@ -74,11 +75,11 @@ export default {
     methods: {
 
         //日時の表示
-        format(date) {
+        format(date: string) {
             return moment(date).format('YYYY年M月D日')
         },
     },
-}
+});
 </script>
 
 

@@ -1,5 +1,5 @@
 <template>
-    <section>
+    <section class="search-word-wrap">
 
         <!-- 人気の検索ワード -->
         <Link
@@ -45,14 +45,14 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "@/sass/variables";
 
-    section {
+    .search-word-wrap {
         margin: 40px 0 24px;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
+        justify-content: center;
     }
     .search_word {
-        margin: 0 8px;
+        margin: 6px 8px;
         padding: 4px 8px;
         display: inline-block;
         border: solid 1px;
