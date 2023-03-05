@@ -54,7 +54,7 @@ export default {
 @import "@/sass/variables";
     .program-wrap {
         position: relative;
-        margin: 8px 0 0;
+        margin: 2px 0 0;
         width: 100%;
         @media screen and (min-width: $bp) {
             width: 49%;

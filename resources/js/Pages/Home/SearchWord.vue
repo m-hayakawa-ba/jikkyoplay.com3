@@ -2,26 +2,31 @@
     <section>
 
         <!-- 人気の検索ワード -->
-        <a
+        <Link
             v-for="search_word in search_words"
+            :key="search_word.id"
+            :href="'/program?word=' + search_word.word"
             class="search_word"
         >
             {{ search_word.word }}
-        </a>
+        </Link>
     </section>
 </template>
 
 
-<script>
+<script lang="ts">
+import { SearchWord } from "../../Interfaces/SearchWord";
+import { defineComponent } from "vue";
 import { usePage, Link } from "@inertiajs/inertia-vue3";
-export default {
+
+export default defineComponent({
 
     //コンポーネント内で使用する変数
-    data() {
-        return {
-            search_words: usePage().props.value.search_words,
-        };
-    },
+    data(): {
+        search_words: SearchWord[]
+    } { return {
+        search_words: usePage().props.value.search_words as SearchWord[],
+    }},
 
     //読み込んだコンポーネント
     components: {
@@ -33,7 +38,7 @@ export default {
         // console.log(this.search_words);
     }
 
-}
+});
 </script>
 
 
@@ -47,9 +52,9 @@ export default {
         justify-content: space-around;
     }
     .search_word {
-        margin: 6px 2px;
-        padding: 4px 6px;
-        font-size: $font-m;
+        margin: 0 8px;
+        padding: 4px 8px;
+        display: inline-block;
         border: solid 1px;
         border-radius: 12px;
         color: #27272a;
@@ -61,11 +66,6 @@ export default {
             border-color: #4f70ff;
             color: #fff;
             transform: scale(1.2);
-        }
-        @media screen and (min-width: $bp) {
-            margin: 8px 6px;
-            padding: 4px 12px;
-            font-size: $font-l;
         }
     }
 

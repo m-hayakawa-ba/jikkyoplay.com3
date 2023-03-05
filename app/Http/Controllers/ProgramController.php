@@ -61,7 +61,7 @@ class ProgramController extends Controller
         $programs = $array['programs'];
 
         //検索履歴を保存
-        if ($request->has('word') && $request->has('point')) {
+        if ($request->has('word') && $request->has('point') && $request->point <= 4) {
             $this->searchWordCreateService->createSearchWord(
                 $request->word,
                 $request->point,

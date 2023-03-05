@@ -1,7 +1,7 @@
 <template>
 
     <!-- 検索ワード -->
-    <SearchItem />
+    <RecommendQuery />
 
     <!-- サイト本体部分 -->
     <div class="inner">
@@ -89,7 +89,7 @@
 <script lang="ts">
 import { AnkerData } from "../../Interfaces/AnkerData";
 import { defineComponent } from "vue";
-import SearchItem from "./SearchItem.vue";
+import RecommendQuery from "./RecommendQuery.vue";
 import SearchWord from "./SearchWord.vue";
 import H2Title   from "@/js/Components/H2Title.vue";
 import AnkerLink from "@/js/Components/AnkerLink.vue";
@@ -103,7 +103,7 @@ export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
-        SearchItem,
+        RecommendQuery,
         SearchWord,
         H2Title,
         AnkerLink,

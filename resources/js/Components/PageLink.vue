@@ -39,7 +39,7 @@ export default {
     .link-wrap {
         display: flex;
         justify-content: flex-end;
-        margin: 10px 0 0 auto;
+        margin: 2px 0 0 auto;
     }
     .link-name {
         color: $font-color-link;
