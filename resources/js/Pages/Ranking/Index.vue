@@ -39,139 +39,160 @@
         </div>
         
         <!-- 総合ランキング -->
-        <section id="total-ranking">
-
-            <RankingBanner
-                image_url="/image/banner/ranking_total.jpg"
-                title="総合ランキング"
-            />
-            <div
-                v-for="(ranking, index) in total_rankings"
-                class="ranking-wrap"
-            >
-                <ProgramWrap
-                    :rank="index + 1"
-                    :program="ranking"
-                />   
-            </div>
-        </section>
+        <RankingBanner
+            id="total-ranking"
+            image_url="/image/banner/ranking_total.jpg"
+            title="総合ランキング"
+        />
+        <DefaultSection>
+            <template v-for="(ranking, index) in total_rankings" :key="ranking.id">
+                <div v-if="index == 0" class="ranking-first pc-only"></div>
+                <div class="ranking-wrap">
+                    <ProgramWrap
+                        :rank="index + 1"
+                        :program="ranking"
+                    />   
+                </div>
+                <div v-if="index == 0" class="ranking-first pc-only"></div>
+            </template>
+        </DefaultSection>
         
         <!-- 人気実況者ランキング -->
-        <section id="creater-ranking">
-
-            <RankingBanner
-                image_url="/image/banner/ranking_creater.jpg"
-                title="人気実況者ランキング"
-            />
-            <div
-                v-for="(ranking, index) in creater_rankings"
-                class="ranking-wrap"
-            >
-                <CreaterWrap
-                    :rank="index + 1"
-                    :creater="ranking"
-                />   
-            </div>
-        </section>
+        <RankingBanner
+            id="creater-ranking"
+            image_url="/image/banner/ranking_creater.jpg"
+            title="人気実況者ランキング"
+        />
+        <DefaultSection>
+            <template v-for="(ranking, index) in creater_rankings" :key="ranking.id">
+                <div v-if="index == 0" class="ranking-first pc-only"></div>
+                <div class="ranking-wrap">
+                    <CreaterWrap
+                        :rank="index + 1"
+                        :creater="ranking"
+                    />   
+                </div>
+                <div v-if="index == 0" class="ranking-first pc-only"></div>
+            </template>
+        </DefaultSection>
         
         <!-- 女性実況動画ランキング -->
-        <section id="female-ranking">
-
-            <RankingBanner
-                image_url="/image/banner/ranking_female.jpg"
-                title="女性実況動画ランキング"
-            />
-            <div
-                v-for="(ranking, index) in female_rankings"
-                class="ranking-wrap"
-            >
-                <ProgramWrap
-                    :rank="index + 1"
-                    :program="ranking"
-                />   
-            </div>
-        </section>
+        <RankingBanner
+            id="female-ranking"
+            image_url="/image/banner/ranking_female.jpg"
+            title="女性実況動画ランキング"
+        />
+        <DefaultSection>
+            <template v-for="(ranking, index) in female_rankings" :key="ranking.id">
+                <div v-if="index == 0" class="ranking-first pc-only"></div>
+                <div class="ranking-wrap">
+                    <ProgramWrap
+                        :rank="index + 1"
+                        :program="ranking"
+                    />   
+                </div>
+                <div v-if="index == 0" class="ranking-first pc-only"></div>
+            </template>
+        </DefaultSection>
         
         <!-- ホラー実況ランキング -->
-        <section id="horror-ranking">
-
-            <RankingBanner
-                image_url="/image/banner/ranking_horror.jpg"
-                title="ホラー実況ランキング"
-            />
-            <div
-                v-for="(ranking, index) in horror_rankings"
-                class="ranking-wrap"
-            >
-                <ProgramWrap
-                    :rank="index + 1"
-                    :program="ranking"
-                />   
-            </div>
-        </section>
+        <RankingBanner
+            id="horror-ranking"
+            image_url="/image/banner/ranking_horror.jpg"
+            title="ホラー実況ランキング"
+        />
+        <DefaultSection>
+            <template v-for="(ranking, index) in horror_rankings" :key="ranking.id">
+                <div v-if="index == 0" class="ranking-first pc-only"></div>
+                <div class="ranking-wrap">
+                    <ProgramWrap
+                        :rank="index + 1"
+                        :program="ranking"
+                    />   
+                </div>
+                <div v-if="index == 0" class="ranking-first pc-only"></div>
+            </template>
+        </DefaultSection>
         
         <!-- レトロゲーム実況ランキング -->
-        <section id="retro-ranking">
-
-            <RankingBanner
-                image_url="/image/banner/ranking_retro.jpg"
-                title="レトロゲーム実況ランキング"
-            />
-            <div
-                v-for="(ranking, index) in retro_rankings"
-                class="ranking-wrap"
-            >
-                <ProgramWrap
-                    :rank="index + 1"
-                    :program="ranking"
-                />   
-            </div>
-        </section>
+        <RankingBanner
+            id="retro-ranking"
+            image_url="/image/banner/ranking_retro.jpg"
+            title="レトロゲーム実況ランキング"
+        />
+        <DefaultSection>
+            <template v-for="(ranking, index) in retro_rankings" :key="ranking.id">
+                <div v-if="index == 0" class="ranking-first pc-only"></div>
+                <div class="ranking-wrap">
+                    <ProgramWrap
+                        :rank="index + 1"
+                        :program="ranking"
+                    />   
+                </div>
+                <div v-if="index == 0" class="ranking-first pc-only"></div>
+            </template>
+        </DefaultSection>
     </div>
 
     <!-- アンカーリンク -->
     <AnkerLink
-        v-if="anker"
+        v-if="anker.length > 0"
         :anker="anker"
         mode="prev"
     />
     <AnkerLink
-        v-if="anker"
+        v-if="anker.length > 0"
         :anker="anker"
         mode="next"
     />
 
 </template>
 
-<script>
+<script lang="ts">
+
+import { AnkerData } from "../../Interfaces/AnkerData";
+import { Creater } from "../../Interfaces/Creater";
+import { SimpleProgram } from "../../Interfaces/Program";
+
+import { defineComponent } from "vue";
 import {usePage} from "@inertiajs/inertia-vue3";
-import H2Title from "@/js/Components/H2Title.vue";
-import SmoothLink from "@/js/Components/SmoothLink.vue";
-import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
 import CreaterWrap from '@/js/Components/Creater/CreaterWrap.vue';
+import DefaultSection from "@/js/Components/Section/DefaultSection.vue";
+import H2Title from "@/js/Components/H2Title.vue";
+import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
 import RankingBanner from '@/js/Components/Ranking/RankingBanner.vue';
+import SmoothLink from "@/js/Components/SmoothLink.vue";
 import AnkerLink from "@/js/Components/AnkerLink.vue";
-export default {
+
+export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
-        H2Title,
         SmoothLink,
-        ProgramWrap,
         CreaterWrap,
+        DefaultSection,
+        H2Title,
+        ProgramWrap,
         RankingBanner,
         AnkerLink,
     },
 
     //コンポーネント内で使用する変数
-    data() {
+    data(): {
+        anker:            AnkerData[],
+        total_rankings:   SimpleProgram[],
+        creater_rankings: Creater[],
+        female_rankings:  SimpleProgram[],
+        horror_rankings:  SimpleProgram[],
+        retro_rankings:   SimpleProgram[],
+    } {
         return {
-            total_rankings:   usePage().props.value.total_rankings,
-            creater_rankings: usePage().props.value.creater_rankings,
-            female_rankings:  usePage().props.value.female_rankings,
-            horror_rankings:  usePage().props.value.horror_rankings,
-            retro_rankings:   usePage().props.value.retro_rankings,
-            anker: null,
+            anker: [],
+            total_rankings:   usePage().props.value.total_rankings   as SimpleProgram[],
+            creater_rankings: usePage().props.value.creater_rankings as Creater[],
+            female_rankings:  usePage().props.value.female_rankings  as SimpleProgram[],
+            horror_rankings:  usePage().props.value.horror_rankings  as SimpleProgram[],
+            retro_rankings:   usePage().props.value.retro_rankings   as SimpleProgram[],
         };
     },
 
@@ -188,21 +209,12 @@ export default {
             {name: 'レトロゲー', id: "retro-ranking",   pos: 0},
         ];
     }
-};
+});
 </script>
 
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-    section {
-        margin-bottom: 60px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        @media screen and (min-width: $bp) {
-            padding-left: 8px;
-        }
-    }
     .page-caption {
         margin: 10px 0 5px;
         @media screen and (min-width: $bp) {
@@ -233,11 +245,18 @@ export default {
     }
     .ranking-wrap {
         position: relative;
-        margin: 8px 0 0;
+        margin-bottom: 12px;
         width: 100%;
         @media screen and (min-width: $bp) {
-            width: 49%;
+            margin: 0 0.166% 24px;
+            width: 33%;
+            &:nth-child(2) {
+                width: 45%;
+            }
         }
+    }
+    .ranking-first {
+        width: 27%;
     }
 
 </style>

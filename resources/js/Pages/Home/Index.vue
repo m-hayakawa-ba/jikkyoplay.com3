@@ -13,9 +13,9 @@
             link_title="すべてのニュースを見る"
             link_path="/news"
         />
-        <section>
+        <DefaultSection>
             <IndexNews />
-        </section>
+        </DefaultSection>
         
         <!-- 今週のランキング -->
         <H2Title
@@ -24,9 +24,9 @@
             link_title="すべてのランキングを見る"
             link_path="/ranking"
         />
-        <section>
+        <DefaultSection>
             <IndexRanking />
-        </section>
+        </DefaultSection>
         
         <!-- 新着実況プレイ動画 -->
         <H2Title
@@ -35,9 +35,9 @@
             link_title="すべての動画を見る"
             link_path="/program"
         />
-        <section>
+        <DefaultSection>
             <IndexProgram />
-        </section>
+        </DefaultSection>
         
         <!-- おすすめ動画レビュー -->
         <H2Title
@@ -46,9 +46,9 @@
             link_title="すべてのレビュー動画を見る"
             link_path="/review"
         />
-        <section>
+        <DefaultSection>
             <IndexReview />
-        </section>
+        </DefaultSection>
 
         <!-- 人気の検索ワード -->
         <SearchWord
@@ -71,13 +71,16 @@
 </template>
 
 <script lang="ts">
+
 import { AnkerData } from "../../Interfaces/AnkerData";
+
 import { defineComponent } from "vue";
 import RecommendQuery from "./RecommendQuery.vue";
 import SearchWord from "./SearchWord.vue";
 import H2Title   from "@/js/Components/H2Title.vue";
 import AnkerLink from "@/js/Components/AnkerLink.vue";
 import PageLink from '@/js/Components/PageLink.vue';
+import DefaultSection from "@/js/Components/Section/DefaultSection.vue";
 import IndexNews from "./Index__News.vue";
 import IndexRanking from "./Index__Ranking.vue";
 import IndexProgram from "./Index__Program.vue";
@@ -92,6 +95,7 @@ export default defineComponent({
         H2Title,
         AnkerLink,
         PageLink,
+        DefaultSection,
         IndexNews,
         IndexRanking,
         IndexProgram,
@@ -125,10 +129,5 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-    section {
-        margin: 4px 0 40px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-start;
-    }
+
 </style>

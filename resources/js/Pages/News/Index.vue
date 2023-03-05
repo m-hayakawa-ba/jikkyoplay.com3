@@ -10,7 +10,7 @@
         />
 
         <!-- ニュース記事 -->
-        <section>
+        <DefaultSection>
             <div
                 v-for="news in newses"
                 :key="news.id"
@@ -18,7 +18,7 @@
             >
                 <NewsWrap :news="news"/>
             </div>
-        </section>
+        </DefaultSection>
 
         <!-- 来月と前月へのリンク -->
         <div class="other-month-wrap">
@@ -66,13 +66,17 @@
 </template>
 
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
+import { News } from "../../Interfaces/News";
 import {usePage, Link} from "@inertiajs/inertia-vue3";
 import moment from 'moment';
 import H2Title from "@/js/Components/H2Title.vue";
-import Return from "@/js/Components/Return.vue";
 import NewsWrap from '@/js/Components/News/NewsWrap.vue';
-export default {
+import Return from "@/js/Components/Return.vue";
+import DefaultSection from "@/js/Components/Section/DefaultSection.vue";
+
+export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
@@ -80,35 +84,39 @@ export default {
         H2Title,
         NewsWrap,
         Return,
+        DefaultSection,
     },
 
     //コンポーネント内で使用する変数
-    data() {
+    data(): {
+        month:  string,
+        newses: News[],
+    } {
         return {
-            month:  usePage().props.value.month,
-            newses: usePage().props.value.newses,
+            month:  usePage().props.value.month as string,
+            newses: usePage().props.value.newses as News[],
         };
     },
 
     //コンポーネント内で使用するメソッド
     methods: {
-        format(date) {
+        format(date: string) {
             return moment(date).format('YYYY年M月')
         },
 
         //来月の文字列を返す
-        //来月がない場合はnullが返る
-        nextMonth() {
+        //来月がない場合は空文字列が返る
+        nextMonth(): string {
             if (moment(this.month).format('YYYY-MM') == moment().format('YYYY-MM')) {
-                return null;
+                return '';
             } else {
                 return moment(this.month).add(1, 'months').format('YYYY-MM');
             }
         },
 
         //前月の文字列を返す
-        //前月がない場合はnullが返る
-        prevMonth() {
+        //前月がない場合は空文字列が返る
+        prevMonth(): string {
             return moment(this.month).add(-1, 'months').format('YYYY-MM')
         },
     },
@@ -118,28 +126,19 @@ export default {
         // console.log(this.newses);
     },
 
-}
+});
 </script>
 
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-    section {
-        margin-top: 4px;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        @media screen and (min-width: $bp) {
-            padding-left: 8px;
-        }
-    }
     .news-wrap {
         position: relative;
-        margin: 8px 0 4px;
+        margin: 8px 0 0;
         width: 100%;
         @media screen and (min-width: $bp) {
-            margin: 8px 0 8px;
-            width: 49.5%;
+            margin: 0 0.25% 24px;
+            width: 49%;
         }
     }
     .other-month-wrap {

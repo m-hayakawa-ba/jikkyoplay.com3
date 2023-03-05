@@ -27,10 +27,15 @@ export default {
 @import "@/sass/variables";
     .banner-wrap {
         position: relative;
-        margin-bottom: 6px;
-        width: 100%;
-        border-radius: 4px;
+        left: -8px;
+        width: calc(100% + 16px);
+        margin-bottom: 20px;
         overflow: hidden;
+        @media screen and (min-width: $bp) {
+            left: 0;
+            width: 100%;
+            border-radius: 4px;
+        }
     }
     .banner-image {
         padding-top: calc(100% / 16 * 5);

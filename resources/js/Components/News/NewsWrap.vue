@@ -107,16 +107,19 @@ export default defineComponent({
             position: relative;
             width: 100%;
             height: 0;
-            padding-top: 64%;
+            padding-top: 58%;
             border-radius: 2px;
             overflow: hidden;
+            @media screen and (min-width: $bp) {
+                padding-top: 50%;
+            }
             img {
                 position: absolute;
                 top: 50%;
                 width: 100%;
                 height: 100%;
                 object-fit: cover;
-                box-shadow: 1px 1px 4px rgb(32 6 6 / 12%);
+                border-radius: 4px;
                 transform: translateY(-50%);
             }
         }

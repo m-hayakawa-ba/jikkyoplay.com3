@@ -42,8 +42,8 @@ export default {
         margin: 8px 0 0;
         width: 100%;
         @media screen and (min-width: $bp) {
-            margin: 0 0.166% 24px;
-            width: 33%;
+            margin: 0 0.25% 24px;
+            width: 49%;
         }
     }
 
