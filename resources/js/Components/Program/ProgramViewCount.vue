@@ -3,34 +3,19 @@
 
         <!-- ランキング表示 -->
         <div
-            v-if="rank"
             class="ranking-icon"
         >
             <img src="/image/ranking.webp">
             <div><span>{{ rank }}</span>位</div>
         </div>
-
-        <!-- 再生回数 -->
-        <div
-            v-if="rank"
-            class="view-count"
-            style="padding-left: 72px;"
-        >
-            <span>{{ view_count.toLocaleString() }}</span> 回再生
-        </div>
-        <div
-            v-else
-            class="view-count"
-            style="padding-left: 8px;"
-        >
-            <span>{{ view_count.toLocaleString() }}</span> 回再生
-        </div>
     </div>
 </template>
 
 
-<script>
-export default {
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
 
     //呼び出し元から渡された引数
     props: [
@@ -38,7 +23,7 @@ export default {
         "view_count", //再生回数
     ],
 
-}
+});
 </script>
 
 
@@ -49,15 +34,15 @@ export default {
         position: relative;
     }
     .ranking-icon {
-        width: 60px;
+        width: 72px;
         position: absolute;
-        top: -8px;
-        left: 8px;
+        top: 26px;
+        left: -6px;
         z-index: 1;
         div {
             position: absolute;
-            top: 9px;
-            left: 50%;
+            top: 13px;
+            left: 52%;
             font-size: $font-l;
             font-weight: bold;
             white-space: nowrap;
@@ -66,15 +51,6 @@ export default {
             span {
                 font-size: $font-xl;
             }
-        }
-    }
-    .view-count {
-        position: relative;
-        top: 2px;
-        font-weight: bold;
-        color: #401409fc;
-        span {
-            font-size: $font-l;
         }
     }
 </style>

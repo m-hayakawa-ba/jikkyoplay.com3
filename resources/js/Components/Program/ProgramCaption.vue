@@ -3,9 +3,9 @@
     <div class="caption-wrap">
 
         <!-- 番組タイトル -->
-        <div class="caption-title">
+        <!-- <div class="caption-title">
             {{ title }}
-        </div>
+        </div> -->
 
         <!-- 投稿者情報 -->
         <div class="caption-creater">
@@ -60,11 +60,12 @@ export default {
 @import "@/sass/variables";
 
     .caption-wrap {
+        position: absolute;
+        bottom: 0;
+        padding: 4px;
         width: 100%;
-        padding: 2px 4px 0;
-        @media screen and (min-width: $bp) {
-            padding: 4px;
-        }
+        color: #fff;
+        background-color: #000000b0;
     }
     .caption-title {
         font-weight: bold;
@@ -78,20 +79,14 @@ export default {
     .caption-creater {
         display: flex;
         align-items: center;
-        @media screen and (min-width: $bp) {
-            margin-top: 8px;
-        }
     }
     .caption-creater-icon {
         width: 38px;
         height: 38px;
         border-radius: 50%;
         overflow: hidden;
-        span {
-            width: 58px;
-        }
     }
-    .caption-creater-detail {
+    .caption-detail {
         margin-left: 8px;
         font-size: $font-s;
         white-space: nowrap;

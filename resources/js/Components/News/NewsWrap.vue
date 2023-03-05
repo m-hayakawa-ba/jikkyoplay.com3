@@ -1,14 +1,19 @@
 <template>
 
-    <InformationWrap :href="news.url">
+    <a
+        :href="news.url"
+        class="news-item"
+        target="_blank"
+    >
 
         <!-- ニュースのサムネイル -->
         <div class="news-image">
             <div>
                 <img
-                    v-if="news.image_url"
+                    v-if="news.image_url && did_load_news_thumbnail"
                     :src="news.image_url"
-                    @error="noImage"
+                    :alt="news.title"
+                    @error="loadingErrorNewsThumbnail"
                 />
                 <img
                     v-else
@@ -32,46 +37,69 @@
 
             <!-- ニュースの発信元 -->
             <div class="news-source">
-                <img v-if="news.news_source.favicon_url" :src="news.news_source.favicon_url" :alt="news.news_source.name">
+                <img
+                    v-if="news.news_source.favicon_url && did_load_news_source_thumbnail"
+                    :src="news.news_source.favicon_url"
+                    :alt="news.news_source.name"
+                    @error="loadingErrorNewsSourceThumbnail"
+                >
+                <img
+                    v-else
+                    src="/image/noimage_trans.png"
+                >
                 <span>{{ news.news_source.name }}</span>
             </div>
         </div>
-    </InformationWrap>
+    </a>
 </template>
 
 
-<script>
-import InformationWrap from "@/js/Components/Information/InformationWrap.vue";
+<script lang="ts">
+import { defineComponent } from "vue";
 import moment from 'moment';
-export default {
+
+export default defineComponent({
 
     //呼び出し元から渡された引数
     props: [
         "news", //ニュースの詳細情報の配列
     ],
 
-    //読み込んだコンポーネント
-    components: {
-        InformationWrap,
+    //コンポーネント内で使用する変数
+    data() {
+        return {
+            did_load_news_thumbnail: true,
+            did_load_news_source_thumbnail: true,
+        };
     },
 
     //コンポーネント内で使用するメソッド
     methods: {
-        format(date) {
+        format(date: string) {
             return moment(date).format('YYYY年M月D日')
         },
-        
-        noImage(element){
-            element.target.src = '/image/noimage.png'
-        }
+        loadingErrorNewsThumbnail() {
+            this.did_load_news_thumbnail = false;
+        },
+        loadingErrorNewsSourceThumbnail() {
+            this.did_load_news_source_thumbnail = false;
+        },
     },
 
-}
+});
 </script>
 
 
 <style lang="scss" scoped>
 @import "../../../sass/variables";
+    .news-item {
+        width: 100%;
+        margin-bottom: 12px;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        overflow: hidden;
+    }
     .news-image {
         width: 50%;
         padding: 2px;
@@ -79,13 +107,15 @@ export default {
             position: relative;
             width: 100%;
             height: 0;
-            padding-top: calc(100% * 9 / 16);
+            padding-top: 64%;
             border-radius: 2px;
             overflow: hidden;
             img {
                 position: absolute;
                 top: 50%;
                 width: 100%;
+                height: 100%;
+                object-fit: cover;
                 box-shadow: 1px 1px 4px rgb(32 6 6 / 12%);
                 transform: translateY(-50%);
             }

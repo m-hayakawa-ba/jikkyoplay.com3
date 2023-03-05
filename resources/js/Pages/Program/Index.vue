@@ -164,10 +164,11 @@ export default {
     }
     .program-wrap {
         position: relative;
-        margin: 2px 0 0;
+        margin-bottom: 12px;
         width: 100%;
         @media screen and (min-width: $bp) {
-            width: 49.5%;
+            margin-bottom: 24px;
+            width: 33%;
         }
     }
 </style>

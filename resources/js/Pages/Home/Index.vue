@@ -10,61 +10,45 @@
         <H2Title
             id="game-news"
             title_jp="ゲーム実況ニュース"
-            title_en="GAME NEWS"
-        />
-        <PageLink
-            href="/news"
-            link_name="すべてのニュース"
+            link_title="すべてのニュースを見る"
+            link_path="/news"
         />
         <section>
             <IndexNews />
         </section>
-        <hr>
         
         <!-- 今週のランキング -->
         <H2Title
             id="game-ranking"
             title_jp="今週の実況動画ランキング"
-            title_en="GAME RANKING"
-        />
-        <PageLink
-            href="/ranking"
-            link_name="すべてのランキング"
+            link_title="すべてのランキングを見る"
+            link_path="/ranking"
         />
         <section>
             <IndexRanking />
         </section>
-        <hr>
         
         <!-- 新着実況プレイ動画 -->
         <H2Title
             id="game-program"
             title_jp="新着実況プレイ動画"
-            title_en="GAME MOVIE"
-        />
-        <PageLink
-            href="/program"
-            link_name="すべての動画を見る"
+            link_title="すべての動画を見る"
+            link_path="/program"
         />
         <section>
             <IndexProgram />
         </section>
-        <hr>
         
         <!-- おすすめ動画レビュー -->
         <H2Title
             id="game-review"
-            title_jp="おすすめ動画レビュー"
-            title_en="GAME REVIEW"
-        />
-        <PageLink
-            href="/review"
-            link_name="すべてのレビューを見る"
+            title_jp="おすすめレビュー動画"
+            link_title="すべてのレビュー動画を見る"
+            link_path="/review"
         />
         <section>
             <IndexReview />
         </section>
-        <hr>
 
         <!-- 人気の検索ワード -->
         <SearchWord
@@ -142,16 +126,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "@/sass/variables";
     section {
-        margin-top: 4px;
+        margin: 4px 0 40px;
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-around;
-        @media screen and (min-width: $bp) {
-            padding-left: 8px;
-        }
-    }
-    hr {
-        margin: 25px 0 30px;
-        color: #e5dae1;
+        justify-content: flex-start;
     }
 </style>
