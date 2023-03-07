@@ -23,8 +23,8 @@
                 <option value="date_asc">投稿日の古い順</option>
                 <option value="view_desc">再生数の多い順</option>
                 <option value="view_asc">再生数の少ない順</option>
-                <option value="sale_desc">ゲーム発売年の新しい順</option>
-                <option value="sale_asc">ゲーム発売年の古い順</option>
+                <option value="year_desc">ゲーム発売年の新しい順</option>
+                <option value="year_asc">ゲーム発売年の古い順</option>
             </select>
         </div>
 
@@ -54,12 +54,18 @@
 </template>
 
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
+
+import { SearchQuery } from "../../Interfaces/SearchQuery";
+import { SimpleProgram } from "../../Interfaces/Program";
+
 import {usePage} from "@inertiajs/inertia-vue3";
 import H2Title from "@/js/Components/H2Title.vue";
 import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
 import Pagination from '@/js/Components/Pagination.vue';
-export default {
+
+export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
@@ -69,13 +75,19 @@ export default {
     },
 
     //コンポーネント内で使用する変数
-    data() {
+    data(): {
+        count: number;
+        programs: SimpleProgram[];
+        page_last: number;
+        queries: SearchQuery;
+        sort: string;
+    } {
         return {
-            count:        usePage().props.value.count,
-            programs:     usePage().props.value.programs,
-            page_last:    usePage().props.value.page_last,
-            queries:      usePage().props.value.queries,
-            sort:         'date_desc',
+            count:     usePage().props.value.count as number,
+            programs:  usePage().props.value.programs as SimpleProgram[],
+            page_last: usePage().props.value.page_last as number,
+            queries:   usePage().props.value.queries as SearchQuery,
+            sort:      'date_desc',
         };
     },
 
@@ -87,7 +99,6 @@ export default {
 
             //クエリを整理する
             var params = new URLSearchParams(this.queries);
-            params.set('page', 1);
             switch(this.sort) {
                 case 'date_desc':
                     params.set('sort', 'date');
@@ -105,31 +116,28 @@ export default {
                     params.set('sort', 'view');
                     params.set('order', 'asc');
                     break;
-                case 'sale_desc':
-                    params.set('sort', 'sale');
+                case 'year_desc':
+                    params.set('sort', 'year');
                     params.set('order', 'desc');
                     break;
-                case 'sale_asc':
-                    params.set('sort', 'sale');
+                case 'year_asc':
+                    params.set('sort', 'year');
                     params.set('order', 'asc');
                     break;
             }
 
             //ソート順を変更してリダイレクト
-            this.$inertia.visit('/program' + '?' + params.toString(), {
-                method: 'get',
-            });
+            this.$inertia.get('/program' + '?' + params.toString());
         },
     },
 
     //初回読み込み時に実行
     mounted() {
-        
         //渡されたクエリからソート順セレクトボックスの初期値を設定
         this.sort = this.queries.sort + '_' + this.queries.order;
     }
     
-}
+});
 </script>
 
 

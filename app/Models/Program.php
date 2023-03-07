@@ -62,7 +62,7 @@ class Program extends Model
         return $query->orderBy(
             match($sort) {
                 'view'    => 'programs.view_count',
-                'sale'    => 'games.releace_year',
+                'year'    => 'games.releace_year',
                 default   => 'programs.published_at',
             },
             match($order) {
