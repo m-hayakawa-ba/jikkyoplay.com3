@@ -14,7 +14,7 @@
             <div class="review-item">
                 <template
                     v-for="(review, index) in reviews"
-                    :key="index"
+                    :key="review.id"
                 >
                     <ReviewWrap
                         :review="review"

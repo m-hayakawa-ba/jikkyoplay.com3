@@ -3,38 +3,16 @@
 
 <template>
 
-    <!-- リンクじゃないとき -->
     <div
         v-if="checkLink() == 'div'"
         class="information-item"
     ><slot></slot></div>
-
-    <!-- 外部リンクのとき -->
-    <a
-        v-else-if="checkLink() == 'a'"
-        :href="href"
-        class="information-item information-link"
-        target="_blank"
-    ><slot></slot></a>
-
-    <!-- 内部リンクのとき -->
-    <Link
-        v-else
-        :href="href"
-        class="information-item information-link"
-    ><slot></slot></Link>
-    
 </template>
 
 
 <script>
 import {Link} from "@inertiajs/inertia-vue3";
 export default {
-
-    //呼び出し元から渡された引数
-    props: [
-        "href",     //外部・内部リンク
-    ],
 
     //読み込んだコンポーネント
     components: {
@@ -71,7 +49,7 @@ export default {
 @import "@/sass/variables";
     .information-item {
         margin-bottom: 8px;
-        padding: 2px;
+        padding: 8px;
         display: flex;
         flex-wrap: wrap;
         align-items: center;
@@ -81,11 +59,5 @@ export default {
         border-radius: 4px;
         box-shadow: 1px 1px 2px #21003421;
         overflow: hidden;
-    }
-    .information-link {
-        &:hover {
-            background-color: #d4f9ff;
-            border-radius: 8px;
-        }
     }
 </style>

@@ -15,6 +15,10 @@
         />
         <DefaultSection>
             <IndexNews />
+            <PageLink
+                link_name="すべてのニュースを見る"
+                href="/news"
+            />
         </DefaultSection>
         
         <!-- 今週のランキング -->
@@ -26,6 +30,10 @@
         />
         <DefaultSection>
             <IndexRanking />
+            <PageLink
+                link_name="すべてのランキングを見る"
+                href="/ranking"
+            />
         </DefaultSection>
         
         <!-- 新着実況プレイ動画 -->
@@ -37,6 +45,10 @@
         />
         <DefaultSection>
             <IndexProgram />
+            <PageLink
+                link_name="すべての動画を見る"
+                href="/program"
+            />
         </DefaultSection>
         
         <!-- おすすめ動画レビュー -->
@@ -48,9 +60,17 @@
         />
         <DefaultSection>
             <IndexReview />
+            <PageLink
+                link_name="すべてのレビュー動画を見る"
+                href="/review"
+            />
         </DefaultSection>
 
         <!-- 人気の検索ワード -->
+        <H2Title
+            id="game-search"
+            title_jp="人気の検索ワード"
+        />
         <SearchWord
             id="game-word"
         />
@@ -121,6 +141,7 @@ export default defineComponent({
             {name: 'ランキング', id: "game-ranking", pos: 0},
             {name: '新着動画',   id: "game-program", pos: 0},
             {name: 'レビュー',   id: "game-review",  pos: 0},
+            {name: '検索ワード', id: "game-search",  pos: 0},
         ];
     }
 });

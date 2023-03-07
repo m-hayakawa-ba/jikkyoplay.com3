@@ -19742,6 +19742,7 @@ exports["default"] = (0, vue_1.defineComponent)({
   },
   //初回読み込み時に実行
   mounted: function mounted() {
+    console.log(this.anker);
     //propsを変更可能な変数にセット
     this.anker_array = this.anker;
     //アンカーリンクの初期値セット
@@ -19781,7 +19782,7 @@ var inertia_vue3_1 = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_
 var SvgIcon_vue_1 = __importDefault(__webpack_require__(/*! @/js/Components/SvgIcon.vue */ "./resources/js/Components/SvgIcon.vue"));
 exports["default"] = {
   //呼び出し元から渡された引数
-  props: ["title_jp", "title_en", "link_title", "link_path"],
+  props: ["id", "title_jp", "title_en", "link_title", "link_path"],
   //読み込んだコンポーネント
   components: {
     Link: inertia_vue3_1.Link,
@@ -20283,6 +20284,7 @@ exports["default"] = {
 Object.defineProperty(exports, "__esModule", ({
   value: true
 }));
+var Constant_1 = __webpack_require__(/*! ../Interfaces/Constant */ "./resources/js/Interfaces/Constant.ts");
 var vue_1 = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 var inertia_vue3_1 = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 exports["default"] = (0, vue_1.defineComponent)({
@@ -20300,7 +20302,7 @@ exports["default"] = (0, vue_1.defineComponent)({
   computed: {
     //laravel側から定数を取得する
     constants: function constants() {
-      return this.$page.props["const"];
+      return (0, Constant_1.getConstant)();
     }
   },
   //コンポーネント内で使う関数
@@ -20389,6 +20391,10 @@ exports["default"] = (0, vue_1.defineComponent)({
     }, {
       name: 'レビュー',
       id: "game-review",
+      pos: 0
+    }, {
+      name: '検索ワード',
+      id: "game-search",
       pos: 0
     }];
   }
@@ -20797,15 +20803,14 @@ var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
 var _hoisted_4 = {
   "class": "link-svg"
 };
-var _hoisted_5 = {
-  "class": "h2-title"
-};
+var _hoisted_5 = ["id"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_SvgIcon = (0, vue_1.resolveComponent)("SvgIcon");
   var _component_Link = (0, vue_1.resolveComponent)("Link");
   return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, null, [(0, vue_1.createCommentVNode)(" リンク先が渡されたときはリンクさせる "), $props.link_path ? ((0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_Link, {
     key: 0,
     href: $props.link_path,
+    id: $props.id,
     "class": "h2-title"
   }, {
     "default": (0, vue_1.withCtx)(function () {
@@ -20814,9 +20819,12 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       })])])])];
     }),
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["href"])) : ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, {
+  }, 8 /* PROPS */, ["href", "id"])) : ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, {
     key: 1
-  }, [(0, vue_1.createCommentVNode)(" リンク先がなかったときは普通のdivタグ "), (0, vue_1.createElementVNode)("div", _hoisted_5, [(0, vue_1.createElementVNode)("h2", null, (0, vue_1.toDisplayString)($props.title_jp), 1 /* TEXT */)])], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */))], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
+  }, [(0, vue_1.createCommentVNode)(" リンク先がなかったときは普通のdivタグ "), (0, vue_1.createElementVNode)("div", {
+    id: $props.id,
+    "class": "h2-title"
+  }, [(0, vue_1.createElementVNode)("h2", null, (0, vue_1.toDisplayString)($props.title_jp), 1 /* TEXT */)], 8 /* PROPS */, _hoisted_5)], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */))], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
 }
 
 exports.render = render;
@@ -21158,7 +21166,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ProgramThumbnail = (0, vue_1.resolveComponent)("ProgramThumbnail");
   var _component_Link = (0, vue_1.resolveComponent)("Link");
   return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, null, [(0, vue_1.createCommentVNode)(" 番組情報 "), (0, vue_1.createVNode)(_component_Link, {
-    href: '/program/' + _ctx.review.id,
+    href: '/program/' + _ctx.review.program_id,
     "class": "review-wrap"
   }, {
     "default": (0, vue_1.withCtx)(function () {
@@ -21504,54 +21512,70 @@ var _hoisted_3 = {
   "class": "main-contents"
 };
 var _hoisted_4 = {
+  "class": "menu-link"
+};
+var _hoisted_5 = {
+  "class": "menu-link"
+};
+var _hoisted_6 = {
+  "class": "menu-link"
+};
+var _hoisted_7 = {
+  "class": "menu-link"
+};
+var _hoisted_8 = {
+  "class": "menu-link"
+};
+var _hoisted_9 = {
   "class": "sub-contents"
 };
-var _hoisted_5 = ["href"];
+var _hoisted_10 = {
+  "class": "menu-link"
+};
+var _hoisted_11 = {
+  "class": "menu-link"
+};
+var _hoisted_12 = {
+  "class": "menu-link"
+};
+var _hoisted_13 = ["href"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, null, [(0, vue_1.createCommentVNode)(" メインウインドウ "), (0, vue_1.createVNode)(vue_1.Transition, {
     name: "main-window"
   }, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_ctx.display_flag ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0, vue_1.createElementVNode)("div", _hoisted_3, [(0, vue_1.createElementVNode)("div", {
-        "class": "menu-link",
+      return [_ctx.display_flag ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_1, [_hoisted_2, (0, vue_1.createElementVNode)("div", _hoisted_3, [(0, vue_1.createElementVNode)("div", _hoisted_4, [(0, vue_1.createElementVNode)("span", {
         onClick: _cache[0] || (_cache[0] = function ($event) {
           return _ctx.visitLink('/');
         })
-      }, " トップページ "), (0, vue_1.createElementVNode)("div", {
-        "class": "menu-link",
+      }, " トップページ ")]), (0, vue_1.createElementVNode)("div", _hoisted_5, [(0, vue_1.createElementVNode)("span", {
         onClick: _cache[1] || (_cache[1] = function ($event) {
           return _ctx.visitLink('/news');
         })
-      }, " ゲーム実況ニュース "), (0, vue_1.createElementVNode)("div", {
-        "class": "menu-link",
+      }, " ゲーム実況ニュース ")]), (0, vue_1.createElementVNode)("div", _hoisted_6, [(0, vue_1.createElementVNode)("span", {
         onClick: _cache[2] || (_cache[2] = function ($event) {
           return _ctx.visitLink('/ranking');
         })
-      }, " 実況動画ランキング "), (0, vue_1.createElementVNode)("div", {
-        "class": "menu-link",
+      }, " 実況動画ランキング ")]), (0, vue_1.createElementVNode)("div", _hoisted_7, [(0, vue_1.createElementVNode)("span", {
         onClick: _cache[3] || (_cache[3] = function ($event) {
           return _ctx.visitLink('/program');
         })
-      }, " ゲーム実況動画一覧 "), (0, vue_1.createElementVNode)("div", {
-        "class": "menu-link",
+      }, " ゲーム実況動画一覧 ")]), (0, vue_1.createElementVNode)("div", _hoisted_8, [(0, vue_1.createElementVNode)("span", {
         onClick: _cache[4] || (_cache[4] = function ($event) {
           return _ctx.visitLink('/review');
         })
-      }, " おすすめ動画レビュー ")]), (0, vue_1.createElementVNode)("div", _hoisted_4, [(0, vue_1.createElementVNode)("div", {
-        "class": "menu-link",
+      }, " おすすめ動画レビュー ")])]), (0, vue_1.createElementVNode)("div", _hoisted_9, [(0, vue_1.createElementVNode)("div", _hoisted_10, [(0, vue_1.createElementVNode)("span", {
         onClick: _cache[5] || (_cache[5] = function ($event) {
           return _ctx.visitLink('/history');
         })
-      }, " 視聴履歴 "), (0, vue_1.createElementVNode)("div", {
-        "class": "menu-link",
+      }, " 視聴履歴 ")]), (0, vue_1.createElementVNode)("div", _hoisted_11, [(0, vue_1.createElementVNode)("span", {
         onClick: _cache[6] || (_cache[6] = function ($event) {
           return _ctx.visitLink('/about');
         })
-      }, " このサイトについて "), (0, vue_1.createElementVNode)("a", {
-        "class": "menu-link",
+      }, " このサイトについて ")]), (0, vue_1.createElementVNode)("div", _hoisted_12, [(0, vue_1.createElementVNode)("a", {
         href: _ctx.constants.url.official_twitter,
         target: "_blank"
-      }, " Twitter ", 8 /* PROPS */, _hoisted_5)])])) : (0, vue_1.createCommentVNode)("v-if", true)];
+      }, " Twitter ", 8 /* PROPS */, _hoisted_13)])])])) : (0, vue_1.createCommentVNode)("v-if", true)];
     }),
     _: 1 /* STABLE */
   })], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
@@ -21585,6 +21609,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_RecommendQuery = (0, vue_1.resolveComponent)("RecommendQuery");
   var _component_H2Title = (0, vue_1.resolveComponent)("H2Title");
   var _component_IndexNews = (0, vue_1.resolveComponent)("IndexNews");
+  var _component_PageLink = (0, vue_1.resolveComponent)("PageLink");
   var _component_DefaultSection = (0, vue_1.resolveComponent)("DefaultSection");
   var _component_IndexRanking = (0, vue_1.resolveComponent)("IndexRanking");
   var _component_IndexProgram = (0, vue_1.resolveComponent)("IndexProgram");
@@ -21598,7 +21623,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     link_path: "/news"
   }), (0, vue_1.createVNode)(_component_DefaultSection, null, {
     "default": (0, vue_1.withCtx)(function () {
-      return [(0, vue_1.createVNode)(_component_IndexNews)];
+      return [(0, vue_1.createVNode)(_component_IndexNews), (0, vue_1.createVNode)(_component_PageLink, {
+        link_name: "すべてのニュースを見る",
+        href: "/news"
+      })];
     }),
     _: 1 /* STABLE */
   }), (0, vue_1.createCommentVNode)(" 今週のランキング "), (0, vue_1.createVNode)(_component_H2Title, {
@@ -21608,7 +21636,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     link_path: "/ranking"
   }), (0, vue_1.createVNode)(_component_DefaultSection, null, {
     "default": (0, vue_1.withCtx)(function () {
-      return [(0, vue_1.createVNode)(_component_IndexRanking)];
+      return [(0, vue_1.createVNode)(_component_IndexRanking), (0, vue_1.createVNode)(_component_PageLink, {
+        link_name: "すべてのランキングを見る",
+        href: "/ranking"
+      })];
     }),
     _: 1 /* STABLE */
   }), (0, vue_1.createCommentVNode)(" 新着実況プレイ動画 "), (0, vue_1.createVNode)(_component_H2Title, {
@@ -21618,7 +21649,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     link_path: "/program"
   }), (0, vue_1.createVNode)(_component_DefaultSection, null, {
     "default": (0, vue_1.withCtx)(function () {
-      return [(0, vue_1.createVNode)(_component_IndexProgram)];
+      return [(0, vue_1.createVNode)(_component_IndexProgram), (0, vue_1.createVNode)(_component_PageLink, {
+        link_name: "すべての動画を見る",
+        href: "/program"
+      })];
     }),
     _: 1 /* STABLE */
   }), (0, vue_1.createCommentVNode)(" おすすめ動画レビュー "), (0, vue_1.createVNode)(_component_H2Title, {
@@ -21628,10 +21662,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     link_path: "/review"
   }), (0, vue_1.createVNode)(_component_DefaultSection, null, {
     "default": (0, vue_1.withCtx)(function () {
-      return [(0, vue_1.createVNode)(_component_IndexReview)];
+      return [(0, vue_1.createVNode)(_component_IndexReview), (0, vue_1.createVNode)(_component_PageLink, {
+        link_name: "すべてのレビュー動画を見る",
+        href: "/review"
+      })];
     }),
     _: 1 /* STABLE */
-  }), (0, vue_1.createCommentVNode)(" 人気の検索ワード "), (0, vue_1.createVNode)(_component_SearchWord, {
+  }), (0, vue_1.createCommentVNode)(" 人気の検索ワード "), (0, vue_1.createVNode)(_component_H2Title, {
+    id: "game-search",
+    title_jp: "人気の検索ワード"
+  }), (0, vue_1.createVNode)(_component_SearchWord, {
     id: "game-word"
   })]), (0, vue_1.createCommentVNode)(" アンカーリンク "), _ctx.anker.length > 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_AnkerLink, {
     key: 0,
@@ -22158,7 +22198,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     title_en: "GAME REVIEW"
   }), (0, vue_1.createCommentVNode)(" レビュー一覧 "), (0, vue_1.createElementVNode)("section", null, [(0, vue_1.createElementVNode)("div", _hoisted_2, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.reviews, function (review, index) {
     return (0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_ReviewWrap, {
-      key: index,
+      key: review.id,
       review: review,
       review_all_flag: true
     }, null, 8 /* PROPS */, ["review"]);
@@ -22487,10 +22527,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  //呼び出し元から渡された引数
-  props: ["href" //外部・内部リンク
-  ],
-
   //読み込んだコンポーネント
   components: {
     Link: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Link
@@ -23841,26 +23877,8 @@ var _hoisted_1 = {
   key: 0,
   "class": "information-item"
 };
-var _hoisted_2 = ["href"];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
-  var _component_Link = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Link");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" リンクじゃないとき "), $options.checkLink() == 'div' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default", {}, undefined, true)])) : $options.checkLink() == 'a' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-    key: 1
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 外部リンクのとき "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("a", {
-    href: $props.href,
-    "class": "information-item information-link",
-    target: "_blank"
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default", {}, undefined, true)], 8 /* PROPS */, _hoisted_2)], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */)) : ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, {
-    key: 2
-  }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 内部リンクのとき "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Link, {
-    href: $props.href,
-    "class": "information-item information-link"
-  }, {
-    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default", {}, undefined, true)];
-    }),
-    _: 3 /* FORWARDED */
-  }, 8 /* PROPS */, ["href"])], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */))], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
+  return $options.checkLink() == 'div' ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.renderSlot)(_ctx.$slots, "default", {}, undefined, true)])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true);
 }
 
 /***/ }),
@@ -25454,7 +25472,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".h2-title[data-v-322be233] {\n  position: relative;\n  left: -8px;\n  display: block;\n  margin: 10px auto 15px;\n  padding: 6px 8px;\n  width: calc(100% + 16px);\n  background-color: #18100c;\n}\n@media screen and (min-width: 640px) {\n.h2-title[data-v-322be233] {\n    left: 0px;\n    width: 100%;\n}\n}\n.h2-title h2[data-v-322be233] {\n  color: #fff;\n  font-size: 1.6rem;\n  font-weight: normal;\n}\n.h2-title .h2-link[data-v-322be233] {\n  position: absolute;\n  top: 7px;\n  right: 8px;\n  display: flex;\n}\n.h2-title .h2-link .link-title[data-v-322be233] {\n  font-size: 1.2rem;\n}\n.h2-title .h2-link .link-svg[data-v-322be233] {\n  position: relative;\n  bottom: 1px;\n  margin-left: 4px;\n  width: 22px;\n  height: 22px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".h2-title[data-v-322be233] {\n  position: relative;\n  left: -8px;\n  display: block;\n  margin: 0 auto 15px;\n  padding: 6px 8px;\n  width: calc(100% + 16px);\n  background-color: #18100c;\n}\n@media screen and (min-width: 640px) {\n.h2-title[data-v-322be233] {\n    left: 0px;\n    width: 100%;\n}\n}\n.h2-title h2[data-v-322be233] {\n  color: #fff;\n  font-size: 1.6rem;\n  font-weight: normal;\n}\n.h2-title .h2-link[data-v-322be233] {\n  position: absolute;\n  top: 7px;\n  right: 8px;\n  display: flex;\n}\n.h2-title .h2-link .link-title[data-v-322be233] {\n  font-size: 1.2rem;\n}\n.h2-title .h2-link .link-svg[data-v-322be233] {\n  position: relative;\n  bottom: 1px;\n  margin-left: 4px;\n  width: 22px;\n  height: 22px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -25478,7 +25496,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".information-item[data-v-e9181fd0] {\n  margin-bottom: 8px;\n  padding: 2px;\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  width: 100%;\n  background-color: #fff;\n  border: solid 1px #8b9699;\n  border-radius: 4px;\n  box-shadow: 1px 1px 2px rgba(33, 0, 52, 0.1294117647);\n  overflow: hidden;\n}\n.information-link[data-v-e9181fd0]:hover {\n  background-color: #d4f9ff;\n  border-radius: 8px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".information-item[data-v-e9181fd0] {\n  margin-bottom: 8px;\n  padding: 8px;\n  display: flex;\n  flex-wrap: wrap;\n  align-items: center;\n  width: 100%;\n  background-color: #fff;\n  border: solid 1px #8b9699;\n  border-radius: 4px;\n  box-shadow: 1px 1px 2px rgba(33, 0, 52, 0.1294117647);\n  overflow: hidden;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26126,7 +26144,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".main-window[data-v-ef284d88] {\n  position: absolute;\n  top: 0;\n  padding: 96px 0 80px;\n  width: 100%;\n  height: 100vh;\n  opacity: 0.95;\n  background-color: #292a2a;\n  color: #fff;\n  text-align: center;\n  overflow: scroll;\n}\n@media screen and (min-width: 640px) {\n.main-window[data-v-ef284d88] {\n    padding: 120px 0 0;\n    overflow: unset;\n}\n}\n.main-window-enter-from[data-v-ef284d88], .main-window-leave-to[data-v-ef284d88] {\n  opacity: 0;\n}\n.main-window-enter-active[data-v-ef284d88], .main-window-leave-active[data-v-ef284d88] {\n  transition: opacity 0.2s;\n}\n.main-window-enter-to[data-v-ef284d88], .main-window-leave[data-v-ef284d88] {\n  opacity: 0.95;\n}\n.main-contents[data-v-ef284d88] {\n  font-size: 1.6rem;\n  margin: 8px 0;\n}\n.sub-contents[data-v-ef284d88] {\n  margin: 20px 0 0;\n}\n.menu-link[data-v-ef284d88] {\n  display: block;\n  color: #fff;\n  margin: 8px 0;\n  cursor: pointer;\n  transition: opacity 0.3s;\n}\n.menu-link[data-v-ef284d88]:hover {\n  opacity: 0.8;\n}\n.logo-vertical[data-v-ef284d88] {\n  width: 200px;\n  margin: 0 auto 40px;\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".main-window[data-v-ef284d88] {\n  position: absolute;\n  top: 0;\n  padding: 96px 0 80px;\n  width: 100%;\n  height: 100vh;\n  opacity: 0.95;\n  background-color: #292a2a;\n  color: #fff;\n  text-align: center;\n  overflow: scroll;\n}\n@media screen and (min-width: 640px) {\n.main-window[data-v-ef284d88] {\n    padding: 120px 0 0;\n    overflow: unset;\n}\n}\n.main-window-enter-from[data-v-ef284d88], .main-window-leave-to[data-v-ef284d88] {\n  opacity: 0;\n}\n.main-window-enter-active[data-v-ef284d88], .main-window-leave-active[data-v-ef284d88] {\n  transition: opacity 0.2s;\n}\n.main-window-enter-to[data-v-ef284d88], .main-window-leave[data-v-ef284d88] {\n  opacity: 0.95;\n}\n.main-contents[data-v-ef284d88] {\n  font-size: 1.6rem;\n  margin: 8px 0;\n}\n.sub-contents[data-v-ef284d88] {\n  margin: 20px 0 0;\n}\n.menu-link[data-v-ef284d88] {\n  display: block;\n  color: #fff;\n  margin: 8px 0;\n}\n.menu-link span[data-v-ef284d88] {\n  cursor: pointer;\n  text-align: center;\n  transition: opacity 0.3s;\n}\n.menu-link span[data-v-ef284d88]:hover {\n  opacity: 0.8;\n}\n.menu-link a[data-v-ef284d88] {\n  color: #fff;\n}\n.logo-vertical[data-v-ef284d88] {\n  width: 200px;\n  margin: 0 auto 40px;\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26246,7 +26264,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".news-wrap[data-v-279333fe] {\n  position: relative;\n  margin: 8px 0 0;\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.news-wrap[data-v-279333fe] {\n    margin: 0 0.25% 24px;\n    width: 49%;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".news-wrap[data-v-279333fe] {\n  position: relative;\n  margin: 8px 0 0;\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.news-wrap[data-v-279333fe] {\n    margin: 0 0.5% 24px;\n    width: 49%;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26342,7 +26360,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".search-item-wrap[data-v-68cfa8a3] {\n  margin: 0 auto;\n  padding: 16px 0px;\n  width: 100%;\n  text-align: center;\n  white-space: nowrap;\n  overflow-x: scroll;\n  scrollbar-width: none;\n}\n.search-item-wrap[data-v-68cfa8a3]::-webkit-scrollbar {\n  display: none;\n}\n.search-item[data-v-68cfa8a3] {\n  margin: 0 8px;\n  padding: 4px 8px;\n  display: inline-block;\n  border: solid 1px;\n  border-radius: 12px;\n  color: #27272a;\n  border-color: #626262;\n  background-color: #ffffff;\n  box-shadow: 1px 1px 1px rgba(60, 60, 60, 0.368627451);\n}\n.search-item[data-v-68cfa8a3]:hover {\n  background-color: #4f70ff;\n  border-color: #4f70ff;\n  color: #fff;\n  transform: scale(1.2);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".search-item-wrap[data-v-68cfa8a3] {\n  margin: 0 auto;\n  padding: 40px 0px 30px;\n  width: 100%;\n  text-align: center;\n  white-space: nowrap;\n  overflow-x: scroll;\n  scrollbar-width: none;\n}\n.search-item-wrap[data-v-68cfa8a3]::-webkit-scrollbar {\n  display: none;\n}\n.search-item[data-v-68cfa8a3] {\n  margin: 0 8px;\n  padding: 4px 8px;\n  display: inline-block;\n  border: solid 1px;\n  border-radius: 12px;\n  color: #27272a;\n  border-color: #626262;\n  background-color: #ffffff;\n  box-shadow: 1px 1px 1px rgba(60, 60, 60, 0.368627451);\n}\n.search-item[data-v-68cfa8a3]:hover {\n  background-color: #4f70ff;\n  border-color: #4f70ff;\n  color: #fff;\n  transform: scale(1.2);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26366,7 +26384,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".search-word-wrap[data-v-107d0c89] {\n  margin: 40px 0 24px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n}\n.search_word[data-v-107d0c89] {\n  margin: 6px 8px;\n  padding: 4px 8px;\n  display: inline-block;\n  border: solid 1px;\n  border-radius: 12px;\n  color: #27272a;\n  border-color: #626262;\n  background-color: #ffffff;\n  box-shadow: 1px 1px 1px rgba(60, 60, 60, 0.368627451);\n}\n.search_word[data-v-107d0c89]:hover {\n  background-color: #4f70ff;\n  border-color: #4f70ff;\n  color: #fff;\n  transform: scale(1.2);\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".search-word-wrap[data-v-107d0c89] {\n  margin: 40px 0 60px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: center;\n}\n.search_word[data-v-107d0c89] {\n  margin: 6px 8px;\n  padding: 4px 8px;\n  display: inline-block;\n  border: solid 1px;\n  border-radius: 12px;\n  color: #27272a;\n  border-color: #626262;\n  background-color: #ffffff;\n  box-shadow: 1px 1px 1px rgba(60, 60, 60, 0.368627451);\n}\n.search_word[data-v-107d0c89]:hover {\n  background-color: #4f70ff;\n  border-color: #4f70ff;\n  color: #fff;\n  transform: scale(1.2);\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26390,7 +26408,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".news-wrap[data-v-1c048c42] {\n  position: relative;\n  margin: 8px 0 0;\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.news-wrap[data-v-1c048c42] {\n    margin: 0 0.25% 24px;\n    width: 49%;\n}\n}\n.other-month-wrap[data-v-1c048c42] {\n  display: flex;\n  width: 100%;\n  overflow: hidden;\n  flex-wrap: nowrap;\n  margin: 30px 0 40px;\n  justify-content: space-around;\n}\n@media screen and (min-width: 640px) {\n.other-month-wrap[data-v-1c048c42] {\n    font-size: 1.6rem;\n    justify-content: center;\n}\n}\n.other-month[data-v-1c048c42], .no-link[data-v-1c048c42] {\n  margin: 12px 2px;\n  display: flex;\n  white-space: nowrap;\n  font-weight: bold;\n  color: #229;\n}\n@media screen and (min-width: 640px) {\n.other-month[data-v-1c048c42], .no-link[data-v-1c048c42] {\n    margin: 12px;\n}\n}\n.no-link[data-v-1c048c42] {\n  color: #888;\n}\n.link-arrow[data-v-1c048c42] {\n  width: 20px;\n  height: 20px;\n}\n@media screen and (min-width: 640px) {\n.link-arrow[data-v-1c048c42] {\n    width: 24px;\n    height: 24px;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".news-wrap[data-v-1c048c42] {\n  position: relative;\n  margin: 8px 0 0;\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.news-wrap[data-v-1c048c42] {\n    margin: 0 0.5% 24px;\n    width: 49%;\n}\n}\n.other-month-wrap[data-v-1c048c42] {\n  display: flex;\n  width: 100%;\n  overflow: hidden;\n  flex-wrap: nowrap;\n  margin: 30px 0 40px;\n  justify-content: space-around;\n}\n@media screen and (min-width: 640px) {\n.other-month-wrap[data-v-1c048c42] {\n    font-size: 1.6rem;\n    justify-content: center;\n}\n}\n.other-month[data-v-1c048c42], .no-link[data-v-1c048c42] {\n  margin: 12px 2px;\n  display: flex;\n  white-space: nowrap;\n  font-weight: bold;\n  color: #229;\n}\n@media screen and (min-width: 640px) {\n.other-month[data-v-1c048c42], .no-link[data-v-1c048c42] {\n    margin: 12px;\n}\n}\n.no-link[data-v-1c048c42] {\n  color: #888;\n}\n.link-arrow[data-v-1c048c42] {\n  width: 20px;\n  height: 20px;\n}\n@media screen and (min-width: 640px) {\n.link-arrow[data-v-1c048c42] {\n    width: 24px;\n    height: 24px;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 
@@ -26438,7 +26456,7 @@ __webpack_require__.r(__webpack_exports__);
 
 var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
 // Module
-___CSS_LOADER_EXPORT___.push([module.id, ".program-title[data-v-b671b41e] {\n  font-size: 1.6rem;\n}\n@media screen and (min-width: 640px) {\n.program-title[data-v-b671b41e] {\n    font-size: 1.8rem;\n}\n}\n.information-wrap[data-v-b671b41e] {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between;\n}\n.information-wrap-left[data-v-b671b41e] {\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.information-wrap-left[data-v-b671b41e] {\n    padding: 0 10px;\n    width: 45%;\n}\n}\n.information-wrap-right[data-v-b671b41e] {\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.information-wrap-right[data-v-b671b41e] {\n    padding: 0 10px;\n    width: 55%;\n}\n}\nh3[data-v-b671b41e] {\n  font-size: 1.6rem;\n  font-weight: bold;\n  margin: 12px 0 4px;\n  border-bottom: solid 1px #888;\n}\n.section-wrap[data-v-b671b41e] {\n  position: relative;\n  width: 100%;\n  margin-bottom: 20px;\n}\n.review-wrap[data-v-b671b41e] {\n  width: 100%;\n  margin-bottom: 20px;\n}\n@media screen and (min-width: 640px) {\n.review-wrap[data-v-b671b41e] {\n    margin-bottom: 30px;\n}\n}\n.review-announce[data-v-b671b41e] {\n  margin-bottom: 20px;\n}\n.review-announce span[data-v-b671b41e] {\n  font-weight: bold;\n}\n.relation-program-wrap[data-v-b671b41e] {\n  margin-bottom: 20px;\n}\n@media screen and (min-width: 640px) {\n.relation-program-wrap[data-v-b671b41e] {\n    margin-bottom: 30px;\n}\n}\n.program-wrap[data-v-b671b41e] {\n  margin-top: 4px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between;\n}\n.program-item[data-v-b671b41e] {\n  position: relative;\n  margin: 8px 0 0;\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.program-item[data-v-b671b41e] {\n    width: 49%;\n}\n}", ""]);
+___CSS_LOADER_EXPORT___.push([module.id, ".program-title[data-v-b671b41e] {\n  font-size: 1.6rem;\n}\n@media screen and (min-width: 640px) {\n.program-title[data-v-b671b41e] {\n    font-size: 1.8rem;\n}\n}\n.information-wrap[data-v-b671b41e] {\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between;\n}\n.information-wrap-left[data-v-b671b41e] {\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.information-wrap-left[data-v-b671b41e] {\n    padding: 0 10px;\n    width: 45%;\n}\n}\n.information-wrap-right[data-v-b671b41e] {\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.information-wrap-right[data-v-b671b41e] {\n    padding: 0 10px;\n    width: 55%;\n}\n}\nh3[data-v-b671b41e] {\n  font-size: 1.6rem;\n  font-weight: bold;\n  margin: 12px 0 4px;\n  border-bottom: solid 1px #888;\n}\n.section-wrap[data-v-b671b41e] {\n  position: relative;\n  width: 100%;\n  margin-bottom: 20px;\n}\n.review-wrap[data-v-b671b41e] {\n  width: 100%;\n  margin-bottom: 20px;\n}\n@media screen and (min-width: 640px) {\n.review-wrap[data-v-b671b41e] {\n    margin-bottom: 30px;\n}\n}\n.review-announce[data-v-b671b41e] {\n  margin-bottom: 20px;\n}\n.review-announce span[data-v-b671b41e] {\n  font-weight: bold;\n}\n.relation-program-wrap[data-v-b671b41e] {\n  margin-bottom: 20px;\n}\n@media screen and (min-width: 640px) {\n.relation-program-wrap[data-v-b671b41e] {\n    margin-bottom: 30px;\n}\n}\n.program-wrap[data-v-b671b41e] {\n  margin-top: 4px;\n  display: flex;\n  flex-wrap: wrap;\n  justify-content: space-between;\n}\n.program-item[data-v-b671b41e] {\n  position: relative;\n  margin-bottom: 12px;\n  width: 100%;\n}\n@media screen and (min-width: 640px) {\n.program-item[data-v-b671b41e] {\n    margin: 0 0.166% 24px;\n    width: 33%;\n}\n}", ""]);
 // Exports
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
 

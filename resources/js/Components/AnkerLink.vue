@@ -1,6 +1,5 @@
 <template>
     
-    
     <!-- 上方向へのアンカーリンク -->
     <SmoothLink
         v-if="mode == 'prev' && anker_display"
@@ -114,7 +113,7 @@ export default defineComponent({
 
     //初回読み込み時に実行
     mounted() {
-
+console.log(this.anker);
         //propsを変更可能な変数にセット
         this.anker_array = this.anker!;
 

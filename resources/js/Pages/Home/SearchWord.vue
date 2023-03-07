@@ -46,7 +46,7 @@ export default defineComponent({
 @import "@/sass/variables";
 
     .search-word-wrap {
-        margin: 40px 0 24px;
+        margin: 40px 0 60px;
         display: flex;
         flex-wrap: wrap;
         justify-content: center;

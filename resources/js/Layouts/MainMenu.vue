@@ -12,33 +12,49 @@
             </div>
 
             <div class="main-contents">
-                <div class="menu-link" @click="visitLink('/')">
-                    トップページ
+                <div class="menu-link">
+                    <span @click="visitLink('/')">
+                        トップページ
+                    </span>
                 </div>
-                <div class="menu-link" @click="visitLink('/news')">
-                    ゲーム実況ニュース
+                <div class="menu-link">
+                    <span @click="visitLink('/news')">
+                        ゲーム実況ニュース
+                    </span>
                 </div>
-                <div class="menu-link" @click="visitLink('/ranking')">
-                    実況動画ランキング
+                <div class="menu-link">
+                    <span @click="visitLink('/ranking')">
+                        実況動画ランキング
+                    </span>
                 </div>
-                <div class="menu-link" @click="visitLink('/program')">
-                    ゲーム実況動画一覧
+                <div class="menu-link">
+                    <span @click="visitLink('/program')">
+                        ゲーム実況動画一覧
+                    </span>
                 </div>
-                <div class="menu-link" @click="visitLink('/review')">
-                    おすすめ動画レビュー
+                <div class="menu-link">
+                    <span @click="visitLink('/review')">
+                        おすすめ動画レビュー
+                    </span>
                 </div>
             </div>
 
             <div class="sub-contents">
-                <div class="menu-link" @click="visitLink('/history')">
-                    視聴履歴
+                <div class="menu-link">
+                    <span @click="visitLink('/history')">
+                        視聴履歴
+                    </span>
                 </div>
-                <div class="menu-link" @click="visitLink('/about')">
-                    このサイトについて
+                <div class="menu-link">
+                    <span @click="visitLink('/about')">
+                        このサイトについて
+                    </span>
                 </div>
-                <a class="menu-link" :href="constants.url.official_twitter" target="_blank">
-                    Twitter
-                </a>
+                <div class="menu-link">
+                    <a :href="constants.url.official_twitter" target="_blank">
+                        Twitter
+                    </a>
+                </div>
             </div>
         </div>
     </transition>
@@ -46,6 +62,7 @@
 
 
 <script lang="ts">
+import { getConstant } from '../Interfaces/Constant';
 import { defineComponent } from "vue";
 import { Link } from "@inertiajs/inertia-vue3";
 export default defineComponent({
@@ -69,8 +86,8 @@ export default defineComponent({
     computed: {
 
         //laravel側から定数を取得する
-        constants() {
-            return this.$page.props.const;
+        constants(): any{
+            return getConstant();
         },
     },
     
@@ -131,10 +148,16 @@ export default defineComponent({
         display: block;
         color: #fff;
         margin: 8px 0;
-        cursor: pointer;
-        transition: opacity 0.3s;
-        &:hover {
-            opacity: 0.8;
+        span {
+            cursor: pointer;
+            text-align: center;
+            transition: opacity 0.3s;
+            &:hover {
+                opacity: 0.8;
+            }
+        }
+        a {
+            color: #fff;
         }
     }
     .logo-vertical {

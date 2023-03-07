@@ -2,7 +2,7 @@
 
     <!-- 番組情報 -->
     <Link 
-        :href="'/program/' + review.id"
+        :href="'/program/' + review.program_id"
         class="review-wrap"
     >
         <!-- 番組タイトル -->

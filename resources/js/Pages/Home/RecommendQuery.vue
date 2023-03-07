@@ -40,7 +40,7 @@ export default defineComponent({
 
     .search-item-wrap {
         margin: 0 auto;
-        padding: 16px 0px;
+        padding: 40px 0px 30px;
         width: 100%;
         text-align: center;
         white-space: nowrap;

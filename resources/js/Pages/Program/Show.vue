@@ -270,10 +270,11 @@ export default {
     }
     .program-item {
         position: relative;
-        margin: 8px 0 0;
+        margin-bottom: 12px;
         width: 100%;
         @media screen and (min-width: $bp) {
-            width: 49%;
+            margin: 0 0.166% 24px;
+            width: 33%;
         }
     }
 </style>

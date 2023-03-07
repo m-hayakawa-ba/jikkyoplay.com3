@@ -18,8 +18,8 @@ class ProgramController extends Controller
     /**
      * 定数定義
      */
-    private $get_program_count = 20;          //1ページあたりの動画数
-    private $relation_program_count = 4;      //表示させる関連動画の個数
+    private $get_program_count = 24;          //1ページあたりの動画数
+    private $relation_program_count = 6;      //表示させる関連動画の個数
     private $period_search_word = '-1 week';  //表示させる検索ワードの集計期間
 
     /**
@@ -61,7 +61,7 @@ class ProgramController extends Controller
         $programs = $array['programs'];
 
         //検索履歴を保存
-        if ($request->has('word') && $request->has('point') && $request->point <= 4) {
+        if (!empty($request->word) && $request->has('point') && $request->point <= 4) {
             $this->searchWordCreateService->createSearchWord(
                 $request->word,
                 $request->point,

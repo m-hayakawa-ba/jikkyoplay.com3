@@ -4,6 +4,7 @@
     <Link
         v-if="link_path"
         :href="link_path"
+        :id="id"
         class="h2-title"
     >
         <h2>
@@ -19,6 +20,7 @@
     <!-- リンク先がなかったときは普通のdivタグ -->
     <div
         v-else
+        :id="id"
         class="h2-title"
     >
         <h2>
@@ -34,6 +36,7 @@ export default {
 
     //呼び出し元から渡された引数
     props: [
+        "id",
         "title_jp",
         "title_en",
         "link_title",
@@ -55,7 +58,7 @@ export default {
         position: relative;
         left: -8px;
         display: block;
-        margin: 10px auto 15px;
+        margin: 0 auto 15px;
         padding: 6px 8px;
         width: calc(100% + 16px);
         background-color: #18100c;
