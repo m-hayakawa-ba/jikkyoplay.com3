@@ -20603,6 +20603,7 @@ Object.defineProperty(exports, "__esModule", ({
 var vue_1 = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bundler.js");
 var inertia_vue3_1 = __webpack_require__(/*! @inertiajs/inertia-vue3 */ "./node_modules/@inertiajs/inertia-vue3/dist/index.js");
 var H2Title_vue_1 = __importDefault(__webpack_require__(/*! @/js/Components/H2Title.vue */ "./resources/js/Components/H2Title.vue"));
+var SearchLink_vue_1 = __importDefault(__webpack_require__(/*! ../../Components/SearchLink.vue */ "./resources/js/Components/SearchLink.vue"));
 var ProgramWrap_vue_1 = __importDefault(__webpack_require__(/*! @/js/Components/Program/ProgramWrap.vue */ "./resources/js/Components/Program/ProgramWrap.vue"));
 var Pagination_vue_1 = __importDefault(__webpack_require__(/*! @/js/Components/Pagination.vue */ "./resources/js/Components/Pagination.vue"));
 exports["default"] = (0, vue_1.defineComponent)({
@@ -20610,7 +20611,8 @@ exports["default"] = (0, vue_1.defineComponent)({
   components: {
     H2Title: H2Title_vue_1["default"],
     ProgramWrap: ProgramWrap_vue_1["default"],
-    Pagination: Pagination_vue_1["default"]
+    Pagination: Pagination_vue_1["default"],
+    SearchLink: SearchLink_vue_1["default"]
   },
   //コンポーネント内で使用する変数
   data: function data() {
@@ -20618,8 +20620,10 @@ exports["default"] = (0, vue_1.defineComponent)({
       count: (0, inertia_vue3_1.usePage)().props.value.count,
       programs: (0, inertia_vue3_1.usePage)().props.value.programs,
       page_last: (0, inertia_vue3_1.usePage)().props.value.page_last,
+      programs_per_page: (0, inertia_vue3_1.usePage)().props.value.programs_per_page,
       queries: (0, inertia_vue3_1.usePage)().props.value.queries,
-      sort: 'date_desc'
+      sort: 'date_desc',
+      delete_query_links: (0, inertia_vue3_1.usePage)().props.value.delete_query_links
     };
   },
   //コンポーネント内で使用するメソッド
@@ -20656,12 +20660,22 @@ exports["default"] = (0, vue_1.defineComponent)({
       }
       //ソート順を変更してリダイレクト
       this.$inertia.get('/program' + '?' + params.toString());
+    },
+    //現在表示されている動画が何件目からかを取得
+    getProgramsStartBy: function getProgramsStartBy() {
+      return ((Number(this.queries.page) - 1) * this.programs_per_page + 1).toLocaleString();
+    },
+    //現在表示されている動画が何件目までかを取得
+    getProgramsEndBy: function getProgramsEndBy() {
+      return ((Number(this.queries.page) - 1) * this.programs_per_page + this.programs.length).toLocaleString();
     }
   },
   //初回読み込み時に実行
   mounted: function mounted() {
     //渡されたクエリからソート順セレクトボックスの初期値を設定
     this.sort = this.queries.sort + '_' + this.queries.order;
+    //SearchQueryの値を次々に取得し、検索条件を外すリンクを作成していく
+    console.log(this.delete_query_links);
   }
 });
 
@@ -22034,21 +22048,17 @@ var _hoisted_1 = {
 var _hoisted_2 = {
   "class": "search-status"
 };
-var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0, vue_1.createElementVNode)("br", {
-    "class": "sp-only"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_4 = /*#__PURE__*/(0, vue_1.createStaticVNode)("<option value=\"date_desc\" data-v-380e9f0e>投稿日の新しい順</option><option value=\"date_asc\" data-v-380e9f0e>投稿日の古い順</option><option value=\"view_desc\" data-v-380e9f0e>再生数の多い順</option><option value=\"view_asc\" data-v-380e9f0e>再生数の少ない順</option><option value=\"year_desc\" data-v-380e9f0e>ゲーム発売年の新しい順</option><option value=\"year_asc\" data-v-380e9f0e>ゲーム発売年の古い順</option>", 6);
-var _hoisted_10 = [_hoisted_4];
+var _hoisted_3 = /*#__PURE__*/(0, vue_1.createStaticVNode)("<option value=\"date_desc\" data-v-380e9f0e>投稿日の新しい順</option><option value=\"date_asc\" data-v-380e9f0e>投稿日の古い順</option><option value=\"view_desc\" data-v-380e9f0e>再生数の多い順</option><option value=\"view_asc\" data-v-380e9f0e>再生数の少ない順</option><option value=\"year_desc\" data-v-380e9f0e>ゲーム発売年の新しい順</option><option value=\"year_asc\" data-v-380e9f0e>ゲーム発売年の古い順</option>", 6);
+var _hoisted_9 = [_hoisted_3];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_H2Title = (0, vue_1.resolveComponent)("H2Title");
+  var _component_SearchLink = (0, vue_1.resolveComponent)("SearchLink");
   var _component_ProgramWrap = (0, vue_1.resolveComponent)("ProgramWrap");
   var _component_Pagination = (0, vue_1.resolveComponent)("Pagination");
   return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, null, [(0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_1, [(0, vue_1.createCommentVNode)(" 今週のランキング "), (0, vue_1.createVNode)(_component_H2Title, {
     title_jp: "ゲーム実況動画一覧",
     title_en: "GAMEPLAY PROGRAMS"
-  }), (0, vue_1.createCommentVNode)(" 動画の総数 "), (0, vue_1.createElementVNode)("div", _hoisted_2, [(0, vue_1.createCommentVNode)(" ヒット数 "), (0, vue_1.createElementVNode)("div", null, [(0, vue_1.createTextVNode)(" 検索項目"), _hoisted_3, (0, vue_1.createTextVNode)("（ヒット数：" + (0, vue_1.toDisplayString)(_ctx.count.toLocaleString()) + "） ", 1 /* TEXT */)]), (0, vue_1.createCommentVNode)(" 並び順選択 "), (0, vue_1.withDirectives)((0, vue_1.createElementVNode)("select", {
+  }), (0, vue_1.createCommentVNode)(" 動画の総数 "), (0, vue_1.createElementVNode)("div", _hoisted_2, [(0, vue_1.createCommentVNode)(" ヒット数 "), (0, vue_1.createElementVNode)("div", null, " 動画件数：" + (0, vue_1.toDisplayString)(_ctx.count.toLocaleString()) + "件（" + (0, vue_1.toDisplayString)(_ctx.getProgramsStartBy()) + " ～ " + (0, vue_1.toDisplayString)(_ctx.getProgramsEndBy()) + " 件） ", 1 /* TEXT */), (0, vue_1.createCommentVNode)(" 並び順選択 "), (0, vue_1.withDirectives)((0, vue_1.createElementVNode)("select", {
     "onUpdate:modelValue": _cache[0] || (_cache[0] = function ($event) {
       return _ctx.sort = $event;
     }),
@@ -22057,7 +22067,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     function () {
       return _ctx.redirectNewSort && _ctx.redirectNewSort.apply(_ctx, arguments);
     })
-  }, _hoisted_10, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue_1.vModelSelect, _ctx.sort]])]), (0, vue_1.createCommentVNode)(" 動画一覧 "), (0, vue_1.createElementVNode)("section", null, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.programs, function (program) {
+  }, _hoisted_9, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue_1.vModelSelect, _ctx.sort]]), (0, vue_1.createCommentVNode)(" 検索削除リンク "), (0, vue_1.createElementVNode)("div", null, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.delete_query_links, function (deletequery_link, index) {
+    return (0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_SearchLink, {
+      key: index,
+      name: deletequery_link.name,
+      query: deletequery_link.query
+    }, null, 8 /* PROPS */, ["name", "query"]);
+  }), 128 /* KEYED_FRAGMENT */))])]), (0, vue_1.createCommentVNode)(" 動画一覧 "), (0, vue_1.createElementVNode)("section", null, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.programs, function (program) {
     return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", {
       key: program.id,
       "class": "program-wrap"

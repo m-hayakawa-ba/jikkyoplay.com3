@@ -14,7 +14,7 @@
 
             <!-- ヒット数 -->
             <div>
-                検索項目<br class="sp-only">（ヒット数：{{ count.toLocaleString() }}）
+                動画件数：{{ count.toLocaleString() }}件（{{ getProgramsStartBy() }}  ～ {{ getProgramsEndBy() }} 件）
             </div>
 
             <!-- 並び順選択 -->
@@ -26,6 +26,17 @@
                 <option value="year_desc">ゲーム発売年の新しい順</option>
                 <option value="year_asc">ゲーム発売年の古い順</option>
             </select>
+
+            <!-- 検索削除リンク -->
+            <div>
+                <SearchLink
+                    v-for="(deletequery_link, index) in delete_query_links"
+                    :key="index"
+                    :name="deletequery_link.name"
+                    :query="deletequery_link.query"
+                />
+            </div>
+
         </div>
 
         <!-- 動画一覧 -->
@@ -62,8 +73,14 @@ import { SimpleProgram } from "../../Interfaces/Program";
 
 import {usePage} from "@inertiajs/inertia-vue3";
 import H2Title from "@/js/Components/H2Title.vue";
+import SearchLink from "../../Components/SearchLink.vue";
 import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
 import Pagination from '@/js/Components/Pagination.vue';
+
+interface QueryLink {
+    name:  string,
+    query: string,
+}
 
 export default defineComponent({
 
@@ -72,6 +89,7 @@ export default defineComponent({
         H2Title,
         ProgramWrap,
         Pagination,
+        SearchLink,
     },
 
     //コンポーネント内で使用する変数
@@ -79,15 +97,19 @@ export default defineComponent({
         count: number;
         programs: SimpleProgram[];
         page_last: number;
+        programs_per_page: number;
         queries: SearchQuery;
         sort: string;
+        delete_query_links : QueryLink[];
     } {
         return {
-            count:     usePage().props.value.count as number,
-            programs:  usePage().props.value.programs as SimpleProgram[],
-            page_last: usePage().props.value.page_last as number,
-            queries:   usePage().props.value.queries as SearchQuery,
-            sort:      'date_desc',
+            count:              usePage().props.value.count as number,
+            programs:           usePage().props.value.programs as SimpleProgram[],
+            page_last:          usePage().props.value.page_last as number,
+            programs_per_page:  usePage().props.value.programs_per_page as number,
+            queries:            usePage().props.value.queries as SearchQuery,
+            sort:               'date_desc',
+            delete_query_links: usePage().props.value.delete_query_links as QueryLink[],
         };
     },
 
@@ -129,12 +151,26 @@ export default defineComponent({
             //ソート順を変更してリダイレクト
             this.$inertia.get('/program' + '?' + params.toString());
         },
+
+        //現在表示されている動画が何件目からかを取得
+        getProgramsStartBy(): string {
+            return ((Number(this.queries.page) - 1) * this.programs_per_page + 1).toLocaleString();
+        },
+        //現在表示されている動画が何件目までかを取得
+        getProgramsEndBy(): string {
+            return ((Number(this.queries.page) - 1) * this.programs_per_page + this.programs.length).toLocaleString();
+        },
     },
 
     //初回読み込み時に実行
     mounted() {
+
         //渡されたクエリからソート順セレクトボックスの初期値を設定
         this.sort = this.queries.sort + '_' + this.queries.order;
+
+        //SearchQueryの値を次々に取得し、検索条件を外すリンクを作成していく
+        console.log(this.delete_query_links);
+        
     }
     
 });

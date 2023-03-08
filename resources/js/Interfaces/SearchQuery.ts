@@ -16,4 +16,5 @@ export interface SearchQuery {
     sort:           string,
     order:          string,
     page:           string,
+    point:          string,
 };

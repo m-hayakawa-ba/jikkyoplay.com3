@@ -78,18 +78,26 @@ class ProgramController extends Controller
             $this->get_program_count,
         );
 
+        //1ページあたりの動画数を取得
+        $programs_per_page = $this->get_program_count;
+
         //検索クエリを取得
         //array_filterを使っているのは、フロントでnullが文字列の"null"になってしまうのを防ぐため
         $queries = array_filter($request->all(), function ($value) {
             return $value !== null;
         });
 
+        //検索条件削除用の検索クエリを作成
+        $delete_query_links = $this->programSearchService->getDeleteQueries($request);
+
         //viewへ遷移
         return Inertia::render('Program/Index', compact(
             'count',
             'programs',
             'page_last',
+            'programs_per_page',
             'queries',
+            'delete_query_links',
         ));
     }
 
