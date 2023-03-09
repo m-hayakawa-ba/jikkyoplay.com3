@@ -1,5 +1,10 @@
 <template>
 
+    <!-- タイトル -->
+    <Head>
+        <title>ゲーム実況動画 人気ランキング｜ゲーム実況動画まとめサイト GameJDM</title>
+    </Head>
+
     <!-- サイト本体部分 -->
     <div class="inner">
         
@@ -155,7 +160,7 @@ import { Creater } from "../../Interfaces/Creater";
 import { SimpleProgram } from "../../Interfaces/Program";
 
 import { defineComponent } from "vue";
-import {usePage} from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/inertia-vue3";
 import CreaterWrap from '@/js/Components/Creater/CreaterWrap.vue';
 import DefaultSection from "@/js/Components/Section/DefaultSection.vue";
 import H2Title from "@/js/Components/H2Title.vue";

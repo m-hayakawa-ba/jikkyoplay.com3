@@ -1,5 +1,10 @@
 <template>
 
+    <!-- タイトル -->
+    <Head>
+        <title>視聴履歴｜ゲーム実況動画まとめサイト GameJDM</title>
+    </Head>
+
     <!-- サイト本体部分 -->
     <div class="inner">
         
@@ -27,16 +32,23 @@
 </template>
 
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
+
+import { SimpleProgram } from "../../Interfaces/Program";
+
 import H2Title from "@/js/Components/H2Title.vue";
-import {usePage} from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/inertia-vue3";
 import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
-export default {
+
+export default defineComponent({
 
     //コンポーネント内で使用する変数
-    data() {
+    data(): {
+        programs: SimpleProgram[];
+    } {
         return {
-            programs: usePage().props.value.programs,
+            programs: usePage().props.value.programs as SimpleProgram[],
         };
     },
 
@@ -49,7 +61,7 @@ export default {
     mounted() {
         console.log(this.programs);
     },
-}
+});
 </script>
 
 
@@ -66,10 +78,11 @@ export default {
     }
     .program-wrap {
         position: relative;
-        margin: 8px 0 0;
+        margin-bottom: 12px;
         width: 100%;
         @media screen and (min-width: $bp) {
-            width: 49.5%;
+            margin: 0 0.166% 24px;
+            width: 33%;
         }
     }
 </style>

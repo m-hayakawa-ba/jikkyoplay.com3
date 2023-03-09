@@ -1,5 +1,10 @@
 <template>
 
+    <!-- タイトル -->
+    <Head>
+        <title>{{ format(month) }}のゲーム実況ニュース｜ゲーム実況動画まとめサイト GameJDM</title>
+    </Head>
+
     <!-- サイト本体部分 -->
     <div class="inner">
         
@@ -69,7 +74,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { News } from "../../Interfaces/News";
-import {usePage, Link} from "@inertiajs/inertia-vue3";
+import { Head, usePage, Link } from "@inertiajs/inertia-vue3";
 import moment from 'moment';
 import H2Title from "@/js/Components/H2Title.vue";
 import NewsWrap from '@/js/Components/News/NewsWrap.vue';

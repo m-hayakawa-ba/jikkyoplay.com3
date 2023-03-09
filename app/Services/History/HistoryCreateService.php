@@ -23,8 +23,8 @@ class HistoryCreateService
             arsort($viewed);
         }
         
-        //50個より多くなったときは、最後の要素を削除
-        while(count($viewed) > 50) {
+        //30個より多くなったときは、最後の要素を削除
+        while(count($viewed) > 30) {
             array_pop($viewed);
         }
 

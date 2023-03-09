@@ -27,14 +27,6 @@
                 {{ creater.name }}
             </th></tr>
             
-            <!-- 音声 -->
-            <!-- <tr><td>
-                <SearchLink 
-                    :name="creater.voice_type"
-                    :query="'voice_id=' + creater.voice_id"
-                />
-            </td></tr> -->
-            
             <!-- その他の動画 -->
             <tr><td>
                 <SearchLink 
@@ -152,7 +144,7 @@ export default {
     .site-link {
         position: relative;
         display: block;
-        margin-left: 8px;
+        margin: 0 auto;
         padding: 2px 0 3px;
         width: 80%;
         min-width: 208px;

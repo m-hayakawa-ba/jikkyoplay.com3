@@ -1,5 +1,10 @@
 <template>
 
+    <!-- タイトル -->
+    <Head>
+        <title>ゲーム実況動画 おすすめ動画レビュー｜ゲーム実況動画まとめサイト GameJDM</title>
+    </Head>
+
     <!-- サイト本体部分 -->
     <div class="inner">
         
@@ -38,7 +43,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import {usePage} from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/inertia-vue3";
 import H2Title from "@/js/Components/H2Title.vue";
 import ReviewWrap from '@/js/Components/Review/ReviewWrap.vue';
 import Pagination from '@/js/Components/Pagination.vue';

@@ -1,5 +1,10 @@
 <template>
 
+    <!-- タイトル -->
+    <Head>
+        <title>ゲーム実況動画まとめサイト GameJDM</title>
+    </Head>
+
     <!-- サイト本体部分 -->
     <div class="inner">
 
@@ -112,7 +117,7 @@ import { RecommendQuery } from '../../Interfaces/RecommendQuery'
 import { SearchWord } from "../../Interfaces/SearchWord";
 
 import { defineComponent } from "vue";
-import { usePage } from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/inertia-vue3";
 import H2Title   from "@/js/Components/H2Title.vue";
 import LinkTag   from "@/js/Components/LinkTag.vue";
 import AnkerLink from "@/js/Components/AnkerLink.vue";

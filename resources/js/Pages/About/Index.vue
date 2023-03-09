@@ -1,9 +1,14 @@
 <template>
 
+    <!-- タイトル -->
+    <Head>
+        <title>このサイトについて｜ゲーム実況動画まとめサイト GameJDM</title>
+    </Head>
+
     <!-- サイト本体部分 -->
     <div class="inner">
         
-        <!-- 視聴履歴 -->
+        <!-- このサイトについて -->
         <H2Title
             title_jp="このサイトについて"
             title_en="ABOUT THIS SITE"
@@ -41,8 +46,7 @@
         </section>
 
         <section class="section-3">
-            <p>当サイトは、YouTube Data API・ニコニコ動画 スナップショット検索API v2 を利用して動画情報を収集しています。</p>
-            <p>できるだけ最新に近い情報を反映するように更新していますが、非公開にしたい動画やチャンネルなどがありましたらtwitterのDMでご連絡ください。</p>
+            <p>当サイトは、YouTube Data API・ニコニコ動画 スナップショット検索API v2 を利用して動画情報を収集しています。できるだけ最新に近い情報を反映するように更新していますが、非公開にしたい動画やチャンネルなどがありましたらtwitterのDMでご連絡ください。</p>
             <p>また、当サイトはリンクフリーです。ご自由にリンクを張っていただいて大丈夫です。</p>
         </section>
 
@@ -51,12 +55,15 @@
 </template>
 
 
-<script>
-import {Link, usePage} from "@inertiajs/inertia-vue3";
+<script lang="ts">
+import { defineComponent } from "vue";
+
+import { Head, Link, usePage } from "@inertiajs/inertia-vue3";
 import H2Title from "@/js/Components/H2Title.vue";
 import SvgIcon from "@/js/Components/SvgIcon.vue";
 import ProgramWrap from "@/js/Components/Program/ProgramWrap.vue";
-export default {
+
+export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
@@ -72,7 +79,7 @@ export default {
             program: usePage().props.value.program,
         };
     },
-}
+});
 </script>
 
 
@@ -130,11 +137,24 @@ export default {
     .section-2 {
         .caption {
             line-height: 1.4;
-            bottom: 2px;
+            top: 4px;
             text-align: justify;
         }
         @media screen and (min-width: $bp) {
             flex-flow: row-reverse;
         }
+        .flex-right {
+            @media screen and (min-width: $bp) {
+                width: 35%;
+            }
+        }
+        .flex-left {
+            @media screen and (min-width: $bp) {
+                width: 65%;
+            }
+        }
+    }
+    .section-3 {
+        margin-bottom: 40px;
     }
 </style>
