@@ -562,7 +562,7 @@ class ProgramSearchService
             $year = $queries['year'];
             unset($queries['year']);
             return [
-                "name"  => $year,
+                "name"  => $year . "年",
                 "query" => http_build_query($queries),
             ];
         } else {

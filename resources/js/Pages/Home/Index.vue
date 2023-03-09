@@ -1,10 +1,18 @@
 <template>
 
-    <!-- 検索ワード -->
-    <RecommendQuery />
-
     <!-- サイト本体部分 -->
     <div class="inner">
+
+        <!-- 検索ワード -->
+        <div class="search-item-wrap">
+            <LinkTag
+                v-for="recommend_query in recommend_queries"
+                :key="recommend_query.id"
+                :name="recommend_query.name"
+                :link="recommend_query.path"
+                icon="single_right"
+            />
+        </div>
         
         <!-- ゲーム実況ニュース -->
         <H2Title
@@ -71,9 +79,15 @@
             id="game-search"
             title_jp="人気の検索ワード"
         />
-        <SearchWord
-            id="game-word"
-        />
+        <section class="search-word-wrap">
+            <LinkTag
+                v-for="search_word in search_words"
+                :key="search_word.id"
+                :name="search_word.word"
+                :link="'/program?word=' + search_word.word"
+                icon="single_right"
+            />
+        </section>
     </div>
 
     <!-- アンカーリンク -->
@@ -91,16 +105,18 @@
 </template>
 
 <script lang="ts">
+import DefaultSection from "@/js/Components/Section/DefaultSection.vue";
 
 import { AnkerData } from "../../Interfaces/AnkerData";
+import { RecommendQuery } from '../../Interfaces/RecommendQuery'
+import { SearchWord } from "../../Interfaces/SearchWord";
 
 import { defineComponent } from "vue";
-import RecommendQuery from "./RecommendQuery.vue";
-import SearchWord from "./SearchWord.vue";
+import { usePage } from "@inertiajs/inertia-vue3";
 import H2Title   from "@/js/Components/H2Title.vue";
+import LinkTag   from "@/js/Components/LinkTag.vue";
 import AnkerLink from "@/js/Components/AnkerLink.vue";
 import PageLink from '@/js/Components/PageLink.vue';
-import DefaultSection from "@/js/Components/Section/DefaultSection.vue";
 import IndexNews from "./Index__News.vue";
 import IndexRanking from "./Index__Ranking.vue";
 import IndexProgram from "./Index__Program.vue";
@@ -110,9 +126,8 @@ export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
-        RecommendQuery,
-        SearchWord,
         H2Title,
+        LinkTag,
         AnkerLink,
         PageLink,
         DefaultSection,
@@ -124,10 +139,14 @@ export default defineComponent({
 
     //コンポーネント内で使用する変数
     data(): {
-        anker: AnkerData[]
+        anker: AnkerData[],
+        recommend_queries: RecommendQuery[],
+        search_words: SearchWord[]
     } {
         return {
             anker: [],
+            recommend_queries: usePage().props.value.recommend_queries as RecommendQuery[],
+            search_words: usePage().props.value.search_words as SearchWord[],
         };
     },
 
@@ -150,5 +169,29 @@ export default defineComponent({
 
 <style lang="scss" scoped>
 @import "@/sass/variables";
-
+    .search-item-wrap {
+        margin: 0 auto;
+        padding: 15px 0px 10px;
+        width: 100%;
+        text-align: center;
+        white-space: nowrap;
+        overflow-x: scroll;
+        scrollbar-width: none;
+        &::-webkit-scrollbar{
+            display:none;
+        }
+        @media screen and (min-width: $bp) {
+            padding: 30px 0px 30px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            padding: 40px 0px 30px;
+        }
+    }
+    .search-word-wrap {
+        margin: 40px 0 60px;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
 </style>

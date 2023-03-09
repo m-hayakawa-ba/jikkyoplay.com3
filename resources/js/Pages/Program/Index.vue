@@ -17,8 +17,23 @@
                 動画件数：{{ count.toLocaleString() }}件（{{ getProgramsStartBy() }}  ～ {{ getProgramsEndBy() }} 件）
             </div>
 
+            <!-- 検索削除リンク -->
+            <div class="link-tag-wrap">
+                <LinkTag
+                    v-for="(deletequery_link, index) in delete_query_links"
+                    :key="index"
+                    :name="deletequery_link.name"
+                    :link="'/program?' + deletequery_link.query"
+                    icon="cross"
+                />
+            </div>
+
             <!-- 並び順選択 -->
-            <select v-model="sort" @change="redirectNewSort">
+            <select
+                class="sort-select"
+                v-model="sort"
+                @change="redirectNewSort"
+            >
                 <option value="date_desc">投稿日の新しい順</option>
                 <option value="date_asc">投稿日の古い順</option>
                 <option value="view_desc">再生数の多い順</option>
@@ -26,16 +41,6 @@
                 <option value="year_desc">ゲーム発売年の新しい順</option>
                 <option value="year_asc">ゲーム発売年の古い順</option>
             </select>
-
-            <!-- 検索削除リンク -->
-            <div>
-                <SearchLink
-                    v-for="(deletequery_link, index) in delete_query_links"
-                    :key="index"
-                    :name="deletequery_link.name"
-                    :query="deletequery_link.query"
-                />
-            </div>
 
         </div>
 
@@ -73,6 +78,7 @@ import { SimpleProgram } from "../../Interfaces/Program";
 
 import {usePage} from "@inertiajs/inertia-vue3";
 import H2Title from "@/js/Components/H2Title.vue";
+import LinkTag from "@/js/Components/LinkTag.vue";
 import SearchLink from "../../Components/SearchLink.vue";
 import ProgramWrap from '@/js/Components/Program/ProgramWrap.vue';
 import Pagination from '@/js/Components/Pagination.vue';
@@ -87,6 +93,7 @@ export default defineComponent({
     //読み込んだコンポーネント
     components: {
         H2Title,
+        LinkTag,
         ProgramWrap,
         Pagination,
         SearchLink,
@@ -180,11 +187,12 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "@/sass/variables";
     .search-status {
-        margin: 10px 0 5px;
-        display: flex;
+        position: relative;
+        margin: 10px 0 20px;
+        width: 100%;
         justify-content: space-between;
         align-items: center;
-        select {
+        .sort-select {
             display: block;
             position: relative;
             padding: 4px 24px 4px 4px;
@@ -192,9 +200,19 @@ export default defineComponent({
             border: solid 1px #aaa;
             outline: 0;
             background-color: #fff;
+            @media screen and (min-width: $bp) {
+                position: absolute;
+                top: 4px;
+                right: 28px;
+            }
         }
         @media screen and (min-width: $bp) {
             margin-left: 16px;
+        }
+        .link-tag-wrap {
+            margin: 4px 0 12px;
+            width: 100%;
+            text-align: left;
         }
     }
     section {

@@ -58,8 +58,8 @@ export default {
         position: relative;
         left: -8px;
         display: block;
-        margin: 0 auto 15px;
-        padding: 6px 8px;
+        margin: 10px auto 15px;
+        padding: 10px 8px;
         width: calc(100% + 16px);
         background-color: #18100c;
         @media screen and (min-width: $bp) {
@@ -73,7 +73,7 @@ export default {
         }
         .h2-link {
             position: absolute;
-            top: 7px;
+            top: 10px;
             right: 8px;
             display: flex;
             .link-title {
