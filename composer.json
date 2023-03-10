@@ -12,7 +12,8 @@
         "inertiajs/inertia-laravel": "^0.6.7",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
-        "laravel/tinker": "^2.5"
+        "laravel/tinker": "^2.5",
+        "predis/predis": "^2.1"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
