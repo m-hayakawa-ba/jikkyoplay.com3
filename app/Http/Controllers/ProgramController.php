@@ -86,9 +86,11 @@ class ProgramController extends Controller
         $queries = array_filter($request->all(), function ($value) {
             return $value !== null;
         });
+        //point要素は次に引き継がない
+        unset($queries['point']);
 
         //検索条件削除用の検索クエリを作成
-        $delete_query_links = $this->programSearchService->getDeleteQueries($request);
+        $delete_query_links = $this->programSearchService->getDeleteQueries($queries);
 
         //viewへ遷移
         return Inertia::render('Program/Index', compact(

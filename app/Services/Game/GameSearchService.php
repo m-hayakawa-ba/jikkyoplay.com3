@@ -3,6 +3,7 @@
 namespace App\Services\Game;
 
 use App\Models\Game;
+use App\Libs\SearchStringLib;
 use Illuminate\Database\Eloquent\Collection;
 
 class GameSearchService
@@ -62,11 +63,14 @@ class GameSearchService
             )
             ->join('makers', 'games.maker_id', '=', 'makers.id')
             ->join('hards', 'games.hard_id', '=', 'hards.id')
-            ->where('games.name', '!=', $search_word)
-            ->whereHas('game_search_names', function ($q) use ($search_word) {
-                $q->where('search_name', 'like', '%' . mb_convert_kana($search_word . '%', 'a'));
-            })
-            ->inRandomOrder()
+            ->where('games.name', '!=', $search_word);
+        $words = explode(" ", SearchStringLib::normalizeSpace($search_word));
+        foreach($words as $word) {
+            $semi_match_games = $semi_match_games->whereHas('game_search_names', function ($q) use ($word) {
+                $q->where('search_name', 'like', '%' . $word . '%');
+            });
+        }
+        $semi_match_games = $semi_match_games->inRandomOrder()
             ->limit($count - $match_games->count())
             ->get();
 

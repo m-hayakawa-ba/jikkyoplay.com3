@@ -3,6 +3,8 @@
     <!-- タイトル -->
     <Head>
         <title>ゲーム実況動画 人気ランキング｜ゲーム実況動画まとめサイト GameJDM</title>
+        <meta name="description" content="ゲームの実況プレイ動画や実況プレイヤーの人気ランキングを、YouTubeやニコニコ動画の再生数をもとにまとめています。" />
+        <link rel="canonical" href="https://jikkyoplay.com/ranking">
     </Head>
 
     <!-- サイト本体部分 -->
@@ -173,6 +175,7 @@ export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
+        Head,
         SmoothLink,
         CreaterWrap,
         DefaultSection,

@@ -9,6 +9,7 @@ use App\Models\Maker;
 use App\Models\Program;
 use App\Models\Site;
 use App\Models\Voice;
+use App\Libs\SearchStringLib;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
@@ -92,25 +93,30 @@ class ProgramSearchService
     /**
      * 検索クエリと、クエリ削除用のクエリを取得
      * 
-     * @param Request $request
+     * @param array $queries
      * 
      * @return array 検索クエリと、クエリ削除用のクエリの配列
      */
-    public function getDeleteQueries(Request $request) : array
+    public function getDeleteQueries(array $queries) : array
     {
-        $query_links    = $this->deleteWord($request);          //文字列検索条件の削除
-        $query_links[]  = $this->deleteSiteId($request);        //サイトidの削除
-        $query_links[]  = $this->deleteVoiceId($request);       //声idの削除
-        $query_links[]  = $this->deleteCreaterName($request);   //投稿者名の削除
-        $query_links[]  = $this->deleteCreaterId($request);     //投稿者idの削除
-        $query_links[]  = $this->deleteGameId($request);        //ゲームidの削除
-        $query_links[]  = $this->deleteHardId($request);        //ハードidの削除
-        $query_links[]  = $this->deleteRetro($request);         //レトロゲームの条件削除
-        $query_links[]  = $this->deleteMakerName($request);     //メーカー名の削除
-        $query_links[]  = $this->deleteMakerId($request);       //メーカーidの削除
-        $query_links[]  = $this->deleteYear($request);          //発売年の削除
+        //配列の初期化
+        $query_links = [];
+        
+        //配列に削除クエリの追加
+        if (($query = $this->deleteWord($queries)) !== [])          { $query_links   = $query; }    //文字列検索条件の削除クエリ
+        if (($query = $this->deleteSiteId($queries)) !== [])        { $query_links[] = $query; }    //サイトidの削除
+        if (($query = $this->deleteVoiceId($queries)) !== [])       { $query_links[] = $query; }    //声idの削除
+        if (($query = $this->deleteCreaterName($queries)) !== [])   { $query_links[] = $query; }    //投稿者名の削除
+        if (($query = $this->deleteCreaterId($queries)) !== [])     { $query_links[] = $query; }    //投稿者idの削除
+        if (($query = $this->deleteGameId($queries)) !== [])        { $query_links[] = $query; }    //ゲームidの削除
+        if (($query = $this->deleteHardId($queries)) !== [])        { $query_links[] = $query; }    //ハードidの削除
+        if (($query = $this->deleteRetro($queries)) !== [])         { $query_links[] = $query; }    //レトロゲームの条件削除
+        if (($query = $this->deleteMakerName($queries)) !== [])     { $query_links[] = $query; }    //メーカー名の削除
+        if (($query = $this->deleteMakerId($queries)) !== [])       { $query_links[] = $query; }    //メーカーidの削除
+        if (($query = $this->deleteYear($queries)) !== [])          { $query_links[] = $query; }    //発売年の削除
 
-        return array_filter($query_links);
+        //配列を返却して終了
+        return $query_links;
     }
 
     /**
@@ -131,22 +137,25 @@ class ProgramSearchService
 
         //クエリを半角または全角のスペースで分割する
         $query = $request->query('word');
-        $words = explode(" ", mb_convert_kana($query, 'as'));
+        $words = explode(" ", SearchStringLib::normalizeSpace($query));
 
         //検索ワードで検索する
-        return $programs->where(function ($q) use ($query, $words) {
-            $q
+        foreach($words as $word) {
+            $programs = $programs->where(function ($q) use ($word) {
                 //ゲームのタイトルから検索
-                ->whereHas('game.game_search_names', function ($q) use ($words) {
-                    $q->whereIn('search_name', $words);
+                $q->whereHas('game.game_search_names', function ($q) use ($word) {
+                    $q->where('search_name', $word);
                 })
                 //動画のタイトルから検索
-                ->orWhere('programs.title', 'like', '%' . $query . '%')
+                ->orWhere('programs.title', 'like', '%' . $word . '%')
                 //実況者名から検索
-                ->orWhereHas('creater', function ($q) use ($query) {
-                    $q->where('name', $query);
+                ->orWhereHas('creater', function ($q) use ($word) {
+                    $q->where('name', $word);
                 });
-        });
+            });
+        }
+
+        return $programs;
     }
     /**
      * 検索条件
@@ -302,30 +311,32 @@ class ProgramSearchService
     /**
      * 検索条件の削除リンク作成
      * 
-     * @param Request $request
+     * @param array $queries
      * 
      * @return array 検索条件を削除するリンク名とクエリ文字列
      */
-    private function deleteWord(Request $request) : array
+    private function deleteWord(array $queries) : array
     {
         //返り値返却用の配列
         $result = [];
 
         //文字列検索があった場合
-        if ($request->filled('word')) {
+        if (isset($queries['word'])) {
+
+            //クエリを保存しておく
+            $query_word = $queries['word'];
 
             //検索条件をスペースで区切って配列を作成する
             $words = preg_split(
                 '/[\s]+/',
-                mb_convert_kana($request->query('word'), 'as'),
+                mb_convert_kana($queries['word'], 'as'),
                 -1,
                 PREG_SPLIT_NO_EMPTY
             );
 
             //各配列ごとに検索条件の削除リンクを作成していく
             foreach($words as $word) {
-                $queries = $request->all();
-                $queries['word'] = str_replace($word, "", $queries['word']);
+                $queries['word'] = SearchStringLib::normalizeSpace(str_replace($word, "", $query_word));
                 $result[] = [
                     "name"  => $word,
                     "query" => http_build_query($queries),
@@ -340,19 +351,19 @@ class ProgramSearchService
     /**
      * サイトidの削除リンク作成
      * 
-     * @param Request $request
+     * @param array $queries
      * 
      * @return array 検索条件を削除するリンク名とクエリ文字列
      */
-    private function deleteSiteId(Request $request) : array
+    private function deleteSiteId(array $queries) : array
     {
         //サイトidの条件があった場合
-        if ($request->filled('site_id')) {
+        if (isset($queries['site_id'])) {
 
-            $queries = $request->all();
+            $site_id = $queries['site_id'];
             unset($queries['site_id']);
             return [
-                "name"  => $this->siteModel->find($request->site_id)->name,
+                "name"  => $this->siteModel->find($site_id)->name,
                 "query" => http_build_query($queries),
             ];
         } else {
@@ -363,19 +374,19 @@ class ProgramSearchService
     /**
      * 声idの削除リンク作成
      * 
-     * @param Request $request
+     * @param array $queries
      * 
      * @return array 検索条件を削除するリンク名とクエリ文字列
      */
-    private function deleteVoiceId(Request $request) : array
+    private function deleteVoiceId(array $queries) : array
     {
         //声idの条件があった場合
-        if ($request->filled('voice_id')) {
+        if (isset($queries['voice_id'])) {
 
-            $queries = $request->all();
+            $voice_id = $queries['voice_id'];
             unset($queries['voice_id']);
             return [
-                "name"  => $this->voiceModel->find($request->voice_id)->type,
+                "name"  => $this->voiceModel->find($voice_id)->type,
                 "query" => http_build_query($queries),
             ];
         } else {
@@ -386,16 +397,15 @@ class ProgramSearchService
     /**
      * 投稿者名の削除リンク作成
      * 
-     * @param Request $request
+     * @param array $queries
      * 
      * @return array 検索条件を削除するリンク名とクエリ文字列
      */
-    private function deleteCreaterName(Request $request) : array
+    private function deleteCreaterName(array $queries) : array
     {
         //投稿者名の条件があった場合
-        if ($request->filled('creater_name')) {
+        if (isset($queries['creater_name'])) {
 
-            $queries = $request->all();
             $creater_name = $queries['creater_name'];
             unset($queries['creater_name']);
             return [
@@ -410,19 +420,19 @@ class ProgramSearchService
     /**
      * 投稿者idの削除リンク作成
      * 
-     * @param Request $request
+     * @param array $queries
      * 
      * @return array 検索条件を削除するリンク名とクエリ文字列
      */
-    private function deleteCreaterId(Request $request) : array
+    private function deleteCreaterId(array $queries) : array
     {
         //投稿者idの条件があった場合
-        if ($request->filled('creater_id')) {
+        if (isset($queries['creater_id'])) {
 
-            $queries = $request->all();
+            $creater_id = $queries['creater_id'];
             unset($queries['creater_id']);
             return [
-                "name"  => $this->createrModel->find($request->creater_id)->name,
+                "name"  => $this->createrModel->find($creater_id)->name,
                 "query" => http_build_query($queries),
             ];
         } else {
@@ -433,19 +443,19 @@ class ProgramSearchService
     /**
      * ゲームidの削除リンク作成
      * 
-     * @param Request $request
+     * @param array $queries
      * 
      * @return array 検索条件を削除するリンク名とクエリ文字列
      */
-    private function deleteGameId(Request $request) : array
+    private function deleteGameId(array $queries) : array
     {
         //ゲームidの条件があった場合
-        if ($request->filled('game_id')) {
+        if (isset($queries['game_id'])) {
 
-            $queries = $request->all();
+            $game_id = $queries['game_id'];
             unset($queries['game_id']);
             return [
-                "name"  => $this->gameModel->find($request->game_id)->name,
+                "name"  => $this->gameModel->find($game_id)->name,
                 "query" => http_build_query($queries),
             ];
         } else {
@@ -456,19 +466,19 @@ class ProgramSearchService
     /**
      * ハードidの削除リンク作成
      * 
-     * @param Request $request
+     * @param array $queries
      * 
      * @return array 検索条件を削除するリンク名とクエリ文字列
      */
-    private function deleteHardId(Request $request) : array
+    private function deleteHardId(array $queries) : array
     {
         //ハードidの条件があった場合
-        if ($request->filled('hard_id')) {
+        if (isset($queries['hard_id'])) {
 
-            $queries = $request->all();
+            $hard_id = $queries['hard_id'];
             unset($queries['hard_id']);
             return [
-                "name"  => $this->hardModel->find($request->hard_id)->name,
+                "name"  => $this->hardModel->find($hard_id)->name,
                 "query" => http_build_query($queries),
             ];
         } else {
@@ -479,16 +489,15 @@ class ProgramSearchService
     /**
      * レトロゲームの条件削除リンク作成
      * 
-     * @param Request $request
+     * @param array $queries
      * 
      * @return array 検索条件を削除するリンク名とクエリ文字列
      */
-    private function deleteRetro(Request $request) : array
+    private function deleteRetro(array $queries) : array
     {
         //ハードidの条件があった場合
-        if ($request->query('retro', 0) == 1) {
+        if (isset($queries['retro']) && $queries['retro'] == 1) {
 
-            $queries = $request->all();
             unset($queries['retro']);
             return [
                 "name"  => "レトロゲーム",
@@ -502,16 +511,15 @@ class ProgramSearchService
     /**
      * メーカー名の削除リンク作成
      * 
-     * @param Request $request
+     * @param array $queries
      * 
      * @return array 検索条件を削除するリンク名とクエリ文字列
      */
-    private function deleteMakerName(Request $request) : array
+    private function deleteMakerName(array $queries) : array
     {
         //メーカー名の条件があった場合
-        if ($request->filled('maker_name')) {
+        if (isset($queries['maker_name'])) {
 
-            $queries = $request->all();
             $maker_name = $queries['maker_name'];
             unset($queries['maker_name']);
             return [
@@ -526,19 +534,19 @@ class ProgramSearchService
     /**
      * メーカーidの削除リンク作成
      * 
-     * @param Request $request
+     * @param array $queries
      * 
      * @return array 検索条件を削除するリンク名とクエリ文字列
      */
-    private function deleteMakerId(Request $request) : array
+    private function deleteMakerId(array $queries) : array
     {
         //メーカーidの条件があった場合
-        if ($request->filled('maker_id')) {
+        if (isset($queries['maker_id'])) {
 
-            $queries = $request->all();
+            $maker_id = $queries['maker_id'];
             unset($queries['maker_id']);
             return [
-                "name"  => $this->makerModel->find($request->maker_id)->name,
+                "name"  => $this->makerModel->find($maker_id)->name,
                 "query" => http_build_query($queries),
             ];
         } else {
@@ -549,16 +557,15 @@ class ProgramSearchService
     /**
      * 発売年の削除リンク作成
      * 
-     * @param Request $request
+     * @param array $queries
      * 
      * @return array 検索条件を削除するリンク名とクエリ文字列
      */
-    private function deleteYear(Request $request) : array
+    private function deleteYear(array $queries) : array
     {
         //発売年の条件があった場合
-        if ($request->filled('year')) {
+        if (isset($queries['year'])) {
 
-            $queries = $request->all();
             $year = $queries['year'];
             unset($queries['year']);
             return [

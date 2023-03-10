@@ -1,5 +1,12 @@
 <template>
 
+    <!-- タイトル -->
+    <Head>
+        <title>{{ title }}</title>
+        <meta name="description" :content="description" />
+        <link rel="canonical" :href="canonical">
+    </Head>
+
     <!-- サイト本体部分 -->
     <div class="inner">
         
@@ -76,7 +83,7 @@ import { defineComponent } from "vue";
 import { SearchQuery } from "../../Interfaces/SearchQuery";
 import { SimpleProgram } from "../../Interfaces/Program";
 
-import {usePage} from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/inertia-vue3";
 import H2Title from "@/js/Components/H2Title.vue";
 import LinkTag from "@/js/Components/LinkTag.vue";
 import SearchLink from "../../Components/SearchLink.vue";
@@ -92,6 +99,7 @@ export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
+        Head,
         H2Title,
         LinkTag,
         ProgramWrap,
@@ -108,6 +116,9 @@ export default defineComponent({
         queries: SearchQuery;
         sort: string;
         delete_query_links : QueryLink[];
+        title: string;
+        description: string;
+        canonical: string;
     } {
         return {
             count:              usePage().props.value.count as number,
@@ -117,6 +128,9 @@ export default defineComponent({
             queries:            usePage().props.value.queries as SearchQuery,
             sort:               'date_desc',
             delete_query_links: usePage().props.value.delete_query_links as QueryLink[],
+            title:              '',
+            description:        '',
+            canonical:          '',
         };
     },
 
@@ -175,9 +189,39 @@ export default defineComponent({
         //渡されたクエリからソート順セレクトボックスの初期値を設定
         this.sort = this.queries.sort + '_' + this.queries.order;
 
-        //SearchQueryの値を次々に取得し、検索条件を外すリンクを作成していく
-        console.log(this.delete_query_links);
-        
+        //タイトルタグを作成する
+        let length = Object.keys(this.delete_query_links).length;
+        if (length == 0) {
+            switch(this.sort) {
+                case 'date_desc':
+                    this.title = "新着ゲーム実況動画一覧｜ゲーム実況動画まとめサイト GameJDM";
+                    this.description = "YouTube・ニコニコ動画に投稿された、新着ゲーム実況プレイ動画の一覧です。";
+                    this.canonical = "https://jikkyoplay.com/program?sort=date&order=desc";
+                    break;
+                case 'view_desc':
+                    this.title = "人気ゲーム実況動画一覧｜ゲーム実況動画まとめサイト GameJDM";
+                    this.description = "YouTube・ニコニコ動画に投稿された、ゲーム実況プレイ動画の再生数順の一覧です。";
+                    this.canonical = "https://jikkyoplay.com/program?sort=view&order=desc";
+                    break;
+                default: 
+                    this.title = "ゲーム実況動画一覧｜ゲーム実況動画まとめサイト GameJDM";
+                    this.description = "YouTube・ニコニコ動画に投稿された、ゲーム実況プレイ動画の一覧です。";
+                    this.canonical = "https://jikkyoplay.com/program";
+                    break;
+            }
+        } else if (length == 1) {
+            this.title = this.delete_query_links[0].name + "のゲーム実況動画一覧｜ゲーム実況動画まとめサイト GameJDM";
+            this.description = "YouTube・ニコニコ動画に投稿された、" + this.delete_query_links[0].name + "のゲーム実況プレイ動画の一覧です。";
+        } else {
+            this.title = "ゲーム実況動画 検索結果一覧｜ゲーム実況動画まとめサイト GameJDM";
+            this.description = "YouTube・ニコニコ動画に投稿された、ゲーム実況プレイ動画の検索結果一覧です。";
+            const urlParam: URLSearchParams = new URLSearchParams(this.queries);
+            urlParam.delete('page');
+            urlParam.delete('point');
+            urlParam.delete('sort');
+            urlParam.delete('order');
+            this.canonical = "https://jikkyoplay.com/program?" + urlParam.toString();
+        }
     }
     
 });

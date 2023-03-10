@@ -3,6 +3,8 @@
     <!-- タイトル -->
     <Head>
         <title>ゲーム実況動画 おすすめ動画レビュー｜ゲーム実況動画まとめサイト GameJDM</title>
+        <meta name="description" content="おすすめレビューのついたゲーム実況動画をまとめています。" />
+        <link rel="canonical" href="https://jikkyoplay.com/review">
     </Head>
 
     <!-- サイト本体部分 -->
@@ -61,6 +63,7 @@ export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
+        Head,
         H2Title,
         ReviewWrap,
         Pagination,

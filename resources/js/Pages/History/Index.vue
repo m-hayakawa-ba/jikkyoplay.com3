@@ -3,6 +3,8 @@
     <!-- タイトル -->
     <Head>
         <title>視聴履歴｜ゲーム実況動画まとめサイト GameJDM</title>
+        <meta name="description" content="視聴履歴です。" />
+        <link rel="canonical" href="https://jikkyoplay.com/history">
     </Head>
 
     <!-- サイト本体部分 -->
@@ -54,6 +56,7 @@ export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
+        Head,
         H2Title,
         ProgramWrap,
     },

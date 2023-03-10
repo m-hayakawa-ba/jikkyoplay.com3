@@ -3,6 +3,8 @@
     <!-- タイトル -->
     <Head>
         <title>{{ format(month) }}のゲーム実況ニュース｜ゲーム実況動画まとめサイト GameJDM</title>
+        <meta name="description" :content="'ゲームの実況プレイに関するニュースをまとめています。' + format(month) + 'のゲーム実況ニュース一覧です。'" />
+        <link rel="canonical" :href="'https://jikkyoplay.com/news/' + thisMonth()">
     </Head>
 
     <!-- サイト本体部分 -->
@@ -85,6 +87,7 @@ export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
+        Head,
         Link,
         H2Title,
         NewsWrap,
@@ -107,6 +110,10 @@ export default defineComponent({
     methods: {
         format(date: string) {
             return moment(date).format('YYYY年M月')
+        },
+
+        thisMonth(): string {
+            return moment(this.month).format('YYYY-MM')
         },
 
         //来月の文字列を返す

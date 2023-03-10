@@ -3,6 +3,8 @@
     <!-- タイトル -->
     <Head>
         <title>ゲーム実況動画まとめサイト GameJDM</title>
+        <meta name="description" content="YouTubeやニコニコ動画など複数の動画サイトに投稿されたゲームの実況プレイ動画をまとめたサイトです。" />
+        <link rel="canonical" href="https://jikkyoplay.com">
     </Head>
 
     <!-- サイト本体部分 -->
@@ -131,6 +133,7 @@ export default defineComponent({
 
     //読み込んだコンポーネント
     components: {
+        Head,
         H2Title,
         LinkTag,
         AnkerLink,

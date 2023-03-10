@@ -1,5 +1,12 @@
 <template>
 
+    <!-- タイトル -->
+    <Head>
+        <title>{{ program.title }}｜ゲーム実況動画まとめサイト GameJDM</title>
+        <meta name="description" :content="creater.name + 'さんのゲーム実況プレイ動画「' + program.title + '」'" />
+        <link rel="canonical" :href="'https://jikkyoplay.com/program/' + program.id">
+    </Head>
+
     <!-- サイト本体部分 -->
     <div class="inner">
 
@@ -112,7 +119,7 @@
 
 
 <script>
-import {usePage} from "@inertiajs/inertia-vue3";
+import { Head, usePage } from "@inertiajs/inertia-vue3";
 import moment from 'moment';
 import CreaterWrap        from '@/js/Components/Creater/CreaterWrap.vue';
 import GameWrap           from '@/js/Components/Game/GameWrap.vue';
@@ -128,6 +135,7 @@ export default {
 
     //読み込んだコンポーネント
     components: {
+        Head,
         CreaterWrap,
         GameWrap,
         ProgramSimpleWrap,

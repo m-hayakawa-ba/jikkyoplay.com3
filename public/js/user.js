@@ -20379,6 +20379,7 @@ var ProgramWrap_vue_1 = __importDefault(__webpack_require__(/*! @/js/Components/
 exports["default"] = (0, vue_1.defineComponent)({
   //読み込んだコンポーネント
   components: {
+    Head: inertia_vue3_1.Head,
     H2Title: H2Title_vue_1["default"],
     SvgIcon: SvgIcon_vue_1["default"],
     Link: inertia_vue3_1.Link,
@@ -20424,6 +20425,7 @@ exports["default"] = (0, vue_1.defineComponent)({
   },
   //読み込んだコンポーネント
   components: {
+    Head: inertia_vue3_1.Head,
     H2Title: H2Title_vue_1["default"],
     ProgramWrap: ProgramWrap_vue_1["default"]
   },
@@ -20465,6 +20467,7 @@ var Index__Review_vue_1 = __importDefault(__webpack_require__(/*! ./Index__Revie
 exports["default"] = (0, vue_1.defineComponent)({
   //読み込んだコンポーネント
   components: {
+    Head: inertia_vue3_1.Head,
     H2Title: H2Title_vue_1["default"],
     LinkTag: LinkTag_vue_1["default"],
     AnkerLink: AnkerLink_vue_1["default"],
@@ -20593,6 +20596,7 @@ var DefaultSection_vue_1 = __importDefault(__webpack_require__(/*! @/js/Componen
 exports["default"] = (0, vue_1.defineComponent)({
   //読み込んだコンポーネント
   components: {
+    Head: inertia_vue3_1.Head,
     Link: inertia_vue3_1.Link,
     H2Title: H2Title_vue_1["default"],
     NewsWrap: NewsWrap_vue_1["default"],
@@ -20610,6 +20614,9 @@ exports["default"] = (0, vue_1.defineComponent)({
   methods: {
     format: function format(date) {
       return (0, moment_1["default"])(date).format('YYYY年M月');
+    },
+    thisMonth: function thisMonth() {
+      return (0, moment_1["default"])(this.month).format('YYYY-MM');
     },
     //来月の文字列を返す
     //来月がない場合は空文字列が返る
@@ -20661,6 +20668,7 @@ var Pagination_vue_1 = __importDefault(__webpack_require__(/*! @/js/Components/P
 exports["default"] = (0, vue_1.defineComponent)({
   //読み込んだコンポーネント
   components: {
+    Head: inertia_vue3_1.Head,
     H2Title: H2Title_vue_1["default"],
     LinkTag: LinkTag_vue_1["default"],
     ProgramWrap: ProgramWrap_vue_1["default"],
@@ -20676,7 +20684,10 @@ exports["default"] = (0, vue_1.defineComponent)({
       programs_per_page: (0, inertia_vue3_1.usePage)().props.value.programs_per_page,
       queries: (0, inertia_vue3_1.usePage)().props.value.queries,
       sort: 'date_desc',
-      delete_query_links: (0, inertia_vue3_1.usePage)().props.value.delete_query_links
+      delete_query_links: (0, inertia_vue3_1.usePage)().props.value.delete_query_links,
+      title: '',
+      description: '',
+      canonical: ''
     };
   },
   //コンポーネント内で使用するメソッド
@@ -20727,8 +20738,39 @@ exports["default"] = (0, vue_1.defineComponent)({
   mounted: function mounted() {
     //渡されたクエリからソート順セレクトボックスの初期値を設定
     this.sort = this.queries.sort + '_' + this.queries.order;
-    //SearchQueryの値を次々に取得し、検索条件を外すリンクを作成していく
-    console.log(this.delete_query_links);
+    //タイトルタグを作成する
+    var length = Object.keys(this.delete_query_links).length;
+    if (length == 0) {
+      switch (this.sort) {
+        case 'date_desc':
+          this.title = "新着ゲーム実況動画一覧｜ゲーム実況動画まとめサイト GameJDM";
+          this.description = "YouTube・ニコニコ動画に投稿された、新着ゲーム実況プレイ動画の一覧です。";
+          this.canonical = "https://jikkyoplay.com/program?sort=date&order=desc";
+          break;
+        case 'view_desc':
+          this.title = "人気ゲーム実況動画一覧｜ゲーム実況動画まとめサイト GameJDM";
+          this.description = "YouTube・ニコニコ動画に投稿された、ゲーム実況プレイ動画の再生数順の一覧です。";
+          this.canonical = "https://jikkyoplay.com/program?sort=view&order=desc";
+          break;
+        default:
+          this.title = "ゲーム実況動画一覧｜ゲーム実況動画まとめサイト GameJDM";
+          this.description = "YouTube・ニコニコ動画に投稿された、ゲーム実況プレイ動画の一覧です。";
+          this.canonical = "https://jikkyoplay.com/program";
+          break;
+      }
+    } else if (length == 1) {
+      this.title = this.delete_query_links[0].name + "のゲーム実況動画一覧｜ゲーム実況動画まとめサイト GameJDM";
+      this.description = "YouTube・ニコニコ動画に投稿された、" + this.delete_query_links[0].name + "のゲーム実況プレイ動画の一覧です。";
+    } else {
+      this.title = "ゲーム実況動画 検索結果一覧｜ゲーム実況動画まとめサイト GameJDM";
+      this.description = "YouTube・ニコニコ動画に投稿された、ゲーム実況プレイ動画の検索結果一覧です。";
+      var urlParam = new URLSearchParams(this.queries);
+      urlParam["delete"]('page');
+      urlParam["delete"]('point');
+      urlParam["delete"]('sort');
+      urlParam["delete"]('order');
+      this.canonical = "https://jikkyoplay.com/program?" + urlParam.toString();
+    }
   }
 });
 
@@ -20763,6 +20805,7 @@ var AnkerLink_vue_1 = __importDefault(__webpack_require__(/*! @/js/Components/An
 exports["default"] = (0, vue_1.defineComponent)({
   //読み込んだコンポーネント
   components: {
+    Head: inertia_vue3_1.Head,
     SmoothLink: SmoothLink_vue_1["default"],
     CreaterWrap: CreaterWrap_vue_1["default"],
     DefaultSection: DefaultSection_vue_1["default"],
@@ -20848,6 +20891,7 @@ exports["default"] = (0, vue_1.defineComponent)({
   },
   //読み込んだコンポーネント
   components: {
+    Head: inertia_vue3_1.Head,
     H2Title: H2Title_vue_1["default"],
     ReviewWrap: ReviewWrap_vue_1["default"],
     Pagination: Pagination_vue_1["default"]
@@ -21789,18 +21833,30 @@ var _withScopeId = function _withScopeId(n) {
 var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("title", null, "このサイトについて｜ゲーム実況動画まとめサイト GameJDM", -1 /* HOISTED */);
 });
-var _hoisted_2 = {
+var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("meta", {
+    name: "description",
+    content: "このサイトは、YouTubeやニコニコ動画など複数の動画サイトに投稿されたゲームの実況プレイ動画をまとめたサイトです。"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("link", {
+    rel: "canonical",
+    href: "https://jikkyoplay.com/about"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_4 = {
   "class": "inner"
 };
-var _hoisted_3 = {
+var _hoisted_5 = {
   "class": "section-1"
 };
-var _hoisted_4 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("div", {
     "class": "flex-left"
   }, [/*#__PURE__*/(0, vue_1.createElementVNode)("p", null, "　このサイトは、YouTubeやニコニコ動画など複数の動画サイトに投稿されたゲームの実況プレイ動画をまとめたサイトです。"), /*#__PURE__*/(0, vue_1.createElementVNode)("p", null, "　主にシリーズもののpart1動画を扱っており、再生数を元にした動画ランキングや人気実況者ランキングの他、最新のゲーム実況ニュースも掲載しています。"), /*#__PURE__*/(0, vue_1.createElementVNode)("p", null, "　また、ゲームのタイトルやハード、メーカー、発売年などで動画を分類し、お好みの実況プレイ動画を効率よく検索できます。")], -1 /* HOISTED */);
 });
-var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("div", {
     "class": "image"
   }, [/*#__PURE__*/(0, vue_1.createElementVNode)("img", {
@@ -21808,26 +21864,26 @@ var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
     alt: "ゲーム実況ランキングページへ"
   })], -1 /* HOISTED */);
 });
-var _hoisted_6 = {
+var _hoisted_8 = {
   "class": "caption"
 };
-var _hoisted_7 = {
+var _hoisted_9 = {
   "class": "section-2"
 };
-var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("div", {
     "class": "flex-left"
   }, [/*#__PURE__*/(0, vue_1.createElementVNode)("p", null, "　プレイヤーが実況や音読をしたり、雑談を交えながらゲームをプレイするというスタイルの動画は、2007年ころからニコニコ動画に投稿され始め、現在では日本だけでなく世界中で楽しまれています。"), /*#__PURE__*/(0, vue_1.createElementVNode)("p", null, "　このサイトは、ゲームファンや実況動画ファンが、より多くのゲームを楽しむために利用することを目的としています。"), /*#__PURE__*/(0, vue_1.createElementVNode)("p", null, "　また、ゲームメーカーやゲーム業界にとっても、このような実況プレイ動画がより多くの人々に紹介され、ゲームの普及やファン層の拡大につながることを期待しています。")], -1 /* HOISTED */);
 });
-var _hoisted_9 = {
+var _hoisted_11 = {
   "class": "flex-right"
 };
-var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("div", {
     "class": "caption"
   }, " シリーズ物の実況プレイ動画の中で、現在確認されている最古のゲーム実況動画 ", -1 /* HOISTED */);
 });
-var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("section", {
     "class": "section-3"
   }, [/*#__PURE__*/(0, vue_1.createElementVNode)("p", null, "当サイトは、YouTube Data API・ニコニコ動画 スナップショット検索API v2 を利用して動画情報を収集しています。できるだけ最新に近い情報を反映するように更新していますが、非公開にしたい動画やチャンネルなどがありましたらtwitterのDMでご連絡ください。"), /*#__PURE__*/(0, vue_1.createElementVNode)("p", null, "また、当サイトはリンクフリーです。ご自由にリンクを張っていただいて大丈夫です。")], -1 /* HOISTED */);
@@ -21840,26 +21896,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ProgramWrap = (0, vue_1.resolveComponent)("ProgramWrap");
   return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, null, [(0, vue_1.createCommentVNode)(" タイトル "), (0, vue_1.createVNode)(_component_Head, null, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_hoisted_1];
+      return [_hoisted_1, _hoisted_2, _hoisted_3];
     }),
     _: 1 /* STABLE */
-  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_2, [(0, vue_1.createCommentVNode)(" このサイトについて "), (0, vue_1.createVNode)(_component_H2Title, {
+  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_4, [(0, vue_1.createCommentVNode)(" このサイトについて "), (0, vue_1.createVNode)(_component_H2Title, {
     title_jp: "このサイトについて",
     title_en: "ABOUT THIS SITE"
-  }), (0, vue_1.createElementVNode)("section", _hoisted_3, [_hoisted_4, (0, vue_1.createVNode)(_component_Link, {
+  }), (0, vue_1.createElementVNode)("section", _hoisted_5, [_hoisted_6, (0, vue_1.createVNode)(_component_Link, {
     href: "/ranking",
     "class": "flex-right"
   }, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_hoisted_5, (0, vue_1.createElementVNode)("div", _hoisted_6, [(0, vue_1.createTextVNode)(" ゲーム実況ランキングページへ "), (0, vue_1.createVNode)(_component_SvgIcon, {
+      return [_hoisted_7, (0, vue_1.createElementVNode)("div", _hoisted_8, [(0, vue_1.createTextVNode)(" ゲーム実況ランキングページへ "), (0, vue_1.createVNode)(_component_SvgIcon, {
         icon: "single_right"
       })])];
     }),
     _: 1 /* STABLE */
-  })]), (0, vue_1.createElementVNode)("section", _hoisted_7, [_hoisted_8, (0, vue_1.createElementVNode)("div", _hoisted_9, [(0, vue_1.createVNode)(_component_ProgramWrap, {
+  })]), (0, vue_1.createElementVNode)("section", _hoisted_9, [_hoisted_10, (0, vue_1.createElementVNode)("div", _hoisted_11, [(0, vue_1.createVNode)(_component_ProgramWrap, {
     rank: "",
     program: _ctx.program
-  }, null, 8 /* PROPS */, ["program"]), _hoisted_10])]), _hoisted_11])], 64 /* STABLE_FRAGMENT */);
+  }, null, 8 /* PROPS */, ["program"]), _hoisted_12])]), _hoisted_13])], 64 /* STABLE_FRAGMENT */);
 }
 
 exports.render = render;
@@ -21886,7 +21942,19 @@ var _withScopeId = function _withScopeId(n) {
 var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("title", null, "視聴履歴｜ゲーム実況動画まとめサイト GameJDM", -1 /* HOISTED */);
 });
-var _hoisted_2 = {
+var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("meta", {
+    name: "description",
+    content: "視聴履歴です。"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("link", {
+    rel: "canonical",
+    href: "https://jikkyoplay.com/history"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_4 = {
   "class": "inner"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -21895,10 +21963,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ProgramWrap = (0, vue_1.resolveComponent)("ProgramWrap");
   return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, null, [(0, vue_1.createCommentVNode)(" タイトル "), (0, vue_1.createVNode)(_component_Head, null, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_hoisted_1];
+      return [_hoisted_1, _hoisted_2, _hoisted_3];
     }),
     _: 1 /* STABLE */
-  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_2, [(0, vue_1.createCommentVNode)(" 視聴履歴 "), (0, vue_1.createVNode)(_component_H2Title, {
+  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_4, [(0, vue_1.createCommentVNode)(" 視聴履歴 "), (0, vue_1.createVNode)(_component_H2Title, {
     title_jp: "視聴履歴",
     title_en: "WATCH HISTORY"
   }), (0, vue_1.createCommentVNode)(" 動画一覧 "), (0, vue_1.createElementVNode)("section", null, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.programs, function (program) {
@@ -21936,13 +22004,25 @@ var _withScopeId = function _withScopeId(n) {
 var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("title", null, "ゲーム実況動画まとめサイト GameJDM", -1 /* HOISTED */);
 });
-var _hoisted_2 = {
+var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("meta", {
+    name: "description",
+    content: "YouTubeやニコニコ動画など複数の動画サイトに投稿されたゲームの実況プレイ動画をまとめたサイトです。"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("link", {
+    rel: "canonical",
+    href: "https://jikkyoplay.com"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_4 = {
   "class": "inner"
 };
-var _hoisted_3 = {
+var _hoisted_5 = {
   "class": "search-item-wrap"
 };
-var _hoisted_4 = {
+var _hoisted_6 = {
   "class": "search-word-wrap"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -21958,10 +22038,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_AnkerLink = (0, vue_1.resolveComponent)("AnkerLink");
   return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, null, [(0, vue_1.createCommentVNode)(" タイトル "), (0, vue_1.createVNode)(_component_Head, null, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_hoisted_1];
+      return [_hoisted_1, _hoisted_2, _hoisted_3];
     }),
     _: 1 /* STABLE */
-  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_2, [(0, vue_1.createCommentVNode)(" 検索ワード "), (0, vue_1.createElementVNode)("div", _hoisted_3, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.recommend_queries, function (recommend_query) {
+  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_4, [(0, vue_1.createCommentVNode)(" 検索ワード "), (0, vue_1.createElementVNode)("div", _hoisted_5, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.recommend_queries, function (recommend_query) {
     return (0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_LinkTag, {
       key: recommend_query.id,
       name: recommend_query.name,
@@ -22023,7 +22103,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   }), (0, vue_1.createCommentVNode)(" 人気の検索ワード "), (0, vue_1.createVNode)(_component_H2Title, {
     id: "game-search",
     title_jp: "人気の検索ワード"
-  }), (0, vue_1.createElementVNode)("section", _hoisted_4, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.search_words, function (search_word) {
+  }), (0, vue_1.createElementVNode)("section", _hoisted_6, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.search_words, function (search_word) {
     return (0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_LinkTag, {
       key: search_word.id,
       name: search_word.word,
@@ -22097,23 +22177,13 @@ var vue_1 = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bund
 var _withScopeId = function _withScopeId(n) {
   return (0, vue_1.pushScopeId)("data-v-1c048c42"), n = n(), (0, vue_1.popScopeId)(), n;
 };
-var _hoisted_1 = {
+var _hoisted_1 = ["content"];
+var _hoisted_2 = ["href"];
+var _hoisted_3 = {
   "class": "inner"
 };
-var _hoisted_2 = {
-  "class": "other-month-wrap"
-};
-var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0, vue_1.createElementVNode)("svg", {
-    fill: "currentColor",
-    "class": "link-arrow"
-  }, [/*#__PURE__*/(0, vue_1.createElementVNode)("use", {
-    "xlink:href": "/icon/left.svg#left"
-  })], -1 /* HOISTED */);
-});
 var _hoisted_4 = {
-  key: 1,
-  "class": "no-link"
+  "class": "other-month-wrap"
 };
 var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("svg", {
@@ -22123,11 +22193,23 @@ var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
     "xlink:href": "/icon/left.svg#left"
   })], -1 /* HOISTED */);
 });
-var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_6 = {
+  key: 1,
+  "class": "no-link"
+};
+var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("svg", {
+    fill: "currentColor",
+    "class": "link-arrow"
+  }, [/*#__PURE__*/(0, vue_1.createElementVNode)("use", {
+    "xlink:href": "/icon/left.svg#left"
+  })], -1 /* HOISTED */);
+});
+var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("div", null, " ニュースはありません ", -1 /* HOISTED */);
 });
-var _hoisted_7 = [_hoisted_5, _hoisted_6];
-var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_9 = [_hoisted_7, _hoisted_8];
+var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("svg", {
     fill: "currentColor",
     "class": "link-arrow"
@@ -22143,11 +22225,16 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Link = (0, vue_1.resolveComponent)("Link");
   return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, null, [(0, vue_1.createCommentVNode)(" タイトル "), (0, vue_1.createVNode)(_component_Head, null, {
     "default": (0, vue_1.withCtx)(function () {
-      return [(0, vue_1.createElementVNode)("title", null, (0, vue_1.toDisplayString)(_ctx.format(_ctx.month)) + "のゲーム実況ニュース｜ゲーム実況動画まとめサイト GameJDM", 1 /* TEXT */)];
+      return [(0, vue_1.createElementVNode)("title", null, (0, vue_1.toDisplayString)(_ctx.format(_ctx.month)) + "のゲーム実況ニュース｜ゲーム実況動画まとめサイト GameJDM", 1 /* TEXT */), (0, vue_1.createElementVNode)("meta", {
+        name: "description",
+        content: 'ゲームの実況プレイに関するニュースをまとめています。' + _ctx.format(_ctx.month) + 'のゲーム実況ニュース一覧です。'
+      }, null, 8 /* PROPS */, _hoisted_1), (0, vue_1.createElementVNode)("link", {
+        rel: "canonical",
+        href: 'https://jikkyoplay.com/news/' + _ctx.thisMonth()
+      }, null, 8 /* PROPS */, _hoisted_2)];
     }),
-
     _: 1 /* STABLE */
-  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_1, [(0, vue_1.createCommentVNode)(" ゲーム実況ニュース "), (0, vue_1.createVNode)(_component_H2Title, {
+  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_3, [(0, vue_1.createCommentVNode)(" ゲーム実況ニュース "), (0, vue_1.createVNode)(_component_H2Title, {
     title_jp: _ctx.format(_ctx.month) + 'のゲーム実況ニュース',
     title_en: "GAME NEWS"
   }, null, 8 /* PROPS */, ["title_jp"]), (0, vue_1.createCommentVNode)(" ニュース記事 "), (0, vue_1.createVNode)(_component_DefaultSection, null, {
@@ -22163,23 +22250,23 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     }),
 
     _: 1 /* STABLE */
-  }), (0, vue_1.createCommentVNode)(" 来月と前月へのリンク "), (0, vue_1.createElementVNode)("div", _hoisted_2, [(0, vue_1.createCommentVNode)(" 来月（未来）へのリンク "), _ctx.nextMonth() ? ((0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_Link, {
+  }), (0, vue_1.createCommentVNode)(" 来月と前月へのリンク "), (0, vue_1.createElementVNode)("div", _hoisted_4, [(0, vue_1.createCommentVNode)(" 来月（未来）へのリンク "), _ctx.nextMonth() ? ((0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_Link, {
     key: 0,
     href: '/news/' + _ctx.nextMonth(),
     "class": "other-month"
   }, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_hoisted_3, (0, vue_1.createElementVNode)("div", null, "  " + (0, vue_1.toDisplayString)(_ctx.format(_ctx.nextMonth())) + " のニュース ", 1 /* TEXT */)];
+      return [_hoisted_5, (0, vue_1.createElementVNode)("div", null, "  " + (0, vue_1.toDisplayString)(_ctx.format(_ctx.nextMonth())) + " のニュース ", 1 /* TEXT */)];
     }),
 
     _: 1 /* STABLE */
-  }, 8 /* PROPS */, ["href"])) : ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_4, _hoisted_7)), (0, vue_1.createCommentVNode)(" 前月（過去）へのリンク "), _ctx.prevMonth() ? ((0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_Link, {
+  }, 8 /* PROPS */, ["href"])) : ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_6, _hoisted_9)), (0, vue_1.createCommentVNode)(" 前月（過去）へのリンク "), _ctx.prevMonth() ? ((0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_Link, {
     key: 2,
     href: '/news/' + _ctx.prevMonth(),
     "class": "other-month"
   }, {
     "default": (0, vue_1.withCtx)(function () {
-      return [(0, vue_1.createElementVNode)("div", null, (0, vue_1.toDisplayString)(_ctx.format(_ctx.prevMonth())) + " のニュース  ", 1 /* TEXT */), _hoisted_8];
+      return [(0, vue_1.createElementVNode)("div", null, (0, vue_1.toDisplayString)(_ctx.format(_ctx.prevMonth())) + " のニュース  ", 1 /* TEXT */), _hoisted_10];
     }),
     _: 1 /* STABLE */
   }, 8 /* PROPS */, ["href"])) : (0, vue_1.createCommentVNode)("v-if", true)])])], 64 /* STABLE_FRAGMENT */);
@@ -22206,26 +22293,40 @@ var vue_1 = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.esm-bund
 var _withScopeId = function _withScopeId(n) {
   return (0, vue_1.pushScopeId)("data-v-380e9f0e"), n = n(), (0, vue_1.popScopeId)(), n;
 };
-var _hoisted_1 = {
+var _hoisted_1 = ["content"];
+var _hoisted_2 = ["href"];
+var _hoisted_3 = {
   "class": "inner"
 };
-var _hoisted_2 = {
+var _hoisted_4 = {
   "class": "search-status"
 };
-var _hoisted_3 = {
+var _hoisted_5 = {
   "class": "link-tag-wrap"
 };
-var _hoisted_4 = /*#__PURE__*/(0, vue_1.createStaticVNode)("<option value=\"date_desc\" data-v-380e9f0e>投稿日の新しい順</option><option value=\"date_asc\" data-v-380e9f0e>投稿日の古い順</option><option value=\"view_desc\" data-v-380e9f0e>再生数の多い順</option><option value=\"view_asc\" data-v-380e9f0e>再生数の少ない順</option><option value=\"year_desc\" data-v-380e9f0e>ゲーム発売年の新しい順</option><option value=\"year_asc\" data-v-380e9f0e>ゲーム発売年の古い順</option>", 6);
-var _hoisted_10 = [_hoisted_4];
+var _hoisted_6 = /*#__PURE__*/(0, vue_1.createStaticVNode)("<option value=\"date_desc\" data-v-380e9f0e>投稿日の新しい順</option><option value=\"date_asc\" data-v-380e9f0e>投稿日の古い順</option><option value=\"view_desc\" data-v-380e9f0e>再生数の多い順</option><option value=\"view_asc\" data-v-380e9f0e>再生数の少ない順</option><option value=\"year_desc\" data-v-380e9f0e>ゲーム発売年の新しい順</option><option value=\"year_asc\" data-v-380e9f0e>ゲーム発売年の古い順</option>", 6);
+var _hoisted_12 = [_hoisted_6];
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_Head = (0, vue_1.resolveComponent)("Head");
   var _component_H2Title = (0, vue_1.resolveComponent)("H2Title");
   var _component_LinkTag = (0, vue_1.resolveComponent)("LinkTag");
   var _component_ProgramWrap = (0, vue_1.resolveComponent)("ProgramWrap");
   var _component_Pagination = (0, vue_1.resolveComponent)("Pagination");
-  return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, null, [(0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_1, [(0, vue_1.createCommentVNode)(" 今週のランキング "), (0, vue_1.createVNode)(_component_H2Title, {
+  return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, null, [(0, vue_1.createCommentVNode)(" タイトル "), (0, vue_1.createVNode)(_component_Head, null, {
+    "default": (0, vue_1.withCtx)(function () {
+      return [(0, vue_1.createElementVNode)("title", null, (0, vue_1.toDisplayString)(_ctx.title), 1 /* TEXT */), (0, vue_1.createElementVNode)("meta", {
+        name: "description",
+        content: _ctx.description
+      }, null, 8 /* PROPS */, _hoisted_1), (0, vue_1.createElementVNode)("link", {
+        rel: "canonical",
+        href: _ctx.canonical
+      }, null, 8 /* PROPS */, _hoisted_2)];
+    }),
+    _: 1 /* STABLE */
+  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_3, [(0, vue_1.createCommentVNode)(" 今週のランキング "), (0, vue_1.createVNode)(_component_H2Title, {
     title_jp: "ゲーム実況動画一覧",
     title_en: "GAMEPLAY PROGRAMS"
-  }), (0, vue_1.createCommentVNode)(" 動画の総数 "), (0, vue_1.createElementVNode)("div", _hoisted_2, [(0, vue_1.createCommentVNode)(" ヒット数 "), (0, vue_1.createElementVNode)("div", null, " 動画件数：" + (0, vue_1.toDisplayString)(_ctx.count.toLocaleString()) + "件（" + (0, vue_1.toDisplayString)(_ctx.getProgramsStartBy()) + " ～ " + (0, vue_1.toDisplayString)(_ctx.getProgramsEndBy()) + " 件） ", 1 /* TEXT */), (0, vue_1.createCommentVNode)(" 検索削除リンク "), (0, vue_1.createElementVNode)("div", _hoisted_3, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.delete_query_links, function (deletequery_link, index) {
+  }), (0, vue_1.createCommentVNode)(" 動画の総数 "), (0, vue_1.createElementVNode)("div", _hoisted_4, [(0, vue_1.createCommentVNode)(" ヒット数 "), (0, vue_1.createElementVNode)("div", null, " 動画件数：" + (0, vue_1.toDisplayString)(_ctx.count.toLocaleString()) + "件（" + (0, vue_1.toDisplayString)(_ctx.getProgramsStartBy()) + " ～ " + (0, vue_1.toDisplayString)(_ctx.getProgramsEndBy()) + " 件） ", 1 /* TEXT */), (0, vue_1.createCommentVNode)(" 検索削除リンク "), (0, vue_1.createElementVNode)("div", _hoisted_5, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.delete_query_links, function (deletequery_link, index) {
     return (0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_LinkTag, {
       key: index,
       name: deletequery_link.name,
@@ -22242,7 +22343,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     function () {
       return _ctx.redirectNewSort && _ctx.redirectNewSort.apply(_ctx, arguments);
     })
-  }, _hoisted_10, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue_1.vModelSelect, _ctx.sort]])]), (0, vue_1.createCommentVNode)(" 動画一覧 "), (0, vue_1.createElementVNode)("section", null, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.programs, function (program) {
+  }, _hoisted_12, 544 /* HYDRATE_EVENTS, NEED_PATCH */), [[vue_1.vModelSelect, _ctx.sort]])]), (0, vue_1.createCommentVNode)(" 動画一覧 "), (0, vue_1.createElementVNode)("section", null, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.programs, function (program) {
     return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", {
       key: program.id,
       "class": "program-wrap"
@@ -22255,7 +22356,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     page_last: Number(_ctx.page_last),
     base_url: "/program",
     queries: _ctx.queries
-  }, null, 8 /* PROPS */, ["page_current", "page_last", "queries"])])], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
+  }, null, 8 /* PROPS */, ["page_current", "page_last", "queries"])])], 64 /* STABLE_FRAGMENT */);
 }
 
 exports.render = render;
@@ -22282,27 +22383,29 @@ var _withScopeId = function _withScopeId(n) {
 var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("title", null, "ゲーム実況動画 人気ランキング｜ゲーム実況動画まとめサイト GameJDM", -1 /* HOISTED */);
 });
-var _hoisted_2 = {
+var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("meta", {
+    name: "description",
+    content: "ゲームの実況プレイ動画や実況プレイヤーの人気ランキングを、YouTubeやニコニコ動画の再生数をもとにまとめています。"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("link", {
+    rel: "canonical",
+    href: "https://jikkyoplay.com/ranking"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_4 = {
   "class": "inner"
 };
-var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("div", {
     "class": "page-caption"
   }, " 過去1週間に投稿されたゲーム実況動画の再生数をもとにしたランキングです！ ", -1 /* HOISTED */);
 });
-var _hoisted_4 = {
+var _hoisted_6 = {
   "class": "page-anker-wrap"
 };
-var _hoisted_5 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0, vue_1.createElementVNode)("img", {
-    src: "/icon/crown.svg"
-  }, null, -1 /* HOISTED */);
-});
-var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0, vue_1.createElementVNode)("img", {
-    src: "/icon/crown.svg"
-  }, null, -1 /* HOISTED */);
-});
 var _hoisted_7 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("img", {
     src: "/icon/crown.svg"
@@ -22318,58 +22421,68 @@ var _hoisted_9 = /*#__PURE__*/_withScopeId(function () {
     src: "/icon/crown.svg"
   }, null, -1 /* HOISTED */);
 });
-var _hoisted_10 = {
-  key: 0,
-  "class": "ranking-first pc-only"
-};
-var _hoisted_11 = {
-  "class": "ranking-wrap"
-};
+var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("img", {
+    src: "/icon/crown.svg"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_11 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("img", {
+    src: "/icon/crown.svg"
+  }, null, -1 /* HOISTED */);
+});
 var _hoisted_12 = {
-  key: 1,
+  key: 0,
   "class": "ranking-first pc-only"
 };
 var _hoisted_13 = {
-  key: 0,
-  "class": "ranking-first pc-only"
-};
-var _hoisted_14 = {
   "class": "ranking-wrap"
 };
-var _hoisted_15 = {
+var _hoisted_14 = {
   key: 1,
+  "class": "ranking-first pc-only"
+};
+var _hoisted_15 = {
+  key: 0,
   "class": "ranking-first pc-only"
 };
 var _hoisted_16 = {
-  key: 0,
-  "class": "ranking-first pc-only"
-};
-var _hoisted_17 = {
   "class": "ranking-wrap"
 };
-var _hoisted_18 = {
+var _hoisted_17 = {
   key: 1,
+  "class": "ranking-first pc-only"
+};
+var _hoisted_18 = {
+  key: 0,
   "class": "ranking-first pc-only"
 };
 var _hoisted_19 = {
-  key: 0,
-  "class": "ranking-first pc-only"
-};
-var _hoisted_20 = {
   "class": "ranking-wrap"
 };
-var _hoisted_21 = {
+var _hoisted_20 = {
   key: 1,
   "class": "ranking-first pc-only"
 };
-var _hoisted_22 = {
+var _hoisted_21 = {
   key: 0,
   "class": "ranking-first pc-only"
 };
-var _hoisted_23 = {
+var _hoisted_22 = {
   "class": "ranking-wrap"
 };
+var _hoisted_23 = {
+  key: 1,
+  "class": "ranking-first pc-only"
+};
 var _hoisted_24 = {
+  key: 0,
+  "class": "ranking-first pc-only"
+};
+var _hoisted_25 = {
+  "class": "ranking-wrap"
+};
+var _hoisted_26 = {
   key: 1,
   "class": "ranking-first pc-only"
 };
@@ -22384,18 +22497,18 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_AnkerLink = (0, vue_1.resolveComponent)("AnkerLink");
   return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, null, [(0, vue_1.createCommentVNode)(" タイトル "), (0, vue_1.createVNode)(_component_Head, null, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_hoisted_1];
+      return [_hoisted_1, _hoisted_2, _hoisted_3];
     }),
     _: 1 /* STABLE */
-  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_2, [(0, vue_1.createCommentVNode)(" 今週のランキング "), (0, vue_1.createVNode)(_component_H2Title, {
+  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_4, [(0, vue_1.createCommentVNode)(" 今週のランキング "), (0, vue_1.createVNode)(_component_H2Title, {
     title_jp: "今週の実況動画ランキング",
     title_en: "GAME RANKING"
-  }), (0, vue_1.createCommentVNode)(" ランキングの説明 "), _hoisted_3, (0, vue_1.createCommentVNode)(" ページ内リンク "), (0, vue_1.createElementVNode)("div", _hoisted_4, [(0, vue_1.createVNode)(_component_SmoothLink, {
+  }), (0, vue_1.createCommentVNode)(" ランキングの説明 "), _hoisted_5, (0, vue_1.createCommentVNode)(" ページ内リンク "), (0, vue_1.createElementVNode)("div", _hoisted_6, [(0, vue_1.createVNode)(_component_SmoothLink, {
     anker: "total-ranking",
     "class": "page-anker-link"
   }, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_hoisted_5, (0, vue_1.createTextVNode)(" 総合ランキング ")];
+      return [_hoisted_7, (0, vue_1.createTextVNode)(" 総合ランキング ")];
     }),
     _: 1 /* STABLE */
   }), (0, vue_1.createVNode)(_component_SmoothLink, {
@@ -22403,7 +22516,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "page-anker-link"
   }, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_hoisted_6, (0, vue_1.createTextVNode)(" 人気実況者ランキング ")];
+      return [_hoisted_8, (0, vue_1.createTextVNode)(" 人気実況者ランキング ")];
     }),
     _: 1 /* STABLE */
   }), (0, vue_1.createVNode)(_component_SmoothLink, {
@@ -22411,7 +22524,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "page-anker-link"
   }, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_hoisted_7, (0, vue_1.createTextVNode)(" 女性実況ランキング ")];
+      return [_hoisted_9, (0, vue_1.createTextVNode)(" 女性実況ランキング ")];
     }),
     _: 1 /* STABLE */
   }), (0, vue_1.createVNode)(_component_SmoothLink, {
@@ -22419,7 +22532,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "page-anker-link"
   }, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_hoisted_8, (0, vue_1.createTextVNode)(" ホラー実況ランキング ")];
+      return [_hoisted_10, (0, vue_1.createTextVNode)(" ホラー実況ランキング ")];
     }),
     _: 1 /* STABLE */
   }), (0, vue_1.createVNode)(_component_SmoothLink, {
@@ -22427,7 +22540,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     "class": "page-anker-link"
   }, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_hoisted_9, (0, vue_1.createTextVNode)(" レトロゲーム実況ランキング ")];
+      return [_hoisted_11, (0, vue_1.createTextVNode)(" レトロゲーム実況ランキング ")];
     }),
     _: 1 /* STABLE */
   })]), (0, vue_1.createCommentVNode)(" 総合ランキング "), (0, vue_1.createVNode)(_component_RankingBanner, {
@@ -22439,10 +22552,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.total_rankings, function (ranking, index) {
         return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, {
           key: ranking.id
-        }, [index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_10)) : (0, vue_1.createCommentVNode)("v-if", true), (0, vue_1.createElementVNode)("div", _hoisted_11, [(0, vue_1.createVNode)(_component_ProgramWrap, {
+        }, [index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_12)) : (0, vue_1.createCommentVNode)("v-if", true), (0, vue_1.createElementVNode)("div", _hoisted_13, [(0, vue_1.createVNode)(_component_ProgramWrap, {
           rank: index + 1,
           program: ranking
-        }, null, 8 /* PROPS */, ["rank", "program"])]), index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_12)) : (0, vue_1.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
+        }, null, 8 /* PROPS */, ["rank", "program"])]), index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_14)) : (0, vue_1.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
       }), 128 /* KEYED_FRAGMENT */))];
     }),
 
@@ -22456,10 +22569,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.creater_rankings, function (ranking, index) {
         return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, {
           key: ranking.id
-        }, [index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_13)) : (0, vue_1.createCommentVNode)("v-if", true), (0, vue_1.createElementVNode)("div", _hoisted_14, [(0, vue_1.createVNode)(_component_CreaterWrap, {
+        }, [index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_15)) : (0, vue_1.createCommentVNode)("v-if", true), (0, vue_1.createElementVNode)("div", _hoisted_16, [(0, vue_1.createVNode)(_component_CreaterWrap, {
           rank: index + 1,
           creater: ranking
-        }, null, 8 /* PROPS */, ["rank", "creater"])]), index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_15)) : (0, vue_1.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
+        }, null, 8 /* PROPS */, ["rank", "creater"])]), index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_17)) : (0, vue_1.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
       }), 128 /* KEYED_FRAGMENT */))];
     }),
 
@@ -22473,10 +22586,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.female_rankings, function (ranking, index) {
         return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, {
           key: ranking.id
-        }, [index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_16)) : (0, vue_1.createCommentVNode)("v-if", true), (0, vue_1.createElementVNode)("div", _hoisted_17, [(0, vue_1.createVNode)(_component_ProgramWrap, {
+        }, [index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_18)) : (0, vue_1.createCommentVNode)("v-if", true), (0, vue_1.createElementVNode)("div", _hoisted_19, [(0, vue_1.createVNode)(_component_ProgramWrap, {
           rank: index + 1,
           program: ranking
-        }, null, 8 /* PROPS */, ["rank", "program"])]), index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_18)) : (0, vue_1.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
+        }, null, 8 /* PROPS */, ["rank", "program"])]), index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_20)) : (0, vue_1.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
       }), 128 /* KEYED_FRAGMENT */))];
     }),
 
@@ -22490,10 +22603,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.horror_rankings, function (ranking, index) {
         return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, {
           key: ranking.id
-        }, [index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_19)) : (0, vue_1.createCommentVNode)("v-if", true), (0, vue_1.createElementVNode)("div", _hoisted_20, [(0, vue_1.createVNode)(_component_ProgramWrap, {
+        }, [index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_21)) : (0, vue_1.createCommentVNode)("v-if", true), (0, vue_1.createElementVNode)("div", _hoisted_22, [(0, vue_1.createVNode)(_component_ProgramWrap, {
           rank: index + 1,
           program: ranking
-        }, null, 8 /* PROPS */, ["rank", "program"])]), index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_21)) : (0, vue_1.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
+        }, null, 8 /* PROPS */, ["rank", "program"])]), index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_23)) : (0, vue_1.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
       }), 128 /* KEYED_FRAGMENT */))];
     }),
 
@@ -22507,10 +22620,10 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.retro_rankings, function (ranking, index) {
         return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, {
           key: ranking.id
-        }, [index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_22)) : (0, vue_1.createCommentVNode)("v-if", true), (0, vue_1.createElementVNode)("div", _hoisted_23, [(0, vue_1.createVNode)(_component_ProgramWrap, {
+        }, [index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_24)) : (0, vue_1.createCommentVNode)("v-if", true), (0, vue_1.createElementVNode)("div", _hoisted_25, [(0, vue_1.createVNode)(_component_ProgramWrap, {
           rank: index + 1,
           program: ranking
-        }, null, 8 /* PROPS */, ["rank", "program"])]), index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_24)) : (0, vue_1.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
+        }, null, 8 /* PROPS */, ["rank", "program"])]), index == 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createElementBlock)("div", _hoisted_26)) : (0, vue_1.createCommentVNode)("v-if", true)], 64 /* STABLE_FRAGMENT */);
       }), 128 /* KEYED_FRAGMENT */))];
     }),
 
@@ -22550,10 +22663,22 @@ var _withScopeId = function _withScopeId(n) {
 var _hoisted_1 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0, vue_1.createElementVNode)("title", null, "ゲーム実況動画 おすすめ動画レビュー｜ゲーム実況動画まとめサイト GameJDM", -1 /* HOISTED */);
 });
-var _hoisted_2 = {
+var _hoisted_2 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("meta", {
+    name: "description",
+    content: "おすすめレビューのついたゲーム実況動画をまとめています。"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_3 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0, vue_1.createElementVNode)("link", {
+    rel: "canonical",
+    href: "https://jikkyoplay.com/review"
+  }, null, -1 /* HOISTED */);
+});
+var _hoisted_4 = {
   "class": "inner"
 };
-var _hoisted_3 = {
+var _hoisted_5 = {
   "class": "review-item"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
@@ -22563,13 +22688,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Pagination = (0, vue_1.resolveComponent)("Pagination");
   return (0, vue_1.openBlock)(), (0, vue_1.createElementBlock)(vue_1.Fragment, null, [(0, vue_1.createCommentVNode)(" タイトル "), (0, vue_1.createVNode)(_component_Head, null, {
     "default": (0, vue_1.withCtx)(function () {
-      return [_hoisted_1];
+      return [_hoisted_1, _hoisted_2, _hoisted_3];
     }),
     _: 1 /* STABLE */
-  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_2, [(0, vue_1.createCommentVNode)(" おすすめ動画レビュー "), (0, vue_1.createVNode)(_component_H2Title, {
+  }), (0, vue_1.createCommentVNode)(" サイト本体部分 "), (0, vue_1.createElementVNode)("div", _hoisted_4, [(0, vue_1.createCommentVNode)(" おすすめ動画レビュー "), (0, vue_1.createVNode)(_component_H2Title, {
     title_jp: "おすすめ動画レビュー",
     title_en: "GAME REVIEW"
-  }), (0, vue_1.createCommentVNode)(" レビュー一覧 "), (0, vue_1.createElementVNode)("section", null, [(0, vue_1.createElementVNode)("div", _hoisted_3, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.reviews, function (review, index) {
+  }), (0, vue_1.createCommentVNode)(" レビュー一覧 "), (0, vue_1.createElementVNode)("section", null, [(0, vue_1.createElementVNode)("div", _hoisted_5, [((0, vue_1.openBlock)(true), (0, vue_1.createElementBlock)(vue_1.Fragment, null, (0, vue_1.renderList)(_ctx.reviews, function (review, index) {
     return (0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_ReviewWrap, {
       key: review.id,
       review: review,
@@ -23654,6 +23779,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   //読み込んだコンポーネント
   components: {
+    Head: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_0__.Head,
     CreaterWrap: _js_Components_Creater_CreaterWrap_vue__WEBPACK_IMPORTED_MODULE_2__["default"],
     GameWrap: _js_Components_Game_GameWrap_vue__WEBPACK_IMPORTED_MODULE_3__["default"],
     ProgramSimpleWrap: _js_Components_Program_ProgramSimpleWrap_vue__WEBPACK_IMPORTED_MODULE_5__["default"],
@@ -25053,65 +25179,68 @@ __webpack_require__.r(__webpack_exports__);
 var _withScopeId = function _withScopeId(n) {
   return (0,vue__WEBPACK_IMPORTED_MODULE_0__.pushScopeId)("data-v-b671b41e"), n = n(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.popScopeId)(), n;
 };
-var _hoisted_1 = {
+var _hoisted_1 = ["content"];
+var _hoisted_2 = ["href"];
+var _hoisted_3 = {
   "class": "inner"
 };
-var _hoisted_2 = {
+var _hoisted_4 = {
   "class": "program-title"
 };
-var _hoisted_3 = {
+var _hoisted_5 = {
   "class": "information-wrap"
 };
-var _hoisted_4 = {
+var _hoisted_6 = {
   "class": "information-wrap-left"
 };
-var _hoisted_5 = {
-  "class": "section-wrap"
-};
-var _hoisted_6 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "実況者情報", -1 /* HOISTED */);
-});
 var _hoisted_7 = {
   "class": "section-wrap"
 };
 var _hoisted_8 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "動画情報", -1 /* HOISTED */);
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "実況者情報", -1 /* HOISTED */);
 });
 var _hoisted_9 = {
   "class": "section-wrap"
 };
 var _hoisted_10 = /*#__PURE__*/_withScopeId(function () {
-  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "ゲーム情報", -1 /* HOISTED */);
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "動画情報", -1 /* HOISTED */);
 });
 var _hoisted_11 = {
+  "class": "section-wrap"
+};
+var _hoisted_12 = /*#__PURE__*/_withScopeId(function () {
+  return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "ゲーム情報", -1 /* HOISTED */);
+});
+var _hoisted_13 = {
   "class": "information-wrap-right"
 };
-var _hoisted_12 = {
+var _hoisted_14 = {
   "class": "review-wrap"
 };
-var _hoisted_13 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "動画レビュー", -1 /* HOISTED */);
 });
-var _hoisted_14 = {
+var _hoisted_16 = {
   key: 0,
   "class": "review-announce"
 };
-var _hoisted_15 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("br", null, null, -1 /* HOISTED */);
 });
-var _hoisted_16 = {
+var _hoisted_18 = {
   "class": "relation-program-wrap"
 };
-var _hoisted_17 = /*#__PURE__*/_withScopeId(function () {
+var _hoisted_19 = /*#__PURE__*/_withScopeId(function () {
   return /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h3", null, "関連動画", -1 /* HOISTED */);
 });
-var _hoisted_18 = {
+var _hoisted_20 = {
   "class": "program-wrap"
 };
-var _hoisted_19 = {
+var _hoisted_21 = {
   "class": "program-item"
 };
 function render(_ctx, _cache, $props, $setup, $data, $options) {
+  var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
   var _component_EmbedMovie = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("EmbedMovie");
   var _component_MovieSiteLink = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("MovieSiteLink");
   var _component_CreaterWrap = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("CreaterWrap");
@@ -25122,15 +25251,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_ReviewSimpleWrap = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ReviewSimpleWrap");
   var _component_ModalCreateReview = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ModalCreateReview");
   var _component_ProgramWrap = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("ProgramWrap");
-  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" サイト本体部分 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_1, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 埋め込み動画 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EmbedMovie, {
+  return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" タイトル "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Head, null, {
+    "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
+      return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("title", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.program.title) + "｜ゲーム実況動画まとめサイト GameJDM", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("meta", {
+        name: "description",
+        content: $data.creater.name + 'さんのゲーム実況プレイ動画「' + $data.program.title + '」'
+      }, null, 8 /* PROPS */, _hoisted_1), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("link", {
+        rel: "canonical",
+        href: 'https://jikkyoplay.com/program/' + $data.program.id
+      }, null, 8 /* PROPS */, _hoisted_2)];
+    }),
+    _: 1 /* STABLE */
+  }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" サイト本体部分 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 埋め込み動画 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_EmbedMovie, {
     site_id: $data.creater.site_id,
     movie_id: $data.program.movie_id
-  }, null, 8 /* PROPS */, ["site_id", "movie_id"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 再生数と投稿日時 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.format($data.program.published_at)) + " 投稿", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "（ " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.program.view_count.toLocaleString()) + "回 再生 ）", 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 動画タイトル "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", _hoisted_2, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.program.title), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 元サイトへの外部リンク "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MovieSiteLink, {
+  }, null, 8 /* PROPS */, ["site_id", "movie_id"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 再生数と投稿日時 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($options.format($data.program.published_at)) + " 投稿", 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, "（ " + (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.program.view_count.toLocaleString()) + "回 再生 ）", 1 /* TEXT */)]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 動画タイトル "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("h2", _hoisted_4, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.program.title), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 元サイトへの外部リンク "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_MovieSiteLink, {
     site_id: $data.creater.site_id,
     movie_id: $data.program.movie_id
-  }, null, 8 /* PROPS */, ["site_id", "movie_id"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 動画の各種情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 実況者情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [_hoisted_6, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CreaterWrap, {
+  }, null, 8 /* PROPS */, ["site_id", "movie_id"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 動画の各種情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_6, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 実況者情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_CreaterWrap, {
     creater: $data.creater
-  }, null, 8 /* PROPS */, ["creater"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 動画情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProgramSimpleWrap, {
+  }, null, 8 /* PROPS */, ["creater"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 動画情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProgramSimpleWrap, {
     site_id: $data.creater.site_id,
     site_name: $data.creater.site_name,
     voice_id: $data.program.voice_id,
@@ -25140,26 +25280,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     creater_id: $data.creater.id,
     default_voice_id: $data.program.voice_id,
     onChange_voice_id: $options.changeVoiceId
-  }, null, 8 /* PROPS */, ["program_id", "creater_id", "default_voice_id", "onChange_voice_id"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲーム情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_9, [_hoisted_10, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_GameWrap, {
+  }, null, 8 /* PROPS */, ["program_id", "creater_id", "default_voice_id", "onChange_voice_id"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲーム情報 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [_hoisted_12, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_GameWrap, {
     game: $data.game
   }, null, 8 /* PROPS */, ["game"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ModalUpdateGame, {
     program_id: $data.program.id,
     onChange_game_id: $options.changeGameId
-  }, null, 8 /* PROPS */, ["program_id", "onChange_game_id"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲームレビュー "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [_hoisted_13, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.reviews, function (review) {
+  }, null, 8 /* PROPS */, ["program_id", "onChange_game_id"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" ゲームレビュー "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [_hoisted_15, ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.reviews, function (review) {
     return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createBlock)(_component_ReviewSimpleWrap, {
       key: review.id,
       review: review
     }, null, 8 /* PROPS */, ["review"]);
-  }), 128 /* KEYED_FRAGMENT */)), $data.reviews.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" この動画へのレビューはまだありません。"), _hoisted_15, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" レビューを書いて "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.creater.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" さんを応援しよう！ ")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ModalCreateReview, {
+  }), 128 /* KEYED_FRAGMENT */)), $data.reviews.length == 0 ? ((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_16, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" この動画へのレビューはまだありません。"), _hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" レビューを書いて "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("span", null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)($data.creater.name), 1 /* TEXT */), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" さんを応援しよう！ ")])) : (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("v-if", true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ModalCreateReview, {
     program_id: $data.program.id,
     creater_name: $data.creater.name,
     onPush_review: $options.pushReview
-  }, null, 8 /* PROPS */, ["program_id", "creater_name", "onPush_review"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 関連動画 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_16, [_hoisted_17, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.relation_programs, function (program) {
-    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_19, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProgramWrap, {
+  }, null, 8 /* PROPS */, ["program_id", "creater_name", "onPush_review"])])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)(" 関連動画 "), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_18, [_hoisted_19, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_20, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($data.relation_programs, function (program) {
+    return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("div", _hoisted_21, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_ProgramWrap, {
       rank: null,
       program: program
     }, null, 8 /* PROPS */, ["program"])]);
-  }), 256 /* UNKEYED_FRAGMENT */))])])])], 2112 /* STABLE_FRAGMENT, DEV_ROOT_FRAGMENT */);
+  }), 256 /* UNKEYED_FRAGMENT */))])])])], 64 /* STABLE_FRAGMENT */);
 }
 
 /***/ }),
