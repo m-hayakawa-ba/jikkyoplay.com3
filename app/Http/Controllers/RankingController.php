@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Cache;
 use App\Services\Creater\CreaterReadService;
 use App\Services\Program\ProgramReadService;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class RankingController extends Controller
@@ -30,30 +30,43 @@ class RankingController extends Controller
      */
     public function index()
     {
+        //クロージャに渡す用の変数を用意
+        $that = $this;
+
         //ランキング一覧を取得
-        $total_rankings = $this->programReadService->getTotalRanking(
-            $this->max_ranking_count_s,
-            $this->period_ranking,
-        );
-        $creater_rankings = $this->createrReadService->getRankings(
-            $this->max_ranking_count_s,
-            $this->period_ranking,
-        );
-        $female_rankings = $this->programReadService->getFemaleRanking(
-            $this->max_ranking_count_s,
-            $this->period_ranking,
-            'female',
-        );
-        $horror_rankings = $this->programReadService->getHorrorRanking(
-            $this->max_ranking_count_s,
-            $this->period_ranking,
-            'horror',
-        );
-        $retro_rankings = $this->programReadService->getRetroRanking(
-            $this->max_ranking_count_s,
-            $this->period_ranking,
-            'retro',
-        );
+        $total_rankings = Cache::remember('ranking_total_rankings', 60*60, function() use ($that) {
+            return $that->programReadService->getTotalRanking(
+                $that->max_ranking_count_s,
+                $that->period_ranking,
+            );
+        });
+        $creater_rankings = Cache::remember('ranking_creater_rankings', 60*60, function() use ($that) {
+            return $that->createrReadService->getRankings(
+                $that->max_ranking_count_s,
+                $that->period_ranking,
+            );
+        });
+        $female_rankings = Cache::remember('ranking_female_rankings', 60*60, function() use ($that) {
+            return $that->programReadService->getFemaleRanking(
+                $that->max_ranking_count_s,
+                $that->period_ranking,
+                'female',
+            );
+        });
+        $horror_rankings = Cache::remember('ranking_horror_rankings', 60*60, function() use ($that) {
+            return $that->programReadService->getHorrorRanking(
+                $that->max_ranking_count_s,
+                $that->period_ranking,
+                'horror',
+            );
+        });
+        $retro_rankings = Cache::remember('ranking_retro_rankings', 60*60, function() use ($that) {
+            return $that->programReadService->getRetroRanking(
+                $that->max_ranking_count_s,
+                $that->period_ranking,
+                'retro',
+            );
+        });
 
         //viewへ遷移
         return Inertia::render('Ranking/Index', compact(
