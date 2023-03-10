@@ -19742,7 +19742,6 @@ exports["default"] = (0, vue_1.defineComponent)({
   },
   //初回読み込み時に実行
   mounted: function mounted() {
-    console.log(this.anker);
     //propsを変更可能な変数にセット
     this.anker_array = this.anker;
     //アンカーリンクの初期値セット
