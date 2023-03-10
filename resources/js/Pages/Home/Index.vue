@@ -91,7 +91,7 @@
                 v-for="search_word in search_words"
                 :key="search_word.id"
                 :name="search_word.word"
-                :link="'/program?word=' + search_word.word"
+                :link="`/program?word=${search_word.word}&point=1`"
                 icon="single_right"
             />
         </section>

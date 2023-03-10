@@ -22107,7 +22107,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
     return (0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_LinkTag, {
       key: search_word.id,
       name: search_word.word,
-      link: '/program?word=' + search_word.word,
+      link: "/program?word=".concat(search_word.word, "&point=1"),
       icon: "single_right"
     }, null, 8 /* PROPS */, ["name", "link"]);
   }), 128 /* KEYED_FRAGMENT */))])]), (0, vue_1.createCommentVNode)(" アンカーリンク "), _ctx.anker.length > 0 ? ((0, vue_1.openBlock)(), (0, vue_1.createBlock)(_component_AnkerLink, {
