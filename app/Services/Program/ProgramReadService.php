@@ -165,8 +165,8 @@ class ProgramReadService
                 $query->where('programs.game_id', $game_id)
                       ->orWhere('programs.creater_id', $creater_id);
             })
-            ->orderBy('creater_match_flag',  'DESC')
-            ->orderBy('programs.view_count', 'DESC')
+            ->orderBy('creater_match_flag',  'asc')
+            ->orderBy('programs.view_count', 'desc')
             ->limit($count)
             ->get();
     }
