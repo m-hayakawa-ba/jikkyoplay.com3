@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Http\Request;
 use App\Services\Creater\CreaterReadService;
 use App\Services\Game\GameReadService;
 use App\Services\Program\ProgramReadService;
@@ -10,7 +12,6 @@ use App\Services\Program\ProgramSearchService;
 use App\Services\Review\ReviewReadService;
 use App\Services\SearchWord\SearchWordCreateService;
 use App\Services\History\HistoryCreateService;
-use Illuminate\Http\Request;
 use Inertia\Inertia;
 
 class ProgramController extends Controller
@@ -52,11 +53,22 @@ class ProgramController extends Controller
             $request->merge(['order' => 'desc']);
         }
 
-        //動画を取得
-        $array = $this->programSearchService->searchPrograms(
-            $request,
-            $this->get_program_count,
-        );
+        //キャッシュさせるかどうかを調べ、動画を取得
+        $cache_key = $this->programSearchService->getCacheKey($request);
+        if (!is_null($cache_key)) {
+            $that = $this;
+            $array = Cache::remember($cache_key, 60*60, function() use ($that, $request) {
+                return $this->programSearchService->searchPrograms(
+                    $request,
+                    $this->get_program_count,
+                );
+            });
+        } else {
+            $array = $this->programSearchService->searchPrograms(
+                $request,
+                $this->get_program_count,
+            );
+        }
         $count = $array['count'];
         $programs = $array['programs'];
 

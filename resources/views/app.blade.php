@@ -15,6 +15,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
         <link href="{{ mix('/css/user.css') }}?v=15" rel="stylesheet" />
         <script src="{{ mix('/js/user.js') }}?v=15" defer></script>
+        <link rel="shortcut icon" href="/favicon.ico">
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" href="/android-chrome-192x192.png">
         @inertiaHead
     </head>
     <body>
