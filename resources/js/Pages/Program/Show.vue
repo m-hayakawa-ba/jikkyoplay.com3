@@ -86,7 +86,8 @@
                         class="review-announce"    
                     >
                         この動画へのレビューはまだありません。<br />
-                        レビューを書いて <span>{{ creater.name }}</span> さんを応援しよう！
+                        レビューを書いて <span>{{ creater.name }}</span> さんを応援しよう！<br />
+                        自分の動画の宣伝もOK！
                     </div>
                     <ModalCreateReview
                         :program_id="program.id"

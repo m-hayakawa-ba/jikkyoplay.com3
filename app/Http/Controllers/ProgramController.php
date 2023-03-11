@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Cache;
+use App\Libs\CacheLib;
 use Illuminate\Http\Request;
 use App\Services\Creater\CreaterReadService;
 use App\Services\Game\GameReadService;
@@ -19,7 +19,6 @@ class ProgramController extends Controller
     /**
      * 定数定義
      */
-    private $get_program_count = 24;          //1ページあたりの動画数
     private $relation_program_count = 6;      //表示させる関連動画の個数
     private $period_search_word = '-1 week';  //表示させる検索ワードの集計期間
 
@@ -45,28 +44,31 @@ class ProgramController extends Controller
      */
     public function index(Request $request)
     {
-        //ソート順がなかった場合は設定する
+        //必要なパラメータがなかった場合は設定する
         if (!$request->filled('sort')) {
             $request->merge(['sort' => 'date']);
         }
         if (!$request->filled('order')) {
             $request->merge(['order' => 'desc']);
         }
+        if (!$request->filled('page')) {
+            $request->merge(['page' => 1]);
+        }
 
-        //キャッシュさせるかどうかを調べ、動画を取得
-        $cache_key = $this->programSearchService->getCacheKey($request);
-        if (!is_null($cache_key)) {
-            $that = $this;
-            $array = Cache::remember($cache_key, 60*60, function() use ($that, $request) {
-                return $this->programSearchService->searchPrograms(
-                    $request,
-                    $this->get_program_count,
-                );
-            });
+        //キャッシュがあるかどうかを調べ、あるときだけ値を取得する
+        $has_cache = CacheLib::has(
+            'program',
+            $request->toArray(),
+        );
+        if ($has_cache) {
+            $array = CacheLib::get(
+                'program',
+                $request->toArray(),
+            );
         } else {
             $array = $this->programSearchService->searchPrograms(
                 $request,
-                $this->get_program_count,
+                config('laravel.program_count'),
             );
         }
         $count = $array['count'];
@@ -87,11 +89,11 @@ class ProgramController extends Controller
         }
         $page_last    = $this->programSearchService->getMaxPageNumber(
             $count,
-            $this->get_program_count,
+            config('laravel.program_count'),
         );
 
         //1ページあたりの動画数を取得
-        $programs_per_page = $this->get_program_count;
+        $programs_per_page = config('laravel.program_count');
 
         //検索クエリを取得
         //array_filterを使っているのは、フロントでnullが文字列の"null"になってしまうのを防ぐため

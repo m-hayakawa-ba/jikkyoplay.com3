@@ -11,8 +11,8 @@
         @endif
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
-        <link href="{{ mix('/css/user.css') }}?v=16" rel="stylesheet" />
-        <script src="{{ mix('/js/user.js') }}?v=16" defer></script>
+        <link href="{{ mix('/css/user.css') }}?v={{ config('laravel.version') }}" rel="stylesheet" />
+        <script src="{{ mix('/js/user.js') }}?v={{ config('laravel.version') }}" defer></script>
         <link rel="shortcut icon" href="/favicon.ico">
         <link rel="apple-touch-icon" href="/apple-touch-icon.png">
         <link rel="icon" type="image/png" href="/android-chrome-192x192.png">

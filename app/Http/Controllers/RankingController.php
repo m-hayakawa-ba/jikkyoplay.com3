@@ -2,20 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Support\Facades\Cache;
+use App\Libs\CacheLib;
 use App\Services\Creater\CreaterReadService;
 use App\Services\Program\ProgramReadService;
 use Inertia\Inertia;
 
 class RankingController extends Controller
 {
-    /**
-     * 定数定義
-     */
-    private $max_ranking_count_l = 20;   //表示させるランキング数（多い場合）
-    private $max_ranking_count_s = 10;   //表示させるランキング数（少ない場合）
-    private $period_ranking = '-1 week'; //表示させるランキングの集計期間
-
     /**
      * コンストラクタ
      */
@@ -34,37 +27,34 @@ class RankingController extends Controller
         $that = $this;
 
         //ランキング一覧を取得
-        $total_rankings = Cache::remember('ranking_total_rankings', 60*60, function() use ($that) {
+        $total_rankings = CacheLib::remember('ranking_total_rankings', function() use ($that) {
             return $that->programReadService->getTotalRanking(
-                $that->max_ranking_count_s,
-                $that->period_ranking,
+                config('laravel.ranking_count'),
+                config('laravel.ranking_period'),
             );
         });
-        $creater_rankings = Cache::remember('ranking_creater_rankings', 60*60, function() use ($that) {
+        $creater_rankings = CacheLib::remember('ranking_creater_rankings', function() use ($that) {
             return $that->createrReadService->getRankings(
-                $that->max_ranking_count_s,
-                $that->period_ranking,
+                config('laravel.ranking_count'),
+                config('laravel.ranking_period'),
             );
         });
-        $female_rankings = Cache::remember('ranking_female_rankings', 60*60, function() use ($that) {
+        $female_rankings = CacheLib::remember('ranking_female_rankings', function() use ($that) {
             return $that->programReadService->getFemaleRanking(
-                $that->max_ranking_count_s,
-                $that->period_ranking,
-                'female',
+                config('laravel.ranking_count'),
+                config('laravel.ranking_period'),
             );
         });
-        $horror_rankings = Cache::remember('ranking_horror_rankings', 60*60, function() use ($that) {
+        $horror_rankings = CacheLib::remember('ranking_horror_rankings', function() use ($that) {
             return $that->programReadService->getHorrorRanking(
-                $that->max_ranking_count_s,
-                $that->period_ranking,
-                'horror',
+                config('laravel.ranking_count'),
+                config('laravel.ranking_period'),
             );
         });
-        $retro_rankings = Cache::remember('ranking_retro_rankings', 60*60, function() use ($that) {
+        $retro_rankings = CacheLib::remember('ranking_retro_rankings', function() use ($that) {
             return $that->programReadService->getRetroRanking(
-                $that->max_ranking_count_s,
-                $that->period_ranking,
-                'retro',
+                config('laravel.ranking_count'),
+                config('laravel.ranking_period'),
             );
         });
 

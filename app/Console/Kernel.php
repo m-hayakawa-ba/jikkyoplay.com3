@@ -27,6 +27,9 @@ class Kernel extends ConsoleKernel
     {
         //毎朝午前4時、ゲーム実況ニュースの日次取得
         $schedule->command('get:news')->dailyAt('04:00');
+
+        //1時間毎にキャッシュを作成
+        $schedule->command('make:cache')->hourly();
     }
 
     /**

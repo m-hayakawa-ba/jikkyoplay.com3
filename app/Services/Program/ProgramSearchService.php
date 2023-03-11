@@ -122,44 +122,6 @@ class ProgramSearchService
     }
 
     /**
-     * 検索結果をキャッシュさせるかどうかを調べる
-     * 
-     * @param Request $request 検索クエリ
-     * 
-     * @return ?string キャッシュさせる場合はキャッシュのキー、させない場合はnull
-     */
-    public function getCacheKey(Request $request) : ?string
-    {
-        //2ページ目以降はキャッシュさせない
-        if ($request->has('page') && $request->page >= 2) {
-            return null;
-        }
-
-        //クエリを配列に変換し、不要なクエリを削除
-        $array = $request->toArray();
-        unset($array['sort']);
-        unset($array['order']);
-        unset($array['page']);
-        unset($array['point']);
-
-        //何も検索していないときはキャッシュさせる
-        if (count($array) == 0) {
-            return "program_" . http_build_query($request->toArray());
-        }
-        
-        //おすすめクエリと同じ文字列のときはキャッシュさせる
-        $recommend_query_count = $this->recommendQuery
-            ->where('path', "/program?" . urldecode(http_build_query($array)))
-            ->count();
-        if ($recommend_query_count > 0) {
-            return "program_" . http_build_query($request->toArray());
-        }
-
-        //それ以外は今のところキャッシュさせない
-        return null;
-    }
-
-    /**
      * 検索条件
      * 動画タイトルの絞り込み
      * 
