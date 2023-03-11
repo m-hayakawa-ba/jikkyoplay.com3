@@ -170,4 +170,22 @@ class ProgramReadService
             ->limit($count)
             ->get();
     }
+
+    /**
+     * サイトマップに掲載する動画のidを取得
+     * 
+     * @return array
+     */
+    public function getSitemapPrograms() : array
+    {
+        return $this->programModel
+            ->select('id')
+            ->where('flag_enabled', 1)
+            ->whereHas('reviews')
+            ->orWhere('view_count', '>=', 100)
+            ->orderBy('published_at', 'desc')
+            ->limit(10000)
+            ->get()
+            ->toArray();
+    }
 }

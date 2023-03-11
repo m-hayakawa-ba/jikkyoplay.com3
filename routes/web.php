@@ -9,6 +9,7 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\ProgramController;
 use App\Http\Controllers\RankingController;
 use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SitemapController;
 
 //トップページ
 Route::get('/', [HomeController::class, 'index']);
@@ -35,3 +36,6 @@ Route::get('/history', [HistoryController::class, 'index']);
 
 //このサイトについて
 Route::get('/about', [AboutController::class, 'index']);
+
+//サイトマップ
+Route::get('/sitemap', [SitemapController::class, 'index']);

@@ -21,6 +21,10 @@ class Program extends Model
     {
         return $this->belongsTo('App\Models\Game');
     }
+    public function reviews(): object
+    {
+        return $this->hasMany('App\Models\Review');
+    }
     public function fix_program_information(): object
     {
         return $this->hasmany('App\Models\FixProgramInformation');

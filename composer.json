@@ -13,6 +13,7 @@
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",
         "laravel/tinker": "^2.5",
+        "laravelium/sitemap": "8.*",
         "predis/predis": "^2.1"
     },
     "require-dev": {

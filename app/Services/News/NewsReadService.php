@@ -4,6 +4,7 @@ namespace App\Services\News;
 
 use App\Models\News;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class NewsReadService
 {
@@ -72,5 +73,19 @@ class NewsReadService
             ->where('published_at', '>=', date('Y-m-d', strtotime('first day of ' . $month)) . ' 00:00:00')
             ->where('published_at', '<=', date('Y-m-d', strtotime('last day of '  . $month)) . ' 23:59:59')
             ->get();
+    }
+
+    /**
+     * サイトマップに掲載するニュースのパラメータ一覧を取得
+     * 
+     * @return array
+     */
+    public function getSitemapParameters() : array
+    {
+        return $this->newsModel
+            ->select(DB::raw('DATE_FORMAT(published_at, "%Y-%m") as published_month'))
+            ->groupBy('published_month')
+            ->get()
+            ->toArray();
     }
 }
