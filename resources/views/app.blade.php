@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ja">
     <head>
         {{-- googleタグマネージャー --}}
         @if (config('app.env') == 'production')
@@ -10,7 +10,7 @@
             })(window,document,'script','dataLayer','GTM-P646PW5');</script>
         @endif
         <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
         <link href="{{ mix('/css/user.css') }}?v={{ config('laravel.version') }}" rel="stylesheet" />
         <script src="{{ mix('/js/user.js') }}?v={{ config('laravel.version') }}" defer></script>
         <link rel="shortcut icon" href="/favicon.ico">

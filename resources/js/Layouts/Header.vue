@@ -6,7 +6,7 @@
             <div class="header-logo-wrap">
                 <h1 class="header-logo">
                     <Link href="/">
-                        <img src="/image/logo.png?v=1" :alt="constants.site_title">
+                        <img src="/image/logo.webp?v=1" :alt="constants.site_title">
                     </Link>
                 </h1>
             </div>
@@ -158,6 +158,9 @@ export default defineComponent({
     }
     .header-logo {
         width: 168px;
+        img {
+            height: 40px;
+        }
     }
 
     .header-button-search, .header-button-main {

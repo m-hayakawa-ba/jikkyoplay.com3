@@ -21,7 +21,7 @@
             <img
                 v-else
                 src="/image/noimage.png"
-                :alt="creater.name"
+                alt="実況者画像なし"
             >
         </div>
 

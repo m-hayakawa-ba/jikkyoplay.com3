@@ -7,7 +7,10 @@
         class="anker-prev"
     >
         <div class="anker-arrow">
-            <img src="/icon/arrow_up.svg">
+            <img
+                src="/icon/arrow_up.svg"
+                alt="下の項目へのアンカーリンク"
+            >
         </div>
         {{ anker_name }}
     </SmoothLink>
@@ -25,7 +28,10 @@
     >
         {{ anker_name }}
         <div class="anker-arrow">
-            <img src="/icon/arrow_down.svg">
+            <img
+                src="/icon/arrow_down.svg"
+                alt="下の項目へのアンカーリンク"
+            >
         </div>
     </SmoothLink>
     <div

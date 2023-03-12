@@ -35,6 +35,7 @@ export default defineComponent({
     }
     .ranking-icon {
         width: 72px;
+        height: 63px;
         position: absolute;
         top: 26px;
         left: -6px;

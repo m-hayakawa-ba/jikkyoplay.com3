@@ -18,6 +18,7 @@
                 <img
                     v-else
                     src="/image/noimage.png"
+                    alt="ニュース画像なし"
                 />
             </div>
         </div>
@@ -46,6 +47,7 @@
                 <img
                     v-else
                     src="/image/noimage_trans.png"
+                    alt="ニュースソースアイコンなし"
                 >
                 <span>{{ news.news_source.name }}</span>
             </div>
