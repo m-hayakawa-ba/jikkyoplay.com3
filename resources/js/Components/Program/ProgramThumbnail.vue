@@ -4,6 +4,7 @@
         <!-- 画像本体 -->
         <img
             :src="program.image_url"
+            :alt="program.title"
             class="thumbnail-img"
         />
 
@@ -11,11 +12,13 @@
         <img
             v-if="program.site_id == constants.site.youtube"
             src="/image/logo_youtube.webp"
+            alt="YouTube"
             class="thumbnail-icon"
         >
         <img
             v-if="program.site_id == constants.site.nicovideo"
             src="/image/logo_nicovideo.webp"
+            alt="ニコニコ動画"
             class="thumbnail-icon"
         >
 
@@ -33,6 +36,7 @@
                 <img
                     v-else
                     src="/image/noimage_trans.png"
+                    :alt="program.creater_name"
                 />
             </div>
 

@@ -3,10 +3,9 @@
 
 <template>
 
-    <div
-        v-if="checkLink() == 'div'"
-        class="information-item"
-    ><slot></slot></div>
+    <div class="information-item">
+        <slot></slot>
+    </div>
 </template>
 
 
@@ -17,29 +16,6 @@ export default {
     //読み込んだコンポーネント
     components: {
         Link,
-    },
-
-    //コンポーネント内で使用するメソッド
-    methods: {
-
-        //渡されたhrefの内容でタグを変更する
-        checkLink() {
-
-            //hrefがなかったときはdivタグにする
-            if (!this.href) {
-                return 'div';
-            }
-
-            //外部リンクのときはaタグにする
-            else if (this.href.indexOf('http://') >= 0 || this.href.indexOf('https://') >= 0) {
-                return 'a';
-            }
-
-            //それ以外のときはLinkタグにする
-            else {
-                return 'Link';
-            }
-        }
     },
 }
 </script>

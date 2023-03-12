@@ -72,6 +72,7 @@ class MakeCache extends Command
         Log::info("キャッシュの作成を開始します");
 
         //トップページのニュースのキャッシュを作成する
+        dump("トップページ：ニュースキャッシュ作成");
         CacheLib::put(
             'home_newses',
             $this->newsReadService->getNewsAtHome(
@@ -80,6 +81,7 @@ class MakeCache extends Command
         );
 
         //トップページのランキングのキャッシュを作成する
+        dump("トップページ：ランキングキャッシュ作成");
         CacheLib::put(
             'home_rankings',
             $this->programReadService->getTotalRanking(
@@ -89,6 +91,7 @@ class MakeCache extends Command
         );
 
         //トップページの新着動画のキャッシュを作成する
+        dump("トップページ：新着動画キャッシュ作成");
         CacheLib::put(
             'home_youtube_programs',
             $this->programReadService->getLatestProgramsEverySite(
@@ -105,6 +108,7 @@ class MakeCache extends Command
         );
 
         //トップページのレビューのキャッシュを作成する
+        dump("トップページ：レビューキャッシュ作成");
         CacheLib::put(
             'home_reviews',
             $this->reviewReadService->getReviewsAtHome(
@@ -113,6 +117,7 @@ class MakeCache extends Command
         );
 
         //トップページの人気検索ワードのキャッシュを作成する
+        dump("トップページ：人気検索ワードキャッシュ作成");
         CacheLib::put(
             'home_search_words',
             $this->searchWordReadService->getSearchWords(
@@ -122,6 +127,7 @@ class MakeCache extends Command
         );
 
         //ランキング一覧のキャッシュを作成する
+        dump("ランキング：キャッシュ作成");
         CacheLib::put(
             'ranking_total_rankings',
             $this->programReadService->getTotalRanking(
@@ -179,6 +185,7 @@ class MakeCache extends Command
         // }
 
         //おすすめクエリのキャッシュを作成する
+        dump("おすすめクエリ：キャッシュ作成");
         $recommend_queries = $this->recommendQueryReadService->getProgramRecommendQueries();
         foreach($recommend_queries as $recommend_query) {
             foreach($this->sort as $sort) {

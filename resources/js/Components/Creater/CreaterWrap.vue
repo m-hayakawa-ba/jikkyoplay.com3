@@ -13,9 +13,15 @@
         <!-- 投稿者の顔アイコン -->
         <div class="creater-image">
             <img
+                v-if="did_load_thumbnail"
                 :src="creater.user_icon_url"
                 :alt="creater.name"
-                @error="noImage"
+                @error="loadingErrorNewsThumbnail"
+            />
+            <img
+                v-else
+                src="/image/noimage.png"
+                :alt="creater.name"
             >
         </div>
 
@@ -49,11 +55,17 @@
 </template>
 
 
-<script>
+<script lang="ts">
+import { defineComponent } from "vue";
+
+import { Creater } from '../../Interfaces/Creater';
+import { getConstant } from '../../Interfaces/Constant';
+
 import InformationWrap from "@/js/Components/Information/InformationWrap.vue";
 import SearchLink from "@/js/Components/SearchLink.vue";
 import CreaterViewCount from "@/js/Components/Creater/CreaterViewCount.vue";
-export default {
+
+export default defineComponent({
 
     //呼び出し元から渡された引数
     props: [
@@ -61,12 +73,19 @@ export default {
         "creater",  //投稿者情報
     ],
 
+    //コンポーネント内で使用する変数
+    data() {
+        return {
+            did_load_thumbnail: true,
+        };
+    },
+
     //返り値が固定の関数
     computed: {
 
         //laravel側から定数を取得する
-        constants() {
-            return this.$page.props.const;
+        constants(): any{
+            return getConstant();
         },
     },
 
@@ -97,17 +116,17 @@ export default {
                 return "/image/logo_nicovideo.webp";
             }
         },
-        
-        noImage(element){
-            element.target.src = '/image/noimage.png'
-        }
+
+        loadingErrorNewsThumbnail() {
+            this.did_load_thumbnail = false;
+        },
     },
 
     //初回読み込み時に実行
     mounted() {
     }
 
-}
+});
 </script>
 
 

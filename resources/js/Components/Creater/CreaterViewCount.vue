@@ -6,7 +6,7 @@
             v-if="rank"
             class="ranking-icon"
         >
-            <img src="/image/ranking.webp">
+            <img src="/image/ranking.webp" :alt="`ランキング 第${rank}位`">
             <div><span>{{ rank }}</span>位</div>
         </div>
 
