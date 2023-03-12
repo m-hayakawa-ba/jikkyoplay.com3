@@ -83,7 +83,10 @@ export default defineComponent({
         getAnkerPosition: function () {
             var pos_y = window.pageYOffset;
             this.anker_array.forEach(e => {
-                e.pos = pos_y + document.getElementById(e.id)!.getBoundingClientRect().top
+                let anker_id = document.getElementById(e.id);
+                if (anker_id) {
+                    e.pos = pos_y + anker_id.getBoundingClientRect().top
+                }
             });
         },
 

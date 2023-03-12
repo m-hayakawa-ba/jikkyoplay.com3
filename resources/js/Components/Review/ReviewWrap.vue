@@ -130,6 +130,7 @@ export default defineComponent({
         display: -webkit-box;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 7;
+        white-space: pre-line;
         @media screen and (min-width: $bp) {
             margin: 12px 0 0 8px;
         }

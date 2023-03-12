@@ -23,9 +23,10 @@
         </div>
 
         <!-- 動画タイトル -->
-        <h2 class="program-title">
-            {{ program.title }}
-        </h2>
+        <h2
+            class="program-title"
+            v-html="program.title"
+        ></h2>
 
         <!-- 元サイトへの外部リンク -->
         <MovieSiteLink

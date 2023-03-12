@@ -29,7 +29,7 @@ export default {
         };
         script = document.createElement('script');
         script.setAttribute('type', 'text/javascript');
-        script.setAttribute('src', 'http://ext.nicovideo.jp/thumb_watch/' + this.movie_id);
+        script.setAttribute('src', 'https://ext.nicovideo.jp/thumb_watch/' + this.movie_id);
         target = document.getElementById('js-program-embed');
         target.appendChild(script);
     }

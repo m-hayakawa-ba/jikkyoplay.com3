@@ -13,9 +13,10 @@
         class="program-wrap"
     >
         <!-- 番組タイトル -->
-        <div class="program-title">
-            {{ program.title }}
-        </div>
+        <div
+            class="program-title"
+            v-html="program.title"    
+        ></div>
 
         <!-- 番組サムネイル -->
         <ProgramThumbnail :program="program"/>
