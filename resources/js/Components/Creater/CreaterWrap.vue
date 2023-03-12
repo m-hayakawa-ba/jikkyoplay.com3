@@ -8,7 +8,7 @@
     />
 
     <!-- 番組情報 -->
-    <InformationWrap>
+    <InformationWrap style="justify-content: space-between;">
 
         <!-- 投稿者の顔アイコン -->
         <div class="creater-image">
@@ -26,29 +26,29 @@
         </div>
 
         <!-- 投稿者の情報 -->
-        <table>
+        <div class="creater-detail">
 
             <!-- 実況者の名前 -->
-            <tr><th>
+            <div class="creater-name">
                 {{ creater.name }}
-            </th></tr>
+            </div>
             
             <!-- その他の動画 -->
-            <tr><td>
+            <div>
                 <SearchLink 
                     name="この実況者さんの他の動画"
                     :query="'creater_id=' + creater.id"
                 />
-            </td></tr>
+            </div>
             
             <!-- もとのページへ -->
-            <tr><td style="padding: 2px 0 1px;">
+            <div style="padding: 2px 0 1px;">
                 <a :href="getChannelUrl()" class="site-link" target="_blank">
                     <img :src="getSiteIconUrl()">
                     <span>チャンネルページへ行く</span>
                 </a>
-            </td></tr>
-        </table>
+            </div>
+        </div>
 
     </InformationWrap>
 
@@ -143,22 +143,16 @@ export default defineComponent({
             box-shadow: 1px 1px 4px rgb(32 6 6 / 12%);
         }
     }
-    .caption-wrap {
-        margin-left: 2px;
-        padding: 2px 16px;
-        width: calc(100% - 98px);
-    }
-    table {
+    .creater-detail {
         width: calc(100% - 128px);
-    }
-    th {
-        font-weight: bold;
-        word-break: break-all;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-    td {
-        padding: 2px 0 2px 8px;
+        margin-left: 4px;
+        .creater-name {
+            font-weight: bold;
+            word-break: break-all;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            height: 44px;
+        }
     }
     .site-link {
         position: relative;

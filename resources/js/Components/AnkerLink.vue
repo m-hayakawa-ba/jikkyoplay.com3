@@ -98,7 +98,7 @@ export default defineComponent({
             this.anker_id = "";
             this.anker_display = false;
             if (this.mode == 'prev') {
-                var offset = window.pageYOffset;
+                var offset = window.pageYOffset - 32;
                 this.anker_array.forEach(e => {
                     if (e.pos < offset) {
                         this.anker_name = e.name;

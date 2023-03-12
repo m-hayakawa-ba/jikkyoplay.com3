@@ -1,10 +1,12 @@
 <template>
     <div class="banner-wrap">
-        <div class="banner-image">
-            <img :src="image_url" :alt="title">
-        </div>
-        <div class="banner-title">
-            {{ title }}
+        <div class="banner-retio">
+            <div class="banner-image">
+                <img :src="image_url" :alt="title">
+            </div>
+            <div class="banner-title">
+                {{ title }}
+            </div>
         </div>
     </div>
 </template>
@@ -26,6 +28,10 @@ export default {
 <style lang="scss" scoped>
 @import "@/sass/variables";
     .banner-wrap {
+        padding-top: 68px;
+        margin-top: -68px;
+    }
+    .banner-retio {
         position: relative;
         left: -8px;
         width: calc(100% + 16px);

@@ -1,32 +1,34 @@
 <template>
 
-    <!-- リンク先が渡されたときはリンクさせる -->
-    <Link
-        v-if="link_path"
-        :href="link_path"
-        :id="id"
-        class="h2-title"
-    >
-        <h2>
-            {{ title_jp }}
-            <div class="h2-link">
-                <div class="link-title pc-only">{{ link_title }}</div>
-                <div class="link-title sp-only">すべて見る</div>
-                <div class="link-svg"><SvgIcon icon="right" /></div>
-            </div>
-        </h2>
-    </Link>
+    <div :id="id" class="h2-wrap">
 
-    <!-- リンク先がなかったときは普通のdivタグ -->
-    <div
-        v-else
-        :id="id"
-        class="h2-title"
-    >
-        <h2>
-            {{ title_jp }}
-        </h2>
+        <!-- リンク先が渡されたときはリンクさせる -->
+        <Link
+            v-if="link_path"
+            :href="link_path"
+            class="h2-title"
+        >
+            <h2>
+                {{ title_jp }}
+                <div class="h2-link">
+                    <div class="link-title pc-only">{{ link_title }}</div>
+                    <div class="link-title sp-only">すべて見る</div>
+                    <div class="link-svg"><SvgIcon icon="right" /></div>
+                </div>
+            </h2>
+        </Link>
+
+        <!-- リンク先がなかったときは普通のdivタグ -->
+        <div
+            v-else
+            class="h2-title"
+        >
+            <h2>
+                {{ title_jp }}
+            </h2>
+        </div>
     </div>
+
 </template>
 
 <script lang="ts">
@@ -54,6 +56,10 @@ export default {
 
 <style lang="scss" scoped>
 @import "../../sass/variables";
+    .h2-wrap {
+        padding-top: 66px;
+        margin-top: -66px;
+    }
     .h2-title {
         position: relative;
         left: -8px;

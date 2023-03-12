@@ -284,6 +284,7 @@ export default {
         .search-select {
             height: 38px;
             width: 100%;
+            color: #fff;
         }
         @media screen and (min-width: $bp) {
             margin-top: 100px;
