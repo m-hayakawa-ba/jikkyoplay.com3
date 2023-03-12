@@ -365,7 +365,7 @@ class ProgramSearchService
             $site_id = $queries['site_id'];
             unset($queries['site_id']);
             return [
-                "name"  => $this->siteModel->find($site_id)->name,
+                "name"  => $this->siteModel->find($site_id)?->name,
                 "query" => http_build_query($queries),
             ];
         } else {
