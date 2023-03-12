@@ -58,7 +58,6 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 
-import { Creater } from '../../Interfaces/Creater';
 import { getConstant } from '../../Interfaces/Constant';
 
 import InformationWrap from "@/js/Components/Information/InformationWrap.vue";
@@ -133,9 +132,9 @@ export default defineComponent({
 <style lang="scss" scoped>
 @import "@/sass/variables";
     .creater-image {
-        width:  104px;
+        width: 104px;
         height: 104px;
-        margin: 0 8px;
+        margin-left: 8px;
         img {
             object-fit: cover;
             width: 100%;
@@ -144,14 +143,14 @@ export default defineComponent({
         }
     }
     .creater-detail {
-        width: calc(100% - 128px);
+        width: calc(100% - 120px);
         margin-left: 4px;
         .creater-name {
             font-weight: bold;
             word-break: break-all;
             overflow: hidden;
             text-overflow: ellipsis;
-            height: 44px;
+            margin-bottom: 8px;
         }
     }
     .site-link {

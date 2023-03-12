@@ -4,7 +4,7 @@
 return [
 
     //js・cssのバージョン
-    'version' => 24,
+    'version' => 25,
 
     //トップページの表示数・表示期間
     'max_news_count'        => 6,           //トップページに表示させるニュースの表示数
