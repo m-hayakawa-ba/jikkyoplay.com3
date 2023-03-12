@@ -252,6 +252,7 @@ export default {
         margin: 0 auto;
         background-color: unset;
         border: none;
+        color: #fff;
         font-size: $font-l;
         transition: opacity 0.3s;
         &:hover {
