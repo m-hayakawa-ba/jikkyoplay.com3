@@ -9,8 +9,14 @@
         />
         <!-- ニコニコ動画 -->
         <EmbedNicovideo
-            v-if="site_id == constants.site.nicovideo"
+            v-else-if="site_id == constants.site.nicovideo"
             :movie_id="movie_id"
+        />
+        <!-- OPENREC.tv -->
+        <EmbedOpenrec
+            v-else-if="site_id == constants.site.openrec"
+            :movie_id="movie_id"
+            :image_url="image_url"
         />
     </div>
 </template>
@@ -19,18 +25,22 @@
 <script>
 import EmbedYoutube       from '@/js/Components/Program/EmbedYoutube.vue';
 import EmbedNicovideo     from '@/js/Components/Program/EmbedNicovideo.vue';
+import EmbedOpenrec       from '@/js/Components/Program/EmbedOpenrec.vue';
 export default {
 
     //読み込んだコンポーネント
     components: {
         EmbedYoutube,
         EmbedNicovideo,
+        EmbedOpenrec,
     },
 
     //呼び出し元から渡された引数
     props: [
         "site_id",  //どの動画サイトへ遷移するか
         "movie_id", //各動画サイトごとの動画id
+        "title",    //動画タイトル
+        "image_url",//動画のサムネイルURL
     ],
 
     //定数の取得

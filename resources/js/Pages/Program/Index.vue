@@ -234,7 +234,7 @@ export default defineComponent({
         position: relative;
         margin: 10px 0 20px;
         width: 100%;
-        justify-content: space-between;
+        justify-content: flex-start;
         align-items: center;
         .sort-select {
             display: block;

@@ -16,9 +16,15 @@
             class="thumbnail-icon"
         >
         <img
-            v-if="program.site_id == constants.site.nicovideo"
+            v-else-if="program.site_id == constants.site.nicovideo"
             src="/image/logo_nicovideo.webp"
             alt="ニコニコ動画"
+            class="thumbnail-icon"
+        >
+        <img
+            v-else-if="program.site_id == constants.site.openrec"
+            src="/image/logo_openrec.webp"
+            alt="OPENREC.tv"
             class="thumbnail-icon"
         >
 

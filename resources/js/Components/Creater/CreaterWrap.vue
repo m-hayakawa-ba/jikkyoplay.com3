@@ -104,6 +104,8 @@ export default defineComponent({
                 return `https://www.youtube.com/channel/${this.creater.user_id}`;
             } else if (this.creater.site_id == this.constants.site.nicovideo) {
                 return `https://www.nicovideo.jp/user/${this.creater.user_id}`;
+            } else if (this.creater.site_id == this.constants.site.openrec) {
+                return `https://www.openrec.tv/user/${this.creater.user_id}`;
             }
         },
 
@@ -113,6 +115,8 @@ export default defineComponent({
                 return "/image/logo_youtube.webp";
             } else if (this.creater.site_id == this.constants.site.nicovideo) {
                 return "/image/logo_nicovideo.webp";
+            } else if (this.creater.site_id == this.constants.site.openrec) {
+                return "/image/logo_openrec.webp";
             }
         },
 

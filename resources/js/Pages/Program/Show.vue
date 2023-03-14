@@ -14,6 +14,8 @@
         <EmbedMovie
             :site_id="creater.site_id"
             :movie_id="program.movie_id"
+            :title="program.title"
+            :image_url="program.image_url"
         />
 
         <!-- 再生数と投稿日時 -->
